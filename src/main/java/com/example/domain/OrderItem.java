@@ -24,6 +24,10 @@ public class OrderItem {
 	/** 注文トッピングリスト */
 	private List<OrderTopping> orderToppingList;
 	
+	public int subTotal() {
+		return 0; // 警告を消すために記述
+	}
+	
 	// 以下、 getter / setter 
 	public Integer getId() {
 		return id;
