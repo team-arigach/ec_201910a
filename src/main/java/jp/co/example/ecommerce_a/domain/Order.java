@@ -1,4 +1,4 @@
-package com.example.domain;
+package jp.co.example.ecommerce_a.domain;
 
 import java.sql.Timestamp;
 import java.util.Date;

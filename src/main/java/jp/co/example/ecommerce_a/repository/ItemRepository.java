@@ -1,10 +1,10 @@
-package com.example.repository;
+package jp.co.example.ecommerce_a.repository;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.example.domain.Item;
-import com.example.domain.Topping;
+import jp.co.example.ecommerce_a.domain.Item;
+import jp.co.example.ecommerce_a.domain.Topping;
 
 /**
  * Itemテーブルを操作するレポジトリ.

@@ -1,4 +1,4 @@
-package com.example.domain;
+package jp.co.example.ecommerce_a.domain;
 
 /**
  * 注文トッピングを表すドメイン.

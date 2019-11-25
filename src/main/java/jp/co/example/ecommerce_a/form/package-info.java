@@ -5,4 +5,4 @@
  * @author takahiro.suzuki
  *
  */
-package com.example.form;
+package jp.co.example.ecommerce_a.form;
