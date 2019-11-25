@@ -12,12 +12,21 @@ import org.springframework.stereotype.Repository;
 
 import jp.co.example.ecommerce_a.domain.User;
 
+/**
+ * ユーザーの情報を操作するリポジトリ.
+ * 
+ * @author takahiro.suzuki
+ *
+ */
 @Repository
 public class UserRepository {
 	
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 	
+	/**
+	 * ユーザーのオブジェクトを格納するRowMapper.
+	 */
 	private final static RowMapper<User> USER_ROW_MAPPER = (rs, i) -> {
 		User user = new User();
 		user.setId(rs.getInt("id"));
@@ -30,11 +39,23 @@ public class UserRepository {
 		return user;
 	};
 	
+	/**
+	 * メールアドレスとパスワードでユーザーを取得する.
+	 * 
+	 * @param email メールアドレス
+	 * @param password パスワード
+	 * @return 検索されたユーザー
+	 */
 	public User findByEmailAndPassword(String email, String password) {
-		String sql = "SELECT id, name, email, password, zipcode, address, telephone FROM users WHERE email = :email AND password = :password";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email).addValue("password", password);
-		User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
-		return user;
+		try {
+			String sql = "SELECT id, name, email, password, zipcode, address, telephone FROM users WHERE email = :email AND password = :password";
+			SqlParameterSource param = new MapSqlParameterSource().addValue("email", email).addValue("password", password);
+			User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
+			return user;
+			
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	public void save(User user) {
