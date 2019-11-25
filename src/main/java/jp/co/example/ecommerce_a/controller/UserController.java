@@ -12,7 +12,7 @@ public class UserController {
 		return "login";
 	}
 	
-	@RequestMapping("")
+	@RequestMapping("/userLogin")
 	public String login(String email, String password) {
 		
 		return "redirect:/item_list";

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,13 +45,13 @@
 		<div class="row">
 			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
 				<div class="well">
-					<form method="post" action="item_list.html">
+					<form method="post" action="item_list.html" th:action="@{/userLogin}">
 						<fieldset>
 							<legend>
 								ログイン
 							</legend>
-							<label
-									class="control-label" style="color: red" for="inputError">メールアドレス、またはパスワードが間違っています</label>
+						<!--	<label
+									class="control-label" style="color: red" for="inputError">メールアドレス、またはパスワードが間違っています</label>-->
 							<div class="form-group">
 								<label for="inputEmail">メールアドレス:</label>
 								<input type="text" id="inputEmail" class="form-control"
