@@ -3,10 +3,12 @@ package jp.co.example.ecommerce_a.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import jp.co.example.ecommerce_a.domain.User;
 import jp.co.example.ecommerce_a.repository.UserRepository;
 
+@Service
 public class RegisterUserService {
 	
 	@Autowired
