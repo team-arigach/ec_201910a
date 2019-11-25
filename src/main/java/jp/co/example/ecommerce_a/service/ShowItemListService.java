@@ -19,7 +19,7 @@ public class ShowItemListService {
 	 * 商品リスト情報を全件取得します.
 	 * @return 商品一覧
 	 */
-	public List<Item> ShowItemList(){
+	public List<Item> showItemList(){
 		List<Item> itemList = itemRepository.findAll();
 		return itemList;
 	}
