@@ -17,13 +17,10 @@ public class UserService {
 	 * 
 	 * @param email メールアドレス
 	 * @param password パスワード
-	 * @return メールアドレスとパスワードで検索されたユーザー
+	 * @return メールアドレスとパスワードで検索されたユーザー 一件も返ってこなければ、例外が発生しnullを返す。
 	 */
 	public User userLogin(String email, String password) {
 		User user = userRepository.findByEmailAndPassword(email, password);
-		if( user == null ) {
-			return null;
-		}
 		return user;
 	}
 
