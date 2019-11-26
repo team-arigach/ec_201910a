@@ -119,7 +119,7 @@ public class OrderRepository {
 				+ "ORDER BY o.id ,oi.id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
-		if( orderList.size() > 0) {
+		if( orderList.size() > 0) { // オーダーリストが存在する場合
 			for (OrderItem orderItem : orderList.get(0).getOrderItemList()) {
 				orderItem.setItem(itemRepository.laod(orderItem.getItemId()));
 				for (OrderTopping orderTopping : orderItem.getOrderToppingList()) {
