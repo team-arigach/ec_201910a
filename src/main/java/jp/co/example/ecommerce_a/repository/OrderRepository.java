@@ -5,18 +5,29 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.domain.OrderItem;
 import jp.co.example.ecommerce_a.domain.OrderTopping;
 
+/**
+ * オーダー(注文)オブジェクトを操作するリポジトリ.
+ * 
+ * @author takahiro.suzuki
+ *
+ */
 @Repository
 public class OrderRepository {
 	
 	@Autowired
 	private NamedParameterJdbcTemplate template;
+	
+	@Autowired
+	private ItemRepository itemRepository;
 	
 	/**
 	 * オーダー(注文)オブジェクトを操作するRowmapper.
@@ -74,7 +85,7 @@ public class OrderRepository {
 	 * @param id
 	 * @return
 	 */
-	public Order load(Integer id) {
+	public Order findByUserIdAndStatus(Integer userId, Integer status) {
 		String sql = "SELECT o.id AS id, "
 				+ "o.user_id, "
 				+ "o.status, "
@@ -87,22 +98,35 @@ public class OrderRepository {
 				+ "destination_tel, "
 				+ "delivery_time, "
 				+ "payment_method, "
-				+ "oi.id AS order_item_id, "
+				+ "oi.id AS order_id, "
 				+ "oi.item_id, "
 				+ "t.id AS order_topping_id, "
+				+ "quantity, "
+				+ "size, "
 				+ "t.topping_id, "
-				+ "t.order_item_id AS order_item_id"
+				+ "t.order_item_id AS order_item_id "
 				+ "FROM orders o "
 				+ "LEFT OUTER JOIN "
 				+ "order_items oi "
 				+ "ON o.id = oi.order_id "
 				+ "LEFT OUTER JOIN order_toppings t "
 				+ "ON t.order_item_id = oi.id "
+				+ "WHERE "
+				+ "o.user_id = :userId AND status = :status "
 				+ "ORDER BY o.id ,oi.id;";
-		List<Order> orderList = template.query(sql, ORDER_ROW_MAPPER);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
+		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
 		if( orderList.size() > 0) {
+			for (OrderItem orderItem : orderList.get(0).getOrderItemList()) {
+				orderItem.setItem(itemRepository.laod(orderItem.getItemId()));
+				for (OrderTopping orderTopping : orderItem.getOrderToppingList()) {
+					orderTopping.setTopping(orderToppingRepository.load( orderTopping.getToppingId() ));
+				}
+			}
 			return orderList.get(0);
+			
 		}
+		
 		return null;
 	}
 
