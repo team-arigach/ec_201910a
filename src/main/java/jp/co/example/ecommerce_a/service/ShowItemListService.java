@@ -17,14 +17,10 @@ public class ShowItemListService {
 	private ItemRepository itemRepository;
 
 	/**
-	 * 商品リスト情報を全件取得します.
+	 * 商品リスト情報を取得します.(最初のログインまたは指定なしでの検索の場合商品情報を全件表示します) 
 	 * 
-	 * @return 商品一覧
+	 * @return 商品一覧画面
 	 */
-//	public List<Item> showItemList() {
-//		List<Item> itemList = itemRepository.findAll();
-//		return itemList;
-//	}
 
 	public List<List<Item>> findByLikeName(String name) {
 		List<Item> itemList = null;
