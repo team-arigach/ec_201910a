@@ -20,7 +20,7 @@ public class ShowItemController {
 	public String showItemList(String name, Model model) {
 		List<List<Item>> bigItemList = showItemListService.findByLikeName(name);
 		if(bigItemList.isEmpty()) {
-			model.addAttribute("message", "該当するメッセージはありません");
+			model.addAttribute("message", "該当する商品はありません");
 			bigItemList = showItemListService.findByLikeName("");
 		}
 		model.addAttribute("bigItemList", bigItemList);
