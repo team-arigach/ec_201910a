@@ -77,7 +77,5 @@ public class Item {
 	public void setToppingList(List<Topping> toppingList) {
 		this.toppingList = toppingList;
 	}
-	
-	
 
 }
