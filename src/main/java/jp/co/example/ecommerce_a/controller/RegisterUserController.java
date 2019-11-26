@@ -10,43 +10,75 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_a.domain.User;
-import jp.co.example.ecommerce_a.form.UserForm;
+import jp.co.example.ecommerce_a.form.RegisterUserForm;
 import jp.co.example.ecommerce_a.service.RegisterUserService;
 
+/**
+ * ユーザー登録コントローラ.
+ * 
+ * @author yosuke.yamada
+ *
+ */
 @Controller
-@RequestMapping("/register")
+@RequestMapping("/registerUser")
 public class RegisterUserController {
 	
 	@Autowired
 	private RegisterUserService registerService;
 	
 	@ModelAttribute
-	public UserForm userForm() {
-		return new UserForm();
+	public RegisterUserForm retisterUserForm() {
+		return new RegisterUserForm();
 	}
 	
-//	@RequestMapping("index"){
-//		public String index() {
-//			return "register_user";
-//		}
-//	}
-	
+	/**
+	 * ユーザ登録画面を表示する.
+	 * 
+	 * @return ユーザ登録画面に遷移
+	 */
 	@RequestMapping("")
-	public String register(@Validated UserForm form,BindingResult result,Model model) {
-		boolean ischeck = registerService.isCheckMailAddress(form.getEmail());
-		if(ischeck) {
-			result.rejectValue("email", "そのメールアドレスは登録されています");
+		public String index() {
+			return "register_user";
 		}
-		if(!(form.getPassword().equals(form.getPasswordconfomation()))) {
-			result.rejectValue("notMuchPassword", "パスワードと確認用パスワードが一致しません");
+	
+	
+	/**
+	 * ユーザ登録をする.
+	 * フォームに空欄等があればエラーを返す。
+	 * 
+	 * @param registerUserform 登録ユーザフォーム
+	 * @param result エラーを格納
+	 * @param model リクエストスコープ
+	 * @return ログイン画面リダイレクト. フォームに空欄等があれば入力フォームにフォワード.
+	 */
+	@RequestMapping("/register")
+	public String register(@Validated RegisterUserForm registerUserform,BindingResult result,Model model) {
+		boolean ischeck = registerService.isCheckMailAddress(registerUserform.getEmail());
+		if(ischeck == false) {
+			result.rejectValue("email",null, "そのメールアドレスは登録されています");
+		}
+		String password = registerUserform.getPassword();
+		System.out.println(password);
+		if(!(password.equals(registerUserform.getPasswordconfomation()))) {
+			result.rejectValue("password",null, "パスワードと確認用パスワードが一致しません");
 		}
 		if(result.hasErrors()) {
-			return "forward:/register_user";
+			return index();
 		}
 		User user = new User();
-		BeanUtils.copyProperties(form, user);
+		BeanUtils.copyProperties(registerUserform, user);
 		registerService.insertUser(user);
-		return "redirect:/login";
+		return "redirect:/registerUser/toLoginPage";
+	}
+	
+	/**
+	 * ログイン画面に遷移するメソッド.
+	 * 
+	 * @return ログイン画面に遷移
+	 */
+	@RequestMapping("toLoginPage")
+	public String toLoginPage() {
+		return "login";
 	}
 
 }

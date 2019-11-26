@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,21 +45,21 @@
 			<!-- /.container-fluid -->
 		</nav>
 
-		<form action="cart_list.html">
+		<form action="cart_list.html" th:action="@{/detail/toShoppingCart}">
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 
 				<h3 class="text-center">商品詳細</h3>
 				<div class="row">
 					<div class="col-xs-5">
-						<img src="img/1.jpg" class="img-responsive img-rounded">
+						<img src="img/1.jpg" class="img-responsive img-rounded" th:src="'/img/' + ${item.imagePath}">
 					</div>
 
 					<div class="col-xs-5">
 						<div class="bs-component">
-							<h4>じゃがバターベーコン</h4> <br>
+							<h4 th:text="${item.name}">じゃがバターベーコン</h4> <br>
 							<br>
-							<p>マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</p>
+							<p th:text="${item.description}">マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</p>
 						</div>
 					</div>
 				</div><br>
@@ -74,12 +74,12 @@
 									<label class="radio-inline">
 										<input type="radio"
 											name="responsibleCompany" checked="checked">
-										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)
+										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM}">1,380円(税抜)</span>
 									</label>
 									<label class="radio-inline">
 										<input type="radio"
 											name="responsibleCompany">
-										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)
+										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${item.priceL}">2,380円(税抜)</span>
 									</label>
 								</div>
 							</div>
@@ -91,36 +91,16 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-12">
-									<label for="inputResponsibleCompany">
+									<label for="inputResponsibleCompany" >
 										トッピング：&nbsp;1つにつき
 										<span>&nbsp;М&nbsp;</span>&nbsp;&nbsp;200円(税抜)
 										<span>&nbsp;Ｌ</span>&nbsp;&nbsp;300円(税抜)
 									</label>
 								</div>
 								<div class="col-sm-12">
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">オニオン
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">チーズ
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ピーマン
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ロースハム
-									</label><br>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ほうれん草
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ぺパロに
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">グリルナス
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">あらびきソーセージ
+									<label class="checkbox-inline" th:each="topping:${item.toppingList}"	>
+										<input type="checkbox" value="">
+											<span th:text="${topping.name}">オニオン</span>
 									</label>
 								</div>
 							</div>
