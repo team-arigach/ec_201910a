@@ -83,8 +83,4 @@ public class Item {
 				+ priceL + ", imagePath=" + imagePath + ", deleted=" + deleted + ", toppingList=" + toppingList + "]";
 	}
 	
-	
-	
-	
-
 }

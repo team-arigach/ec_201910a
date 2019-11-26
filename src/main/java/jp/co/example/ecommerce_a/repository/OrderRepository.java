@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -85,8 +86,9 @@ public class OrderRepository {
 	};
 	
 	/**
-	 * @param id
-	 * @return
+	 * ユーザーIDとステータスから注文情報を取得する.
+	 * @param id ID
+	 * @return 注文情報
 	 */
 	public Order findByUserIdAndStatus(Integer userId, Integer status) {
 		String sql = "SELECT o.id AS id, "
@@ -133,4 +135,27 @@ public class OrderRepository {
 		return null;
 	}
 
+	/**
+	 * 注文情報（支払者情報）を更新する.
+	 * 
+	 * @param order 注文情報
+	 */
+	public void update(Order order) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		String sql = "UPDATE orders SET "
+				+ "id = :id, "
+				+ "user_id = :userId, "
+				+ "status = :status, "
+				+ "total_price = :totalPrice, "
+				+ "order_date = :orderDate, "
+				+ "destination_name = :destinationName, "
+				+ "destination_name = :destinationName, "
+				+ "destination_zipcode = :destinationZipcode, "
+				+ "destination_address = :destinationAddress, "
+				+ "destination_tel = :destinationTel, "
+				+ "delivery_time = :deliveryTime, "
+				+ "payment_method = :paymentMethod "
+				+ "WHERE id = :id";
+		template.update(sql, param);
+	}
 }

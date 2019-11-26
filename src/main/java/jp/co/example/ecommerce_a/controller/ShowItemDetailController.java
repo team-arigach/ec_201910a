@@ -15,7 +15,7 @@ import jp.co.example.ecommerce_a.service.ShowItemDetailService;
  *
  */
 @Controller
-@RequestMapping("detail")
+@RequestMapping("/detail")
 public class ShowItemDetailController {
 
 	@Autowired
@@ -39,7 +39,7 @@ public class ShowItemDetailController {
 	 * 
 	 * @return　ショッピングカートページ
 	 */
-	@RequestMapping("toShoppingCart")
+	@RequestMapping("/toShoppingCart")
 	public String toShoppingCart() {
 		return "cart_list";
 	}
