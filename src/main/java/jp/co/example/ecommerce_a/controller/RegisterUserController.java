@@ -14,7 +14,7 @@ import jp.co.example.ecommerce_a.form.UserForm;
 import jp.co.example.ecommerce_a.service.RegisterUserService;
 
 @Controller
-@RequestMapping("/register")
+@RequestMapping("/registerUser")
 public class RegisterUserController {
 	
 	@Autowired
@@ -25,28 +25,31 @@ public class RegisterUserController {
 		return new UserForm();
 	}
 	
-//	@RequestMapping("index"){
-//		public String index() {
-//			return "register_user";
-//		}
-//	}
-	
 	@RequestMapping("")
+		public String index() {
+			return "register_user";
+		}
+	
+	
+	@RequestMapping("/register")
 	public String register(@Validated UserForm form,BindingResult result,Model model) {
 		boolean ischeck = registerService.isCheckMailAddress(form.getEmail());
-		if(ischeck) {
-			result.rejectValue("email", "そのメールアドレスは登録されています");
+		if(ischeck == false) {
+			result.rejectValue("email",null, "そのメールアドレスは登録されています");
 		}
-		if(!(form.getPassword().equals(form.getPasswordconfomation()))) {
-			result.rejectValue("notMuchPassword", "パスワードと確認用パスワードが一致しません");
+		String password = form.getPassword();
+		System.out.println(form.getPassword());
+		if(password != null &&(password.equals(form.getPasswordconfomation()))) {
+			result.rejectValue("notMuchPassword",null, "パスワードと確認用パスワードが一致しません");
 		}
 		if(result.hasErrors()) {
-			return "forward:/register_user";
+			return index();
 		}
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
 		registerService.insertUser(user);
-		return "redirect:/login";
+		return "redirect:/registerUser";
 	}
+
 
 }

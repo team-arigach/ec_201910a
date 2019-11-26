@@ -8,7 +8,7 @@ public class UserForm {
 	@NotBlank(message = "お名前を入力して下さい")
 	private String name;
 	@NotBlank(message = "メールアドレスを入力して下さい")
-	@Email(message = "アドレスが不正です")
+	@Email
 	private String email;
 	@NotBlank(message = "電話番号を入力して下さい")
 	private String telephone;
