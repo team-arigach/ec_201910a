@@ -50,7 +50,7 @@ public class ItemRepository {
 	 * 商品メニューの曖昧検索を取得します.
 	 * 
 	 * @param name 絞り込み検索の条件
-	 * @return
+	 * @return　商品情報リスト
 	 */
 	public List<Item> findByLikeName(String name){
 		StringBuilder sql = new StringBuilder();
@@ -58,5 +58,18 @@ public class ItemRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql.toString(), param,ITEM_ROW_MAPPER);
 		return itemList;
+	}
+	
+	/**
+	 * 主キーから商品情報を取得します.
+	 *
+	 * @param id ID
+	 * @return 商品情報
+	 */
+	public Item laod(Integer id) {
+		String  sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
+		return item;
 	}
 }
