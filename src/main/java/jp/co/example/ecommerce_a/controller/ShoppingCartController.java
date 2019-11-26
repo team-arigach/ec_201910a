@@ -11,5 +11,7 @@ public class ShoppingCartController {
 	public String index() {
 		return "item_detail";
 	}
-
+	
+	@RequestMapping("/insert")
+	public String insert() {return "";}
 }
