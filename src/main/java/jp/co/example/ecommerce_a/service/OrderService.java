@@ -14,6 +14,11 @@ public class OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 	
+	/**
+	 * 注文する.
+	 * 
+	 * @param order　注文情報
+	 */
 	public void order(Order order) {
 		orderRepository.findByUserIdAndStatus(order.getUserId(), 0);
 		if(order.getPaymentMethod() == 1) {
