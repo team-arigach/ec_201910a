@@ -1,12 +1,35 @@
 package jp.co.example.ecommerce_a.form;
 
-public class RegisterUserForm {
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
+/**
+ * ユーザー登録フォーム.
+ * 
+ * @author yosuke.yamada
+ *
+ */
+public class RegisterUserForm {
 	
+
+	/**	名前 */
+	@NotBlank(message = "お名前を入力して下さい")	
 	private String name;
-	private String mail;
+	/** メールアドレス */
+	@NotBlank(message = "メールアドレスを入力して下さい")
+	@Email(message = "入力された内容がメールアドレスではありません")
+	private String email;
+	/**	電話番号 */
+	@NotBlank(message = "電話番号を入力して下さい")
 	private String telephone;
+	/**	パスワード */
+	@NotBlank(message = "パスワードを入力して下さい")
 	private String password;
+	/**	確認用パスワード */
+	@NotBlank(message = "確認用パスワードを入力して下さい")
+	private String passwordconfomation;
+	/**	住所 */
+	@NotBlank(message = "住所を入力して下さい")
 	private String address;
 
 	public String getName() {
@@ -17,12 +40,12 @@ public class RegisterUserForm {
 		this.name = name;
 	}
 
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getTelephone() {
@@ -41,6 +64,14 @@ public class RegisterUserForm {
 		this.password = password;
 	}
 
+	public String getPasswordconfomation() {
+		return passwordconfomation;
+	}
+
+	public void setPasswordconfomation(String passwordconfomation) {
+		this.passwordconfomation = passwordconfomation;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -51,8 +82,8 @@ public class RegisterUserForm {
 
 	@Override
 	public String toString() {
-		return "RegisterUserForm [name=" + name + ", mail=" + mail + ", telephone=" + telephone + ", password="
-				+ password + ", address=" + address + "]";
+		return "RegisterUserForm [name=" + name + ", email=" + email + ", telephone=" + telephone + ", password="
+				+ password + ", passwordconfomation=" + passwordconfomation + ", address=" + address + "]";
 	}
 
 }
