@@ -21,16 +21,22 @@ public class OrderController {
 		return new OrderForm();
 	}
 	
+	@RequestMapping("")
+	public String index() {
+		return "order_confirm";
+	}
+	
 	/**
 	 * 注文する.
 	 * 
 	 * @param orderForm 注文フォーム
 	 * @return　注文完了画面へリダイレクト
 	 */
-	@RequestMapping("")
+	@RequestMapping("/input")
 	public String order(OrderForm orderForm) {
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
+		System.err.println(order);
 		orderService.order(order);
 		return "redirect:/order";
 	}
