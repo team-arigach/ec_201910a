@@ -2,6 +2,7 @@ package jp.co.example.ecommerce_a.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -37,6 +38,12 @@ public class OrderToppingRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		OrderTopping orderTopping = template.queryForObject(sql, param, ORDER_TOPPING_ROW_MAPPER);
 		return orderTopping;
+	}
+	
+	public void insert(OrderTopping orderTopping) {
+		String sql = "INSERT INTO order_toppings(id, order_item_id, topping_id) VALUES(:id,:orderId,:toppingId)";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(orderTopping);
+		template.update(sql, param);
 	}
 
 }
