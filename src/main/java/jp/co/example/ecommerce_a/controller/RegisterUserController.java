@@ -65,7 +65,6 @@ public class RegisterUserController {
 		if(result.hasErrors()) {
 			return index();
 		}
-		
 		User user = new User();
 		BeanUtils.copyProperties(registerUserform, user);
 		registerService.insertUser(user);
