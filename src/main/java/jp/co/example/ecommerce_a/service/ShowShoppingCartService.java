@@ -1,5 +1,8 @@
 package jp.co.example.ecommerce_a.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.MailSender;
@@ -46,7 +49,6 @@ public class ShowShoppingCartService {
 		msg.setText("テストです。");
 		mailSender.send(msg);
 	}
-
 	
 
 }

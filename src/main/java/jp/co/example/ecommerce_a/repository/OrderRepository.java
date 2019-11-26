@@ -36,7 +36,7 @@ public class OrderRepository {
 	/**
 	 * オーダー(注文)オブジェクトを操作するRowmapper.
 	 */
-	private final static ResultSetExtractor<List<Order>> ORDER_ROW_MAPPER = (rs) -> {
+	private final ResultSetExtractor<List<Order>> ORDER_ROW_MAPPER = (rs) -> {
 		int preId = 0;
 		int preOrderItemId = 0;
 		List<OrderItem> orderItemList = null;
@@ -69,6 +69,7 @@ public class OrderRepository {
 				orderItem.setQuantity(rs.getInt("quantity"));
 				orderItem.setOrderId(rs.getInt("order_id"));
 				orderItem.setSize(rs.getString("size").charAt(0));
+				orderItem.setItem(itemRepository.laod(orderItem.getItemId()));
 				orderToppingList = new ArrayList<>();
 				orderItem.setOrderToppingList(orderToppingList);
 				orderItemList.add(orderItem);
@@ -79,6 +80,7 @@ public class OrderRepository {
 				orderTopping.setId(rs.getInt("order_topping_id"));
 				orderTopping.setOrderItemId(rs.getInt("order_item_id"));
 				orderTopping.setToppingId(rs.getInt("topping_id"));
+				orderTopping.setTopping(toppingRepository.load(orderTopping.getToppingId()));
 				orderToppingList.add(orderTopping);
 			}
 		}
@@ -122,16 +124,8 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
 		if( orderList.size() > 0) { // オーダーリストが存在する場合
-			for (OrderItem orderItem : orderList.get(0).getOrderItemList()) {
-				orderItem.setItem(itemRepository.laod(orderItem.getItemId()));
-				for (OrderTopping orderTopping : orderItem.getOrderToppingList()) {
-					orderTopping.setTopping( toppingRepository.load( orderTopping.getToppingId() ));
-				}
-			}
 			return orderList.get(0);
-			
 		}
-		
 		return null;
 	}
 
