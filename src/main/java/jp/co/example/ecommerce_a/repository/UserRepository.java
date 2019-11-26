@@ -1,8 +1,10 @@
 package jp.co.example.ecommerce_a.repository;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -56,8 +58,17 @@ public class UserRepository {
 		}
 	}
 	
-	public void insert() {
-		
+	public void save(User user) {
+		String sql="INSERT INTO users(name,email,password,zipcode,address,telephone) VALUES(:name,:email,:password,:zipcode,:address,:telephone)";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
+		template.update(sql, param);
+	}
+	
+	public List<User> findByMailAddress(String email) {
+		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		return userList;
 	}
 	
 	
