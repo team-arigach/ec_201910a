@@ -81,11 +81,11 @@
 					<tbody>
 						<tr th:each="itemList:${bigItemList}">
 							<th th:each="item:${itemList}">
-								<a href="item_detail.html" >
+								<a href="item_detail.html" th:href="@{'/detail/?id=' + ${item.id}}">
 									<img src="img/1.jpg" th:src="'/img/' + ${item.imagePath}"
 										class="img-responsive img-rounded" width="200" height="600">
 								</a><br>
-								<a href="item_detail.html" th:text="${item.name}">じゃがバターベーコン</a><br>
+								<a href="item_detail.html" th:href="@{'/detail/?id=' + ${item.id}}" th:text="${item.name}">じゃがバターベーコン</a><br>
 								<span class="price" th:text="${item.priceM}">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
 								<span class="price" th:text="${item.priceL}">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
 							</th>
