@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -131,6 +132,13 @@ public class OrderRepository {
 		}
 		
 		return null;
+	}
+	
+	
+	public void insert(Order order) {
+		String sql = "INSERT INTO FROM orders(user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method) VALUES(:userId,:status,:totalPrice,:orderDate,:destinationName,:destinationEmail,:destinationZipcode,:destinationAddress,:destinationTel,:delivaryTime,:paymentMethod)";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		template.update(sql, param);
 	}
 
 }
