@@ -29,6 +29,9 @@ public class OrderRepository {
 	@Autowired
 	private ItemRepository itemRepository;
 	
+	@Autowired
+	private ToppingRepository toppingRepository;
+	
 	/**
 	 * オーダー(注文)オブジェクトを操作するRowmapper.
 	 */
@@ -58,7 +61,7 @@ public class OrderRepository {
 				orderList.add(order);
 				preId = order.getId();
 			}
-			if( rs.getInt("order_item_id") != 0 || rs.getInt("order_id") != preOrderItemId ) {
+			if( rs.getInt("order_item_id") != 0 || rs.getInt("order_item_id") != preOrderItemId ) {
 				OrderItem orderItem = new OrderItem();
 				orderItem.setId(rs.getInt("id"));
 				orderItem.setItemId(rs.getInt("item_id"));
@@ -68,7 +71,7 @@ public class OrderRepository {
 				orderToppingList = new ArrayList<>();
 				orderItem.setOrderToppingList(orderToppingList);
 				orderItemList.add(orderItem);
-				preOrderItemId = rs.getInt("order_id");
+				preOrderItemId = rs.getInt("order_item_id");
 			}
 			if( rs.getInt("order_topping_id") != 0) {
 				OrderTopping orderTopping = new OrderTopping();
@@ -120,7 +123,7 @@ public class OrderRepository {
 			for (OrderItem orderItem : orderList.get(0).getOrderItemList()) {
 				orderItem.setItem(itemRepository.laod(orderItem.getItemId()));
 				for (OrderTopping orderTopping : orderItem.getOrderToppingList()) {
-					orderTopping.setTopping(orderToppingRepository.load( orderTopping.getToppingId() ));
+					orderTopping.setTopping( toppingRepository.load( orderTopping.getToppingId() ));
 				}
 			}
 			return orderList.get(0);
