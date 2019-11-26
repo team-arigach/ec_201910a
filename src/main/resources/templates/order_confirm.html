@@ -236,58 +236,17 @@
 													class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
 											</div>
 											<div class="col-sm-5">
-												<input type="date" name="name" id="name"
+												<input type="date" name="deliveryTime" id="name"
 													class="form-control input-sm" />
 											</div>
 
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
-												<label class="radio-inline">
+												<label class="radio-inline" th:each="deliveryTime:${deliveryTimeList}">
 													<input type="radio"
-														name="responsibleCompany" checked="checked">
-													10時
+														name="deliveryTime" checked="checked" th:value="${deliveryTime}" th:text="${deliveryTime} + 時">
 												</label>
-												<label class="radio-inline">
-													<input type="radio"
-														name="responsibleCompany">
-													11時
-												</label>
-												<label class="radio-inline">
-													<input type="radio"
-														name="responsibleCompany">
-													12時
-												</label><br>
-												<label class="radio-inline">
-													<input type="radio"
-														name="responsibleCompany">
-													13時
-												</label>
-												<label class="radio-inline">
-													<input type="radio"
-														name="responsibleCompany">
-													14時
-												</label>
-												<label class="radio-inline">
-													<input type="radio"
-														name="responsibleCompany">
-													15時
-												</label><br>
-												<label class="radio-inline">
-													<input type="radio"
-														name="responsibleCompany">
-													16時
-												</label>
-												<label class="radio-inline">
-													<input type="radio"
-														name="responsibleCompany">
-													17時
-												</label>
-												<label class="radio-inline">
-													<input type="radio"
-														name="responsibleCompany">
-													18時
-												</label><br>
 											</div>
 										</div>
 									</div>
@@ -316,7 +275,7 @@
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" checked="checked" th:value="1">
 												代金引換
 											</label>
 										</div>
@@ -334,7 +293,7 @@
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" checked="checked" th:value="2">
 												クレジットカード
 											</label><br><br>
 										</div>

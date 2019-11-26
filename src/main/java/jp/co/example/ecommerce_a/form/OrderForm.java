@@ -1,23 +1,30 @@
 package jp.co.example.ecommerce_a.form;
 
+import javax.validation.constraints.NotBlank;
+
 public class OrderForm {
 
 	/**	宛名氏名 */
+	@NotBlank(message="名前を入力して下さい")
 	private String destinationName;
 	
 	/**	宛名Eメール */
+	@NotBlank(message="メールアドレスを入力して下さい")
 	private String destinationEmail;
 	
 	/**	宛名郵便番号 */
 	private String destinationZipcode;
 	
 	/**	宛名住所 */
+	@NotBlank(message="住所を入力して下さい")	
 	private String destinationAddress;
 	
 	/**	宛名電話番号 */
+	@NotBlank(message="電話番号を入力して下さい")
 	private String destinationTel;
 	
 	/**	配達時間 */
+	@NotBlank(message="配達日時を入力して下さい")
 	private String deliveryTime;
 	
 	/**	支払方法 */
