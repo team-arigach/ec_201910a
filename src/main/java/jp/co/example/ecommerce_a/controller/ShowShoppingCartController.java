@@ -23,18 +23,22 @@ public class ShowShoppingCartController {
 	 */
 	@RequestMapping("/cartList")
 	public String showCartList(Integer userId, Model model) {
-		Order order = showShoppingCartService.showShoppingCart(1, 0);
+		Order order = showShoppingCartService.showShoppingCart(18, 0);
 		System.out.println(order);
-		model.addAttribute("order", order);
+		if(order != null) {
+			model.addAttribute("order", order);
+		}
 		return "cart_list";
 	}
 	
-	@RequestMapping("/aaa")
+	@RequestMapping("/mail")
 	public String send() {
-		System.err.println("メールを送りたい。");
+		System.err.println("メールを送信する。");
 		showShoppingCartService.send();
-		System.err.println("メールを送りたい。");
+		System.err.println("メールの送信完了");
 		return null;
 	}
+	
+	
 
 }
