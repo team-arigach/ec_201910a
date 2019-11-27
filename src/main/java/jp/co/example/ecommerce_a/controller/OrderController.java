@@ -18,6 +18,7 @@ import jp.co.example.ecommerce_a.service.OrderService;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
+	
 
 	@Autowired
 	private OrderService orderService;
@@ -28,7 +29,7 @@ public class OrderController {
 	}
 	
 	/**
-	 * 注文確認画面を表示する
+	 * 注文確認画面を表示する.
 	 * 
 	 * @param model　リクエストスコープ
 	 * @return　注文確認画面
@@ -45,7 +46,7 @@ public class OrderController {
 	}
 	
 	/**
-	 * 注文する
+	 * 注文する.
 	 * 
 	 * @param orderForm　注文フォーム
 	 * @param result　BindingResult
