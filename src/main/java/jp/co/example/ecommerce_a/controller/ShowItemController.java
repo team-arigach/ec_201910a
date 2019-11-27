@@ -29,7 +29,7 @@ public class ShowItemController {
 	 * @param model
 	 * @return 商品全件画面か検索結果画面
 	 */
-	@RequestMapping("/")
+	@RequestMapping("/showItemList")
 	public String showItemList(String name, Model model) {
 		List<List<Item>> bigItemList = showItemListService.findByLikeName(name);
 		if(bigItemList.isEmpty()) {
