@@ -1,5 +1,5 @@
 	<!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -165,7 +165,7 @@
 		</div>
 
 		<!-- table -->
-		<form action="order_finished.html">
+		<form action="order_finished.html" th:action="@{/order/input}" th:object="${orderForm}">
 			<div class="row">
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
@@ -179,7 +179,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationName" th:field="*{destinationName}">
 								</td>
 							</tr>
 							<tr>
@@ -189,7 +189,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationEmail" th:field="*{destinationEmail}">
 								</td>
 							</tr>
 							<tr>
@@ -199,7 +199,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">&nbsp;&nbsp;<button>住所検索</button>
+									<input type="text" name="destinationZipcode" th:field="*{destinationZipcode}">&nbsp;&nbsp;<button>住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -209,7 +209,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationAddress" th:field="*{destinationAddress}">
 								</td>
 							</tr>
 							<tr>
@@ -219,7 +219,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationTel" th:field="*{destinationTel}">
 								</td>
 							</tr>
 							<tr>
