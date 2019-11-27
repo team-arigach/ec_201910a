@@ -35,6 +35,7 @@ public class OrderController {
 	 */
 	@RequestMapping("")
 	public String index(Model model) {
+		
 		List<Integer> deliveryTimeList = new ArrayList<>();
 		for( int i = 10; i <= 21; i++){
 			deliveryTimeList.add(i);
