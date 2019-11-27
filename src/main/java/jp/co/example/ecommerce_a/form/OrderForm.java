@@ -1,36 +1,52 @@
 package jp.co.example.ecommerce_a.form;
 
+import java.sql.Date;
+
+import javax.validation.constraints.NotBlank;
+
 //import javax.validation.constraints.NotBlank;
 
 public class OrderForm {
 
 	/**	宛名氏名 */
-	//@NotBlank(message="名前を入力して下さい")
+	@NotBlank(message="名前を入力して下さい")
 	private String destinationName;
 	
 	/**	宛名Eメール */
-	//@NotBlank(message="メールアドレスを入力して下さい")
+	@NotBlank(message="メールアドレスを入力して下さい")
 	private String destinationEmail;
 	
 	/**	宛名郵便番号 */
 	private String destinationZipcode;
 	
 	/**	宛名住所 */
-	//@NotBlank(message="住所を入力して下さい")	
+	@NotBlank(message="住所を入力して下さい")	
 	private String destinationAddress;
 	
 	/**	宛名電話番号 */
-	//@NotBlank(message="電話番号を入力して下さい")
+	@NotBlank(message="電話番号を入力して下さい")
 	private String destinationTel;
 	
 	/**	配達時間 */
-	//@NotBlank(message="配達日時を入力して下さい")
-	private Integer deliveryTime;
+	private Date deliveryTime;
 	
+	private Integer deliveryHour;
+	
+
 	/**	支払方法 */
 	private Integer paymentMethod;
 
 	//以下getter/setter
+	
+
+	@Override
+	public String toString() {
+		return "OrderForm [destinationName=" + destinationName + ", destinationEmail=" + destinationEmail
+				+ ", destinationZipcode=" + destinationZipcode + ", destinationAddress=" + destinationAddress
+				+ ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime + ", deliveryHour="
+				+ deliveryHour + ", paymentMethod=" + paymentMethod + "]";
+	}
+
 	public String getDestinationName() {
 		return destinationName;
 	}
@@ -71,12 +87,20 @@ public class OrderForm {
 		this.destinationTel = destinationTel;
 	}
 
-	public Integer getDeliveryTime() {
+	public Date getDeliveryTime() {
 		return deliveryTime;
 	}
 
-	public void setDeliveryTime(Integer deliveryTime) {
+	public void setDeliveryTime(Date deliveryTime) {
 		this.deliveryTime = deliveryTime;
+	}
+
+	public Integer getDeliveryHour() {
+		return deliveryHour;
+	}
+
+	public void setDeliveryHour(Integer deliveryHour) {
+		this.deliveryHour = deliveryHour;
 	}
 
 	public Integer getPaymentMethod() {
@@ -86,13 +110,7 @@ public class OrderForm {
 	public void setPaymentMethod(Integer paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
-
-	@Override
-	public String toString() {
-		return "OrderForm [destinationName=" + destinationName + ", destinationEmail=" + destinationEmail
-				+ ", destinationZipcode=" + destinationZipcode + ", destinationAddress=" + destinationAddress
-				+ ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime + ", paymentMethod="
-				+ paymentMethod + "]";
-	}
+	
+	
 
 }
