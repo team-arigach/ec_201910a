@@ -3,6 +3,7 @@ package jp.co.example.ecommerce_a.form;
 import java.sql.Date;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 //import javax.validation.constraints.NotBlank;
 
@@ -28,6 +29,7 @@ public class OrderForm {
 	private String destinationTel;
 	
 	/**	配達時間 */
+	@NotEmpty(message="配達日時を入力して下さい")
 	private Date deliveryTime;
 	
 	private Integer deliveryHour;
