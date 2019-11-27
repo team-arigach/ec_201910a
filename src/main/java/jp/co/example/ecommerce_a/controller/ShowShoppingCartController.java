@@ -31,12 +31,14 @@ public class ShowShoppingCartController {
 		return "cart_list";
 	}
 	
-	@RequestMapping("/aaa")
+	@RequestMapping("/mail")
 	public String send() {
-		System.err.println("メールを送りたい。");
+		System.err.println("メールを送信する。");
 		showShoppingCartService.send();
-		System.err.println("メールを送りたい。");
+		System.err.println("メールの送信完了");
 		return null;
 	}
+	
+	
 
 }
