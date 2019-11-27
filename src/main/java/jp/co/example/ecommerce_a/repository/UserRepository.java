@@ -71,6 +71,13 @@ public class UserRepository {
 		return userList;
 	}
 	
+	public User load(Integer id) {
+		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE id=:id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
+		return user;
+	}
+	
 	
 
 }
