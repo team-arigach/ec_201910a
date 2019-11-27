@@ -131,7 +131,7 @@ public class OrderRepository {
 	
 	
 	public void insert(Order order) {
-		String sql = "INSERT INTO FROM orders(user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method) VALUES(:userId,:status,:totalPrice,:orderDate,:destinationName,:destinationEmail,:destinationZipcode,:destinationAddress,:destinationTel,:delivaryTime,:paymentMethod)";
+		String sql = "INSERT INTO orders(user_id,status,total_price) VALUES(:userId,:status,:totalPrice)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		template.update(sql, param);
 	}

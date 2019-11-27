@@ -6,23 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.OrderItemForm;
 import jp.co.example.ecommerce_a.service.InsertShoppingCartService;
+
+//import jp.co.example.ecommerce_a.service.InsertShoppingCartService;
 
 @Controller
 @RequestMapping("/shoppingCart")
 public class ShoppingCartController {
 
 	@Autowired
-	private HttpSession session;
-	private InsertShoppingCartService insertShoppingCartService;
-	
+	private InsertShoppingCartService insertShoppingService;
+
+//	@Autowired
+	// private InsertShoppingCartService insertShoppingCartService;
+
 	@RequestMapping("")
-	public String index(HttpSession session) {
-		System.out.println(session.getId());
-		return "item_detail";
-	}
+	public String additem(OrderItemForm orderItemForm) {
+		insertShoppingService.insertOrder(orderItemForm);
+		
 
 //	@RequestMapping("/insert")
 //	public String insert(OrderItemForm orderItemForm) {
@@ -31,4 +33,7 @@ public class ShoppingCartController {
 //
 //		return "";
 //	}
+		return "cart_list";
+	}
+
 }
