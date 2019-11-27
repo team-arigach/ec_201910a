@@ -23,9 +23,11 @@ public class ShowShoppingCartController {
 	 */
 	@RequestMapping("/cartList")
 	public String showCartList(Integer userId, Model model) {
-		Order order = showShoppingCartService.showShoppingCart(1, 0);
+		Order order = showShoppingCartService.showShoppingCart(18, 0);
 		System.out.println(order);
-		model.addAttribute("order", order);
+		if(order != null) {
+			model.addAttribute("order", order);
+		}
 		return "cart_list";
 	}
 	
