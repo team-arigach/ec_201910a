@@ -236,16 +236,16 @@
 													class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
 											</div>
 											<div class="col-sm-5">
-												<input type="date" name="deliveryTime" id="name"
+												<input type="date" name="deliveryTime1" id="name"
 													class="form-control input-sm" />
 											</div>
 
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
-												<label class="radio-inline" th:each="deliveryTime:${deliveryTimeList}">
+												<label class="radio-inline">
 													<input type="radio"
-														name="deliveryTime" checked="checked" th:value="${deliveryTime}" th:text="${deliveryTime} + 時">
+														name="deliveryTime" th:each="deliveryTime:${deliveryTimeList}" th:value="${deliveryTime}" th:text="${deliveryTime} + 時">
 												</label>
 											</div>
 										</div>

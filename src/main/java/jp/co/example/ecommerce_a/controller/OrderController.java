@@ -27,6 +27,12 @@ public class OrderController {
 		return new OrderForm();
 	}
 	
+	/**
+	 * 注文確認画面を表示する
+	 * 
+	 * @param model　リクエストスコープ
+	 * @return　注文確認画面
+	 */
 	@RequestMapping("")
 	public String index(Model model) {
 		List<Integer> deliveryTimeList = new ArrayList<>();
@@ -39,10 +45,12 @@ public class OrderController {
 	}
 	
 	/**
-	 * 注文する.
+	 * 注文する
 	 * 
-	 * @param orderForm 注文フォーム
-	 * @return　注文完了画面へリダイレクト
+	 * @param orderForm　注文フォーム
+	 * @param result　BindingResult
+	 * @param model　リクエストスコープ
+	 * @return　エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
 	@RequestMapping("/input")
 	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
@@ -52,7 +60,7 @@ public class OrderController {
 		
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
-		System.err.println(order);
+		System.out.println(order);
 		orderService.order(order);
 		return "redirect:/order/toOrderFinish";
 	}
