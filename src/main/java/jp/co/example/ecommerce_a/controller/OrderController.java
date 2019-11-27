@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.OrderForm;
 import jp.co.example.ecommerce_a.service.OrderService;
+import jp.co.example.ecommerce_a.service.ShowShoppingCartService;
 
 @Controller
 @RequestMapping("/order")
@@ -22,6 +23,9 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private ShowShoppingCartService showShoppingCartService;
 	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
@@ -41,6 +45,7 @@ public class OrderController {
 			deliveryTimeList.add(i);
 		}
 		model.addAttribute("deliveryTimeList", deliveryTimeList);
+		model.addAttribute("order", showShoppingCartService.showShoppingCart(1, 0));
 		
 		return "order_confirm";
 	}
@@ -53,8 +58,10 @@ public class OrderController {
 	 * @param model　リクエストスコープ
 	 * @return　エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/input")
 	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
+		System.err.println(orderForm);
 		if(result.hasErrors()) {
 			return index(model);
 		}
