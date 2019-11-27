@@ -37,8 +37,12 @@ public class ShowItemController {
 			bigItemList = showItemListService.findByLikeName("");
 		}
 		model.addAttribute("bigItemList", bigItemList);
+		
+		// オートコンプリート用にJavaScriptの配列の中身を文字列で作ってスコープへ格納
+		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(name);
+		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
+		
 		return "item_list";
 	}
-	
 	
 }
