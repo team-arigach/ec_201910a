@@ -44,7 +44,8 @@
 			</div>
 			<!-- /.container-fluid -->
 		</nav>
-		<form th:action="@{/shoppingCart}">
+		<form th:action="@{/shoppingCart}" method="post">
+		<input type="hidden" name="itemId" th:value=${item.id}>
 
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
@@ -73,12 +74,12 @@
 								<div class="col-sm-12">
 									<label class="radio-inline">
 										<input type="radio"
-											name="responsibleCompany" checked="checked">
+											name="size" checked="checked" value="M">
 										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM}">1,380円(税抜)</span>
 									</label>
 									<label class="radio-inline">
 										<input type="radio"
-											name="responsibleCompany">
+											name="size" value="L">
 										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${item.priceL}">2,380円(税抜)</span>
 									</label>
 								</div>
@@ -99,7 +100,7 @@
 								</div>
 								<div class="col-sm-12">
 									<label class="checkbox-inline" th:each="topping:${item.toppingList}"	>
-										<input type="checkbox" value="">
+										<input type="checkbox" name="orderToppingIdList" th:value="${topping.id}">
 											<span th:text="${topping.name}">オニオン</span>
 									</label>
 								</div>
@@ -115,19 +116,19 @@
 									<label for="">数量:</label>
 									<label class="control-label"
 										style="color: red" for="inputError">数量を選択してください</label> <select
-										name="area" class="form-control">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
+										name="quanity" class="form-control">
+										<option th:value="1">1</option>
+										<option th:value="2">2</option>
+										<option th:value="3">3</option>
+										<option th:value="4">4</option>
+										<option th:value="5">5</option>
+										<option th:value="6">6</option>
+										<option th:value="7">7</option>
+										<option th:value="8">8</option>
+										<option th:value="9">9</option>
+										<option th:value="10">10</option>
+										<option th:value="11">11</option>
+										<option th:value="12">12</option>
 									</select>
 								</div>
 							</div>
