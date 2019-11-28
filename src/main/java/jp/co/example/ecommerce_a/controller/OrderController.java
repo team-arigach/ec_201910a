@@ -3,6 +3,7 @@ package jp.co.example.ecommerce_a.controller;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
 import jp.co.example.ecommerce_a.service.OrderService;
-
+	
 
 @Controller
 @RequestMapping("/order")
@@ -75,7 +76,9 @@ public class OrderController {
 		BeanUtils.copyProperties(orderForm, order);
 		
 		//パラメータで取得したdeliverryTimeとdeliveryHourTimestamp型に変換してOrderオブジェクトにセット
-		LocalDate localDate = orderForm.getDeliveryTime();
+		String strLocalDate = orderForm.getDeliveryTime();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate localDate = LocalDate.parse(strLocalDate, formatter);
 		int year = localDate.getYear();
 		int month = localDate.getMonthValue();
 		int date = localDate.getDayOfMonth();
