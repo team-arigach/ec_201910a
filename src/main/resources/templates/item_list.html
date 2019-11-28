@@ -102,12 +102,12 @@
 									class="img-responsive img-rounded" width="200" height="600">
 							</a><br> <a href="item_detail.html"
 								th:href="@{'/detail/?id=' + ${item.id}}"> <span
-									th:text="${item.name}"></span></a><br> <span class="price">&nbsp;М&nbsp;</span>
+									th:text="${item.name}"></span></a><br> <span class="price">&nbsp;М&nbsp;</span>&nbsp;
 								<span
-								th:text="${#numbers.formatInteger(item.priceM, 1,'COMMA')}"></span>&nbsp;&nbsp;円(税抜)
-								8カット 2-3人分<br> <span class="price">&nbsp;Ｌ</span> <span
+								th:text="${#numbers.formatInteger(item.priceM, 1,'COMMA')}"></span>&nbsp;円(税抜)
+								8カット 2-3人分<br> <span class="price">&nbsp;Ｌ</span>&nbsp; <span
 								th:text="${#numbers.formatInteger(item.priceL, 1,'COMMA')}"></span>
-								&nbsp;&nbsp;円(税抜) 12カット 3-4人分<br></th>
+								円(税抜) 12カット 3-4人分<br></th>
 						</tr>
 
 					</tbody>
