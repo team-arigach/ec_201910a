@@ -1,8 +1,10 @@
 package jp.co.example.ecommerce_a.form;
 
+
 import java.sql.Date;
 
 import javax.validation.constraints.NotBlank;
+
 //import javax.validation.constraints.NotEmpty;
 
 public class OrderForm {
@@ -110,7 +112,4 @@ public class OrderForm {
 	public void setPaymentMethod(Integer paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
-	
-	
-
 }
