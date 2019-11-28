@@ -1,5 +1,8 @@
 package jp.co.example.ecommerce_a.controller;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,15 +68,24 @@ public class OrderController {
 	 */
 	@RequestMapping("/input")
 	public String order(@Validated OrderForm orderForm, CreditInfoForm creditInfoForm, BindingResult result, Model model) {
-		System.err.println(orderForm);
-		System.err.println(creditInfoForm);
 		if(result.hasErrors()) {
 			return index(model);
 		}
 		
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
-		System.err.println(order);
+		
+		//パラメータで取得したdeliverryTimeとdeliveryHourTimestamp型に変換してOrderオブジェクトにセット
+		LocalDate localDate = orderForm.getDeliveryTime().toLocalDate();
+		int year = localDate.getYear();
+		int month = localDate.getMonthValue();
+		int date = localDate.getDayOfMonth();
+		int hour = orderForm.getDeliveryHour();
+		int minute = 0;
+		LocalDateTime localDateTime = LocalDateTime.of(year, month, date, hour, minute);
+		Timestamp timestamp = Timestamp.valueOf(localDateTime);
+		order.setDeliveryTime(timestamp);
+		
 		orderService.order(order);
 		return "redirect:/order/toOrderFinish";
 	}
@@ -92,7 +104,4 @@ public class OrderController {
 	public String toPurchaseHistory() {
 		return "purchase_history";
 	}
-	
-
-	
 }
