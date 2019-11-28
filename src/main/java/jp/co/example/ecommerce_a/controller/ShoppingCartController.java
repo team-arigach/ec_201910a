@@ -35,14 +35,10 @@ public class ShoppingCartController {
 	 */
 	@RequestMapping("/shoppingCart")
 	public String additem(OrderItemForm orderItemForm) {
-		orderItemForm.setItemId("2");
-		orderItemForm.setQuanity("2");
-		orderItemForm.setSize("M");
-		List<Integer> orderToppingIdList = new ArrayList<>();
-		orderToppingIdList.add(2);
-		orderToppingIdList.add(3);
-		orderToppingIdList.add(4);
-		orderItemForm.setOrderToppingIdList(orderToppingIdList);
+		System.out.println(orderItemForm.getSize());
+		System.out.println(orderItemForm.getIntQuantity());
+		System.out.println(orderItemForm.getOrderToppingIdList());
+		System.out.println(orderItemForm.getItemId());
 		insertShoppingService.insertOrder(orderItemForm);
 		
 

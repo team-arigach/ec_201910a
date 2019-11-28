@@ -55,6 +55,7 @@ public class InsertShoppingCartService {
 			orderTopping.setToppingId(orderToppingId);
 			orderTopping.setTopping(toppingRepository.load(orderTopping.getToppingId()));
 			orderTopping.setOrderItemId(orderItem.getId());
+			orderToppingList.add(orderTopping);
 		}
 		// Session_idをハッシュコードで取得
 		Integer userId = session.getId().hashCode();
@@ -70,21 +71,20 @@ public class InsertShoppingCartService {
 			order.setDeliveryTime(deliveryTime);
 			Integer orderId = orderRepository.insert(order).getId();
 			orderItem.setOrderId(orderId);
-			Integer orderItemId = orderItemRepository.insert(orderItem).getId();
-			for(OrderTopping orderTopping : orderToppingList) {
-				orderTopping.setOrderItemId(orderItemId);
-				orderToppingRepository.insert(orderTopping);
-			}
-			
 
 		} else {
 			existedOrder.getOrderItemList().add(orderItem);
 			orderItem.setOrderId(existedOrder.getId());
-			Integer orderItemId = orderItemRepository.insert(orderItem).getId();
-			for (OrderTopping orderTopping : orderToppingList) {
-				orderTopping.setOrderItemId(orderItemId);
-				orderToppingRepository.insert(orderTopping);
+		}
+		Integer orderItemId = orderItemRepository.insert(orderItem).getId();
+		for (OrderTopping orderTopping : orderToppingList) {
+			orderTopping.setOrderItemId(orderItemId);
+			System.out.println(orderTopping.getOrderItemId());
+			System.out.println(orderTopping.getToppingId());
+			if(orderItemForm.getOrderToppingIdList() != null) {
+			orderToppingRepository.insert(orderTopping);
 			}
+			System.out.println("追加登録");
 		}
 	}
 }
