@@ -42,7 +42,7 @@ public class OrderRepository {
 	@PostConstruct
 	public void init() {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcOperations());
-		SimpleJdbcInsert withTableName = simpleJdbcInsert.withTableName("employees");
+		SimpleJdbcInsert withTableName = simpleJdbcInsert.withTableName("orders");
 		insert = withTableName.usingGeneratedKeyColumns("id");
 	}
 	
