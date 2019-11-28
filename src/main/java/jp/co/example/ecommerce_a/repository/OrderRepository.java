@@ -177,7 +177,7 @@ public class OrderRepository {
 				+ "LEFT OUTER JOIN order_toppings t "
 				+ "ON t.order_item_id = oi.id "
 				+ "WHERE "
-				+ "id = :id "
+				+ "o.id = :id "
 				+ "ORDER BY o.id ,oi.id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);

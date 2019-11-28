@@ -102,7 +102,7 @@
 								</div>
 								<div class="col-sm-12" id="topping">
 									<label class="checkbox-inline" th:each="topping:${item.toppingList}"	>
-										<input type="checkbox" name="orderToppingIdList" th:value="${topping.id}">
+										<input type="checkbox" name="orderToppingIdList" th:value="${topping.id}" class="checkbox">
 											<span th:text="${topping.name}">オニオン</span>
 									</label>
 								</div>
