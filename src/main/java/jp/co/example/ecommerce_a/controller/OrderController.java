@@ -32,6 +32,9 @@ public class OrderController {
 	@Autowired
 	private TestDataService testDataService;
 	
+	@Autowired
+	private MailSenderService mailSenderService;
+	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
 		return new OrderForm();
@@ -44,9 +47,9 @@ public class OrderController {
 	 * @return　注文確認画面
 	 */
 	@RequestMapping("")
-	public String index(Model model) {
+	public String index(Integer id, Model model) {
 		
-		Order order = testDataService.testOrder();
+		Order order = orderService.showOrder(id);
 		model.addAttribute("order",order);
 		
 		List<Integer> deliveryTimeList = new ArrayList<>();
@@ -97,6 +100,9 @@ public class OrderController {
 	 */
 	@RequestMapping("/toOrderFinish")
 	public String toOrderFinish() {
+		System.err.println("メールを送信する。");
+		mailSenderService.send();
+		System.err.println("メールの送信完了");
 		return "order_finished";
 	}
 }

@@ -28,4 +28,8 @@ public class OrderService {
 		}
 		orderRepository.update(order);
 	}
+	
+	public Order showOrder(Integer id) {
+		return orderRepository.load(id);
+	}
 }
