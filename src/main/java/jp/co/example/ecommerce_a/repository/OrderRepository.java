@@ -185,7 +185,9 @@ public class OrderRepository {
 		template.update(sql, param);
 	}
 	
-//	public void updateUserId(Integer id) {
-//		String sql = "UPDATE orders SET i"
-//	}
+	public void updateUserId(Integer userId,Integer sessionId) {
+		String sql = "UPDATE orders SET user_id=userId WHERE user_id=sessionId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("sessionId", sessionId);
+		template.update(sql, param);
+	}
 }
