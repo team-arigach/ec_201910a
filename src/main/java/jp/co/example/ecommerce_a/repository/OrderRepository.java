@@ -184,4 +184,8 @@ public class OrderRepository {
 				+ "WHERE id = :id";
 		template.update(sql, param);
 	}
+	
+//	public void updateUserId(Integer id) {
+//		String sql = "UPDATE orders SET i"
+//	}
 }

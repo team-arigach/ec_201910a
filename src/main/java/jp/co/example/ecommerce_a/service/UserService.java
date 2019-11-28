@@ -1,5 +1,7 @@
 package jp.co.example.ecommerce_a.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private HttpSession session;
 	/**
 	 * メールアドレスとパスワードでユーザーを検索.
 	 * 
@@ -21,6 +25,7 @@ public class UserService {
 	 */
 	public User userLogin(String email, String password) {
 		User user = userRepository.findByEmailAndPassword(email, password);
+		session.setAttribute("user", user);
 		return user;
 	}
 
