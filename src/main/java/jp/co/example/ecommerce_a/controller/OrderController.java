@@ -14,18 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.OrderForm;
 import jp.co.example.ecommerce_a.service.OrderService;
-import jp.co.example.ecommerce_a.service.ShowShoppingCartService;
+import jp.co.example.ecommerce_a.service.TestDataService;
 
 @Controller
 @RequestMapping("/order")
 public class OrderController {
 	
-
 	@Autowired
 	private OrderService orderService;
 	
 	@Autowired
-	private ShowShoppingCartService showShoppingCartService;
+	private TestDataService testDataService;
 	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
@@ -40,12 +39,15 @@ public class OrderController {
 	 */
 	@RequestMapping("")
 	public String index(Model model) {
+		
+		Order order = testDataService.testOrder();
+		model.addAttribute("order",order);
+		
 		List<Integer> deliveryTimeList = new ArrayList<>();
 		for( int i = 10; i <= 21; i++){
 			deliveryTimeList.add(i);
 		}
 		model.addAttribute("deliveryTimeList", deliveryTimeList);
-		model.addAttribute("order", showShoppingCartService.showShoppingCart(1, 0));
 		
 		return "order_confirm";
 	}
@@ -58,7 +60,6 @@ public class OrderController {
 	 * @param model　リクエストスコープ
 	 * @return　エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/input")
 	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
 		System.err.println(orderForm);
@@ -68,7 +69,7 @@ public class OrderController {
 		
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
-		System.out.println(order);
+		System.err.println(order);
 		orderService.order(order);
 		return "redirect:/order/toOrderFinish";
 	}
