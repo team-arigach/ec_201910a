@@ -50,12 +50,14 @@ public class InsertShoppingCartService {
 		orderItem.setSize(orderItemForm.getCharSize());
 		List<OrderTopping> orderToppingList = new ArrayList<OrderTopping>();
 		orderItem.setOrderToppingList(orderToppingList);
-		for (Integer orderToppingId : orderItemForm.getOrderToppingIdList()) {
-			OrderTopping orderTopping = new OrderTopping();
-			orderTopping.setToppingId(orderToppingId);
-			orderTopping.setTopping(toppingRepository.load(orderTopping.getToppingId()));
-			orderTopping.setOrderItemId(orderItem.getId());
-			orderToppingList.add(orderTopping);
+		if (orderItemForm.getOrderToppingIdList() != null) {
+			for (Integer orderToppingId : orderItemForm.getOrderToppingIdList()) {
+				OrderTopping orderTopping = new OrderTopping();
+				orderTopping.setToppingId(orderToppingId);
+				orderTopping.setTopping(toppingRepository.load(orderTopping.getToppingId()));
+				orderTopping.setOrderItemId(orderItem.getId());
+				orderToppingList.add(orderTopping);
+			}
 		}
 		// Session_idをハッシュコードで取得
 		Integer userId = session.getId().hashCode();
@@ -71,6 +73,7 @@ public class InsertShoppingCartService {
 			order.setDeliveryTime(deliveryTime);
 			Integer orderId = orderRepository.insert(order).getId();
 			orderItem.setOrderId(orderId);
+			System.out.println("新規登録");
 
 		} else {
 			existedOrder.getOrderItemList().add(orderItem);
@@ -81,10 +84,21 @@ public class InsertShoppingCartService {
 			orderTopping.setOrderItemId(orderItemId);
 			System.out.println(orderTopping.getOrderItemId());
 			System.out.println(orderTopping.getToppingId());
-			if(orderItemForm.getOrderToppingIdList() != null) {
-			orderToppingRepository.insert(orderTopping);
+			if (orderItemForm.getOrderToppingIdList().size() != 0) {
+				orderToppingRepository.insert(orderTopping);
 			}
 			System.out.println("追加登録");
 		}
+	}
+	
+	/**
+	 * ショッピングカートのアイテムを消去するメソッド
+	 * 
+	 * @param orderItemid orderItemId
+	 */
+	public void deteleOrder(Integer orderItemid) {
+		orderToppingRepository.delete(orderItemid);
+		orderItemRepository.delete(orderItemid);
+		
 	}
 }

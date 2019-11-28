@@ -45,5 +45,10 @@ public class OrderToppingRepository {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderTopping);
 		template.update(sql, param);
 	}
-
+	
+	public void delete(Integer orderItemId) {
+		String sql = "DELETE FROM order_toppings WHERE order_item_id= :orderItemId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+		template.update(sql, param);
+	}
 }
