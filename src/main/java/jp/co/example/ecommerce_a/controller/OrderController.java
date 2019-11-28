@@ -19,7 +19,6 @@ import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
 import jp.co.example.ecommerce_a.service.OrderService;
-import jp.co.example.ecommerce_a.service.TestDataService;
 
 
 @Controller
@@ -28,9 +27,6 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService orderService;
-	
-	@Autowired
-	private TestDataService testDataService;
 	
 	@Autowired
 	private MailSenderService mailSenderService;
@@ -70,9 +66,9 @@ public class OrderController {
 	 * @return　エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
 	@RequestMapping("/input")
-	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm, Model model) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm,Integer id, Model model) {
 		if(result.hasErrors()) {
-			return index(model);
+			return index(id, model);
 		}
 		
 		Order order = new Order();
