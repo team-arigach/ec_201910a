@@ -32,7 +32,9 @@ public class ShowShoppingCartController {
 		Order order = showShoppingCartService.showShoppingCart(userId, 0);
 		System.out.println(order);
 		if(order != null) {
-			model.addAttribute("order", order);
+			if(order.getOrderItemList().size() != 0) {
+				model.addAttribute("order", order);
+			}
 		}
 		return "cart_list";
 	}
