@@ -13,6 +13,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 </head>
 <body>
 	<div class="container">
@@ -149,15 +150,15 @@
 									<div class="text-center">郵便番号</div>
 								</td>
 								<td><input type="text" name="destinationZipcode"
-									th:field="*{destinationZipcode}">&nbsp;&nbsp;
-									<button>住所検索</button></td>
+									th:field="*{destinationZipcode}" onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;
+									<!-- <button>住所検索</button></td> -->
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">住所</div>
 								</td>
 								<td><input type="text" name="destinationAddress"
-									th:field="*{destinationAddress}">
+									th:field="*{destinationAddress}" size="65">
 									<span th:errors="*{destinationAddress}" style="color: red"></span>
 								</td>
 							</tr>
