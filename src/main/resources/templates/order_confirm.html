@@ -28,7 +28,7 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ --> <img
-						alt="main log" src="img/header_logo.png" height="35">
+						alt="main log" th:src="@{img/header_logo.png}" height="35">
 					</a>
 				</div>
 
@@ -132,14 +132,18 @@
 									<div class="text-center">お名前</div>
 								</td>
 								<td><input type="text" name="destinationName"
-									th:field="*{destinationName}"></td>
+									th:field="*{destinationName}">
+									<span th:errors="*{destinationName}" style="color: red"></span>
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">メールアドレス</div>
 								</td>
 								<td><input type="text" name="destinationEmail"
-									th:field="*{destinationEmail}"></td>
+									th:field="*{destinationEmail}">
+									<span th:errors="*{destinationEmail}" style="color: red"></span>
+								</td>
 							</tr>
 							<tr>
 								<td>
@@ -154,14 +158,18 @@
 									<div class="text-center">住所</div>
 								</td>
 								<td><input type="text" name="destinationAddress"
-									th:field="*{destinationAddress}"></td>
+									th:field="*{destinationAddress}">
+									<span th:errors="*{destinationAddress}" style="color: red"></span>
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">電話番号</div>
 								</td>
 								<td><input type="text" name="destinationTel"
-									th:field="*{destinationTel}"></td>
+									th:field="*{destinationTel}">
+									<span th:errors="*{destinationTel}" style="color: red"></span>
+								</td>
 							</tr>
 							<tr>
 								<td>
@@ -172,8 +180,10 @@
 										<div class="row">
 											<div class="col-sm-12"></div>
 											<div class="col-sm-5">
+											<span th:errors="*{deliveryTime}" style="color: red"></span><br>
+											<span th:errors="*{deliveryHour}" style="color: red"></span>
 												<input type="date" name="deliveryTime"
-													class="form-control input-sm" />
+													class="form-control input-sm">
 											</div>
 
 										</div>
@@ -182,7 +192,7 @@
 												<label class="radio-inline"
 													th:each="deliveryTime:${deliveryTimeList}"> <input
 													type="radio" name="deliveryHour" th:value="${deliveryTime}"
-													th:text="${deliveryTime} + 時">
+													th:text="${deliveryTime} + 時" th:field="*{deliveryHour}">
 												</label>
 											</div>
 										</div>

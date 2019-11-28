@@ -2,37 +2,41 @@ package jp.co.example.ecommerce_a.form;
 
 
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-//import javax.validation.constraints.NotEmpty;
+
+
 
 public class OrderForm {
 
 	/**	宛名氏名 */
-	@NotBlank(message="名前を入力して下さい")
+	@NotBlank(message="　名前を入力して下さい")
 	private String destinationName;
 	
 	/**	宛名Eメール */
-	@NotBlank(message="メールアドレスを入力して下さい")
+	@NotBlank(message="　メールアドレスを入力して下さい")
 	private String destinationEmail;
 	
 	/**	宛名郵便番号 */
 	private String destinationZipcode;
 	
 	/**	宛名住所 */
-	@NotBlank(message="住所を入力して下さい")	
+	@NotBlank(message="　住所を入力して下さい")	
 	private String destinationAddress;
 	
 	/**	宛名電話番号 */
-	@NotBlank(message="電話番号を入力して下さい")
+	@NotBlank(message="　電話番号を入力して下さい")
 	private String destinationTel;
 	
+	/**	配達年月日 */
+	@NotNull(message = "配達日時を指定して下さい")
+	private LocalDate deliveryTime;
+
 	/**	配達時間 */
-	//@NotEmpty(message="配達日時を入力して下さい")
-	private Date deliveryTime;
-	
+	@NotNull(message="配達時間を指定して下さい")
 	private Integer deliveryHour;
 	
 
@@ -42,17 +46,21 @@ public class OrderForm {
 
 	//以下getter/setter
 
-	@Override
-	public String toString() {
-		return "OrderForm [destinationName=" + destinationName + ", destinationEmail=" + destinationEmail
-				+ ", destinationZipcode=" + destinationZipcode + ", destinationAddress=" + destinationAddress
-				+ ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime + ", deliveryHour="
-				+ deliveryHour + ", paymentMethod=" + paymentMethod + "]";
-	}
 
 	public String getDestinationName() {
 		return destinationName;
 	}
+
+
+	public LocalDate getDeliveryTime() {
+		return deliveryTime;
+	}
+
+
+	public void setDeliveryTime(LocalDate deliveryTime) {
+		this.deliveryTime = deliveryTime;
+	}
+
 
 	public void setDestinationName(String destinationName) {
 		this.destinationName = destinationName;
@@ -90,13 +98,13 @@ public class OrderForm {
 		this.destinationTel = destinationTel;
 	}
 
-	public Date getDeliveryTime() {
-		return deliveryTime;
-	}
-
-	public void setDeliveryTime(Date deliveryTime) {
-		this.deliveryTime = deliveryTime;
-	}
+//	public Date getDeliveryTime() {
+//		return deliveryTime;
+//	}
+//
+//	public void setDeliveryTime(Date deliveryTime) {
+//		this.deliveryTime = deliveryTime;
+//	}
 
 	public Integer getDeliveryHour() {
 		return deliveryHour;

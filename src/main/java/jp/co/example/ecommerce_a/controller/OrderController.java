@@ -67,7 +67,7 @@ public class OrderController {
 	 * @return　エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
 	@RequestMapping("/input")
-	public String order(@Validated OrderForm orderForm, CreditInfoForm creditInfoForm, BindingResult result, Model model) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm, Model model) {
 		if(result.hasErrors()) {
 			return index(model);
 		}
@@ -76,7 +76,7 @@ public class OrderController {
 		BeanUtils.copyProperties(orderForm, order);
 		
 		//パラメータで取得したdeliverryTimeとdeliveryHourTimestamp型に変換してOrderオブジェクトにセット
-		LocalDate localDate = orderForm.getDeliveryTime().toLocalDate();
+		LocalDate localDate = orderForm.getDeliveryTime();
 		int year = localDate.getYear();
 		int month = localDate.getMonthValue();
 		int date = localDate.getDayOfMonth();
