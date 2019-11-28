@@ -78,10 +78,10 @@ public class OrderRepository {
 			}
 			if( rs.getInt("order_item_id") != 0 || rs.getInt("order_item_id") != preOrderItemId ) {
 				OrderItem orderItem = new OrderItem();
-				orderItem.setId(rs.getInt("id"));
+				orderItem.setId(rs.getInt("order_item_id"));
 				orderItem.setItemId(rs.getInt("item_id"));
 				orderItem.setQuantity(rs.getInt("quantity"));
-				orderItem.setOrderId(rs.getInt("order_id"));
+				orderItem.setOrderId(rs.getInt("id"));
 				orderItem.setSize(rs.getString("size").charAt(0));
 				orderItem.setItem(itemRepository.laod(orderItem.getItemId()));
 				orderToppingList = new ArrayList<>();
@@ -119,7 +119,7 @@ public class OrderRepository {
 				+ "destination_tel, "
 				+ "delivery_time, "
 				+ "payment_method, "
-				+ "oi.id AS order_id, "
+				+ "oi.id AS order_item_id, "
 				+ "oi.item_id, "
 				+ "t.id AS order_topping_id, "
 				+ "quantity, "
@@ -138,6 +138,7 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
 		if( orderList.size() > 0) { // オーダーリストが存在する場合
+			System.err.println(orderList.get(0));
 			return orderList.get(0);
 		}
 		return null;
