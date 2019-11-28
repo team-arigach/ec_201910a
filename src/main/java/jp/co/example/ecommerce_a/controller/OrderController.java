@@ -6,18 +6,17 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-<<<<<<< HEAD
-=======
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
->>>>>>> 61179dd149cd463d1a5d5139478520fe5ee5899b
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.OrderForm;
 import jp.co.example.ecommerce_a.service.OrderService;
 import jp.co.example.ecommerce_a.service.ShowShoppingCartService;
+
 
 @Controller
 @RequestMapping("/order")
