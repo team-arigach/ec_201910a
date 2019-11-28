@@ -36,7 +36,7 @@ public class ShoppingCartController {
 	@RequestMapping("/shoppingCart")
 	public String additem(OrderItemForm orderItemForm) {
 		orderItemForm.setItemId("2");
-		orderItemForm.setQuanity("0");
+		orderItemForm.setQuanity("2");
 		orderItemForm.setSize("M");
 		List<Integer> orderToppingIdList = new ArrayList<>();
 		orderToppingIdList.add(2);
@@ -46,7 +46,7 @@ public class ShoppingCartController {
 		insertShoppingService.insertOrder(orderItemForm);
 		
 
-		return "cart_list";
+		return "redirect:/cartList";
 	}
 
 }

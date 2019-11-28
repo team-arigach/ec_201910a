@@ -46,6 +46,8 @@ public class InsertShoppingCartService {
 	public void insertOrder(OrderItemForm orderItemForm) {
 		OrderItem orderItem = new OrderItem();
 		orderItem.setItemId(orderItemForm.getIntItemId());
+		orderItem.setQuantity(orderItemForm.getIntQuantity());
+		orderItem.setSize(orderItemForm.getCharSize());
 		List<OrderTopping> orderToppingList = new ArrayList<OrderTopping>();
 		orderItem.setOrderToppingList(orderToppingList);
 		for (Integer orderToppingId : orderItemForm.getOrderToppingIdList()) {

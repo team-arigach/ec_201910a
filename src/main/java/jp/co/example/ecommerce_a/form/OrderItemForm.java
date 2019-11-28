@@ -23,6 +23,14 @@ public class OrderItemForm {
 	public Integer getIntItemId() {
 		return Integer.parseInt(itemId);
 	}
+	/**
+	 * 数量をInteger型で返すメソッド.
+	 * 
+	 * @return itemId
+	 */
+	public Integer getIntQuantity() {
+		return Integer.parseInt(quanity);
+	}
 
 	/**
 	 * サイズをCharacter型で返すメソッド.
