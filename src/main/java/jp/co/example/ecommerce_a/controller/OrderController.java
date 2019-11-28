@@ -88,9 +88,9 @@ public class OrderController {
 		return "order_finished";
 	}
 	
-	@RequestMapping("/purchaseHistory")
+	@RequestMapping("/orderHistory")
 	public String toPurchaseHistory() {
-		return "purchase_history";
+		return "order_history";
 	}
 	
 
