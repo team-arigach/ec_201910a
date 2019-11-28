@@ -38,7 +38,7 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ --> <img
+					<a class="navbar-brand" href="item_list.html" th:href="@{/showItemList}"> <!-- 企業ロゴ --> <img
 						alt="main log" src="img/header_logo.png" height="35">
 					</a>
 				</div>
@@ -49,7 +49,7 @@
 					<p class="navbar-text navbar-right">
 						<a href="cart_list.html" class="navbar-link"
 							th:href="@{/cartList}">ショッピングカート</a>&nbsp;&nbsp; <a
-							href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
+							href="order_history.html" class="navbar-link" th:href="@{/orderHistory}">注文履歴</a>&nbsp;&nbsp;
 						<a href="login.html" class="navbar-link" th:href="@{/login}">ログイン</a>&nbsp;&nbsp;
 						<a href="item_list.html" class="navbar-link" th:href="@{/logout}">ログアウト</a>
 					</p>
@@ -102,12 +102,12 @@
 									class="img-responsive img-rounded" width="200" height="600">
 							</a><br> <a href="item_detail.html"
 								th:href="@{'/detail/?id=' + ${item.id}}"> <span
-									th:text="${item.name}"></span></a><br> <span class="price">&nbsp;М&nbsp;</span>
+									th:text="${item.name}"></span></a><br> <span class="price">&nbsp;М&nbsp;</span>&nbsp;
 								<span
-								th:text="${#numbers.formatInteger(item.priceM, 1,'COMMA')}"></span>&nbsp;&nbsp;円(税抜)
-								8カット 2-3人分<br> <span class="price">&nbsp;Ｌ</span> <span
+								th:text="${#numbers.formatInteger(item.priceM, 1,'COMMA')}"></span>&nbsp;円(税抜)
+								8カット 2-3人分<br> <span class="price">&nbsp;Ｌ</span>&nbsp; <span
 								th:text="${#numbers.formatInteger(item.priceL, 1,'COMMA')}"></span>
-								&nbsp;&nbsp;円(税抜) 12カット 3-4人分<br></th>
+								円(税抜) 12カット 3-4人分<br></th>
 						</tr>
 
 					</tbody>
