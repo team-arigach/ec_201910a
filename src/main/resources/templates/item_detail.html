@@ -11,6 +11,8 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif] -->
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" th:src="@{/js/item_detail.js}"></script>
 </head>
 <body>
 	<div class="container">
@@ -73,13 +75,13 @@
 								<div class="col-sm-12">
 									<label class="radio-inline">
 										<input type="radio"
-											name="responsibleCompany" checked="checked">
-										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM}">1,380円(税抜)</span>
+											name="responsibleCompany" checked="checked" class="size" th:value="M">
+										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span id="price_m" th:text="${item.priceM} + 円"></span>(税抜)
 									</label>
 									<label class="radio-inline">
 										<input type="radio"
-											name="responsibleCompany">
-										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${item.priceL}">2,380円(税抜)</span>
+											name="responsibleCompany" class="size" th:value="L">
+										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span id="price_l" th:text="${item.priceL} + 円"></span>(税抜)
 									</label>
 								</div>
 							</div>
@@ -97,9 +99,9 @@
 										<span>&nbsp;Ｌ</span>&nbsp;&nbsp;300円(税抜)
 									</label>
 								</div>
-								<div class="col-sm-12">
+								<div class="col-sm-12" id="topping">
 									<label class="checkbox-inline" th:each="topping:${item.toppingList}"	>
-										<input type="checkbox" value="">
+										<input type="checkbox" value="" class="checkbox">
 											<span th:text="${topping.name}">オニオン</span>
 									</label>
 								</div>
@@ -115,7 +117,7 @@
 									<label for="">数量:</label>
 									<label class="control-label"
 										style="color: red" for="inputError">数量を選択してください</label> <select
-										name="area" class="form-control">
+										name="area" class="form-control" id="pizzanum">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -138,7 +140,7 @@
 				<div class="row">
 					<div class="col-xs-offset-2 col-xs-10">
 						<div class="form-group">
-							<span id="total-price">この商品金額：38,000 円(税抜)</span>
+							<span id="total-price">この商品金額：<span id="totalprice"></span>円(税抜)</span>
 						</div>
 					</div>
 				</div>
