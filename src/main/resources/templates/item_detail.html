@@ -44,7 +44,7 @@
 			</div>
 			<!-- /.container-fluid -->
 		</nav>
-		<form th:action="@{/shoppingCart}" method="post">
+		<form th:action="@{/shoppingCart/registerItem}" method="post">
 		<input type="hidden" name="itemId" th:value=${item.id}>
 
 		<div class="row">

@@ -1,8 +1,6 @@
 package jp.co.example.ecommerce_a.controller;
 
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +18,7 @@ import jp.co.example.ecommerce_a.service.InsertShoppingCartService;
  *
  */
 @Controller
-@RequestMapping("")
+@RequestMapping("/shoppingCart")
 public class ShoppingCartController {
 
 	@Autowired
@@ -33,15 +31,18 @@ public class ShoppingCartController {
 	 * @param orderItemForm リクエストパラメータ
 	 * @return ショッピングカートリストに遷移
 	 */
-	@RequestMapping("/shoppingCart")
+	@RequestMapping("/registerItem")
 	public String additem(OrderItemForm orderItemForm) {
-		System.out.println(orderItemForm.getSize());
-		System.out.println(orderItemForm.getIntQuantity());
-		System.out.println(orderItemForm.getOrderToppingIdList());
-		System.out.println(orderItemForm.getItemId());
 		insertShoppingService.insertOrder(orderItemForm);
 		
 
+		return "redirect:/cartList";
+	}
+	
+	@RequestMapping("/deleteItem")
+	public String deleteItem(Integer orderItemId) {
+		insertShoppingService.deteleOrder(orderItemId);
+		System.out.println(orderItemId);
 		return "redirect:/cartList";
 	}
 
