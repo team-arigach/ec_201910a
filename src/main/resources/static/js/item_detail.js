@@ -17,14 +17,13 @@ $(function() {
 		var pizza_num = $("#pizzanum option:selected").val();
 		if(size == "M"){
 			var size_price = $("#price_m").text().replace("円", "");
-			var topping_price = 200 * parseInt(topping_count);
+			var topping_price = 200 * topping_count;
 		}
 		if(size == "L"){
 			var size_price = $("#price_l").text().replace("円", "");
-			var topping_price = 300 * parseInt(topping_count);
+			var topping_price = 300 * topping_count;
 		}
 		var price = (parseInt(size_price) + topping_price) * pizza_num;
-		console.log(price);
 		$("#totalprice").text(price);
 	};
 });
