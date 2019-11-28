@@ -3,12 +3,16 @@ package jp.co.example.ecommerce_a.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import jp.co.example.ecommerce_a.domain.Order;
@@ -32,6 +36,16 @@ public class OrderRepository {
 	
 	@Autowired
 	private ToppingRepository toppingRepository;
+	
+	private SimpleJdbcInsert insert;
+
+	@PostConstruct
+	public void init() {
+		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcOperations());
+		SimpleJdbcInsert withTableName = simpleJdbcInsert.withTableName("employees");
+		insert = withTableName.usingGeneratedKeyColumns("id");
+	}
+	
 	
 	/**
 	 * オーダー(注文)オブジェクトを操作するRowmapper.
@@ -128,6 +142,23 @@ public class OrderRepository {
 		}
 		return null;
 	}
+	
+	
+	/**
+	 * ショッピングカートにアイテムを追加する.
+	 * 
+	 * @param order 注文情報
+	 * @return 注文情報
+	 */
+	public Order insert(Order order) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		Number key = insert.executeAndReturnKey(param);
+		order.setId(key.intValue());
+		return order;
+	}
+	
+	
+	
 
 	/**
 	 * 注文情報（支払者情報）を更新する.
