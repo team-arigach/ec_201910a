@@ -24,7 +24,7 @@ public class OrderItem {
 	/** 注文トッピングリスト */
 	private List<OrderTopping> orderToppingList;
 	
-	public int subTotal() {
+	public int getSubTotal() {
 		return 0; // 警告を消すために記述
 	}
 	
