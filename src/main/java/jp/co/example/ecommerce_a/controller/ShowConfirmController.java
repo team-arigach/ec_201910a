@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_a.domain.Order;
+import jp.co.example.ecommerce_a.domain.OrderItem;
 import jp.co.example.ecommerce_a.form.OrderForm;
 import jp.co.example.ecommerce_a.service.TestDataService;
 
@@ -41,6 +42,10 @@ public class ShowConfirmController {
 	public String showConfirm(Model model) {
 		
 		Order order = testDataService.testOrder();
+		for (OrderItem oi : order.getOrderItemList()) {
+			System.out.println("subtotal = " + oi.getSubTotal());
+			
+		}
 		model.addAttribute("order",order);
 		System.out.println(order);
 		return "order_confirm"; 

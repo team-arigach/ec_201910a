@@ -79,23 +79,23 @@
 									<span th:text="${orderItem.item.name}">商品名</span>
 								</div>
 							</td>
-							<td><span class="price">&nbsp;M</span>&nbsp;&nbsp; <span
-								th:text="${orderItem.item.priceM}"></span>円 &nbsp;&nbsp;<span
-								th:text="${orderItem.quantity}"></span>個<br> <span
-								class="price">&nbsp;Ｌ</span>&nbsp;&nbsp; <span
-								th:text="${orderItem.item.priceL}"></span>円 &nbsp;&nbsp;<span
-								th:text="${orderItem.quantity}"></span>個</td>
+							
+							<td><span class="price" th:text="${orderItem.size + 'サイズ'}">&nbsp;</span>&nbsp;&nbsp;
+							 <span th:if="${orderItem.size} == 'M'" th:text="${orderItem.item.priceM + '円'}" ></span> &nbsp;&nbsp;
+							 <span th:if="${orderItem.size} == 'L'" th:text="${orderItem.item.priceL + '円'}"></span> &nbsp;&nbsp;
+							 <span th:text="${orderItem.quantity}"></span>個<br>
+								
 							<td>
 								<ul>
 									<li th:each="orderTopping:${orderItem.orderToppingList}">
-										<span th:text="${orderTopping.topping.name}"></span> <span
-										th:text="${orderTopping.topping.priceM}"></span>円
+										<span th:text="${orderTopping.topping.name}"></span>
+										<span th:text="${orderTopping.topping.priceM}"></span>円
 									</li>
 								</ul>
 							</td>
 							<td>
 								<div class="text-center">
-									<span th:text="${order.totalPrice}"></span>円
+									<span th:text="${orderItem.getSubTotal()}"></span>円
 								</div>
 							</td>
 						</tr>
