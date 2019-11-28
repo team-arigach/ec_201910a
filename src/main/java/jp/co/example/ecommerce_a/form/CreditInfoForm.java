@@ -5,7 +5,7 @@ public class CreditInfoForm {
 	
 	private Integer userId;
 	/** カード番号 */
-	private long card_number;
+	private String card_number;
 	/** 有効期限年 */
 	private Integer card_exp_year;
 	/** 有効期限月 */
@@ -18,6 +18,11 @@ public class CreditInfoForm {
 	private Integer amount;
 	
 	private long order_number;
+	
+	public Long getLongCardNumber(String cardNumber) {
+		Long parseLong = Long.parseLong(cardNumber + "L");
+		return parseLong;
+	}
 
 	public Integer getUserId() {
 		return userId;
@@ -27,11 +32,11 @@ public class CreditInfoForm {
 		this.userId = userId;
 	}
 
-	public long getCard_number() {
+	public String getCard_number() {
 		return card_number;
 	}
 
-	public void setCard_number(long card_number) {
+	public void setCard_number(String card_number) {
 		this.card_number = card_number;
 	}
 
