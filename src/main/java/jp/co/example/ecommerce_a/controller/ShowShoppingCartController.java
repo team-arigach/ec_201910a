@@ -1,5 +1,7 @@
 package jp.co.example.ecommerce_a.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -16,14 +18,18 @@ public class ShowShoppingCartController {
 	@Autowired
 	private ShowShoppingCartService showShoppingCartService;
 	
+	@Autowired
+	private HttpSession session;
+	
 	/**
 	 * ショッピングカードを表示する.
 	 * @param model モデル
 	 * @return カートのリストを表示する
 	 */
 	@RequestMapping("/cartList")
-	public String showCartList(Integer userId, Model model) {
-		Order order = showShoppingCartService.showShoppingCart(18, 0);
+	public String showCartList(Model model) {
+		Integer userId = session.getId().hashCode();
+		Order order = showShoppingCartService.showShoppingCart(userId, 0);
 		System.out.println(order);
 		if(order != null) {
 			model.addAttribute("order", order);
