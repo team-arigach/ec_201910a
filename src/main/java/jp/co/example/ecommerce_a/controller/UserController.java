@@ -51,7 +51,7 @@ public class UserController {
 			model.addAttribute("loginError", "メールアドレスかパスワードが一致しません。");
 			return toLogin();
 		}
-		return "redirect:/item_list";
+		return "redirect:/showItemList";
 	}
 	
 	/**
