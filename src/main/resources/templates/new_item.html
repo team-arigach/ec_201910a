@@ -20,7 +20,7 @@
 		<div class="card border-dark form-mgn mt-3">
 			<h1 class="card-header">商品を登録</h1>
 			<div class="card-body">
-				<form action="#" method="post">
+				<form action="#" th:action="@{/newItem/inputItem}" method="post">
 					<div class="row">
 						<div class="col-5">
 							<div class="field">
@@ -36,20 +36,21 @@
 									class="form-control">
 							</div>
 							<div class="field">
-								<label for="name">商品名</label> <input type="text" name="name"
+								<label for="description">商品説明</label> <textarea name="description"
+									class="form-control"></textarea>
+							</div>
+							<div class="field">
+								<label for="priceM">Mサイズの価格</label> <input type="text" name="priceM"
 									class="form-control">
 							</div>
 							<div class="field">
-								<label for="name">商品名</label> <input type="text" name="name"
-									class="form-control">
-							</div>
-							<div class="field">
-								<label for="name">商品名</label> <input type="text" name="name"
+								<label for="priceL">Lサイズの価格</label> <input type="text" name="priceL"
 									class="form-control">
 							</div>
 						</div>
 
 						<div class="col-sm-12">
+						<input type="hidden" name="deleted" value="false">
 							<button type="submit" class="btn-success btn-block my-1">登録</button>
 						</div>
 					</div>
