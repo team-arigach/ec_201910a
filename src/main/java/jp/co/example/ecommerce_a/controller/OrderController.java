@@ -50,7 +50,7 @@ public class OrderController {
 	public String index(Integer id, Model model) {
 		
 		Order order = orderService.showOrder(id);
-		model.addAttribute("order",order);
+		model.addAttribute("order", order);
 		
 		List<Integer> deliveryTimeList = new ArrayList<>();
 		for( int i = 10; i <= 21; i++){
