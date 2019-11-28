@@ -18,13 +18,13 @@ public class RegisterUserService {
 	private PasswordEncoder passwordEncoder;
 	
 	public void insertUser(User user) {
-		passwordEncoder.encode(user.getPassword());
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}
 	
 	public boolean isCheckMailAddress(String email) {
 		User user = userRepository.findByMailAddress(email);
-		if ( user != null ) {
+		if ( user == null ) {
 			return true;
 		}
 		return false;
