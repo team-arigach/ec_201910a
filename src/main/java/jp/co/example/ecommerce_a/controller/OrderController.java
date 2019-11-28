@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
+import jp.co.example.ecommerce_a.service.MailSenderService;
 import jp.co.example.ecommerce_a.service.OrderService;
 import jp.co.example.ecommerce_a.service.TestDataService;
 

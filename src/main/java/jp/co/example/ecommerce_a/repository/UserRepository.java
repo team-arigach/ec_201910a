@@ -64,11 +64,14 @@ public class UserRepository {
 		template.update(sql, param);
 	}
 	
-	public List<User> findByMailAddress(String email) {
+	public User findByMailAddress(String email) {
 		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
 		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
-		return userList;
+		if(userList.size() != 0) {
+			userList.get(0);
+		}
+		return null;
 	}
 	
 	public User load(Integer id) {
