@@ -107,9 +107,8 @@
 
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
-				<div class="form-group text-center"
-					th:each="orderItem:${order.orderItemList}">
-					消費税：<span id="total-price"
+				<div class="form-group text-center">
+					消費税：<span id="total-price" 
 						th:text="${#numbers.formatInteger(order.totalPrice * 0.1, 1,'COMMA')}"></span>円<br>
 					ご注文金額合計：<span id="total-price"
 						th:text="${#numbers.formatInteger(order.totalPrice * 1.1, 1,'COMMA')} "></span>円
