@@ -37,9 +37,9 @@ public class OrderForm {
 
 	/**	支払方法 */
 	private Integer paymentMethod;
+	
 
 	//以下getter/setter
-	
 
 	@Override
 	public String toString() {
@@ -112,4 +112,8 @@ public class OrderForm {
 	public void setPaymentMethod(Integer paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
+<<<<<<< HEAD
+=======
+	
+>>>>>>> creditFunction
 }
