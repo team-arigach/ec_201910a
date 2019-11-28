@@ -32,6 +32,9 @@ public class OrderController {
 	@Autowired
 	private TestDataService testDataService;
 	
+	@Autowired
+	private MailSenderService mailSenderService;
+	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
 		return new OrderForm();
@@ -97,6 +100,9 @@ public class OrderController {
 	 */
 	@RequestMapping("/toOrderFinish")
 	public String toOrderFinish() {
+		System.err.println("メールを送信する。");
+		mailSenderService.send();
+		System.err.println("メールの送信完了");
 		return "order_finished";
 	}
 }
