@@ -28,6 +28,8 @@ public class ShowConfirmService {
 	 */
 	public Order showOrderConfirm(Integer userId, Integer status) {
 		Order order = orderRepository.findByUserIdAndStatus(userId, status);
+		System.out.println(order);
+		
 		return order;
 	}
 }

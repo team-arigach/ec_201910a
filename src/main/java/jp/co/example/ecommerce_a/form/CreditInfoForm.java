@@ -1,54 +1,93 @@
 package jp.co.example.ecommerce_a.form;
 
+
 public class CreditInfoForm {
 	
+	private Integer userId;
 	/** カード番号 */
-	private Integer cardNumber;
+	private long card_number;
 	/** 有効期限年 */
-	private Integer cardExpYear;
+	private Integer card_exp_year;
 	/** 有効期限月 */
-	private Integer cardExpMonth;
+	private Integer card_exp_month;
 	/** カード名義人 */
-	private String cardName;
+	private String card_name;
 	/** セキュリティーコード */
-	private Integer cardCvv;
+	private Integer card_cvv;
+	/** 金額 */
+	private Integer amount;
 	
-	public Integer getCardNumber() {
-		return cardNumber;
-	}
-	public void setCardNumber(Integer cardNumber) {
-		this.cardNumber = cardNumber;
-	}
-	public Integer getCardExpYear() {
-		return cardExpYear;
-	}
-	public void setCardExpYear(Integer cardExpYear) {
-		this.cardExpYear = cardExpYear;
-	}
-	public Integer getCardExpMonth() {
-		return cardExpMonth;
-	}
-	public void setCardExpMonth(Integer cardExpMonth) {
-		this.cardExpMonth = cardExpMonth;
-	}
-	public String getCardName() {
-		return cardName;
-	}
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
-	}
-	public Integer getCardCvv() {
-		return cardCvv;
-	}
-	public void setCardCvv(Integer cardCvv) {
-		this.cardCvv = cardCvv;
-	}
-	
-	@Override
-	public String toString() {
-		return "CreditInfo [cardNumber=" + cardNumber + ", cardExpYear=" + cardExpYear + ", cardExpMonth="
-				+ cardExpMonth + ", cardName=" + cardName + ", cardCvv=" + cardCvv + "]";
+	private long order_number;
+
+	public Integer getUserId() {
+		return userId;
 	}
 
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public long getCard_number() {
+		return card_number;
+	}
+
+	public void setCard_number(long card_number) {
+		this.card_number = card_number;
+	}
+
+	public Integer getCard_exp_year() {
+		return card_exp_year;
+	}
+
+	public void setCard_exp_year(Integer card_exp_year) {
+		this.card_exp_year = card_exp_year;
+	}
+
+	public Integer getCard_exp_month() {
+		return card_exp_month;
+	}
+
+	public void setCard_exp_month(Integer card_exp_month) {
+		this.card_exp_month = card_exp_month;
+	}
+
+	public String getCard_name() {
+		return card_name;
+	}
+
+	public void setCard_name(String card_name) {
+		this.card_name = card_name;
+	}
+
+	public Integer getCard_cvv() {
+		return card_cvv;
+	}
+
+	public void setCard_cvv(Integer card_cvv) {
+		this.card_cvv = card_cvv;
+	}
+
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+
+	public long getOrder_number() {
+		return order_number;
+	}
+
+	public void setOrder_number(long order_number) {
+		this.order_number = order_number;
+	}
+
+	@Override
+	public String toString() {
+		return "CreditInfoForm [userId=" + userId + ", card_number=" + card_number + ", card_exp_year=" + card_exp_year
+				+ ", card_exp_month=" + card_exp_month + ", card_name=" + card_name + ", card_cvv=" + card_cvv
+				+ ", amount=" + amount + ", order_number=" + order_number + "]";
+	}
 	
 }
