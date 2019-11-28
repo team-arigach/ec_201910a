@@ -30,9 +30,6 @@ public class OrderController {
 	private OrderService orderService;
 	
 	@Autowired
-	private TestDataService testDataService;
-	
-	@Autowired
 	private MailSenderService mailSenderService;
 	
 	@ModelAttribute
