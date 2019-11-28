@@ -76,12 +76,12 @@
 								<div class="col-sm-12">
 									<label class="radio-inline">
 										<input type="radio"
-											name="responsibleCompany" checked="checked" class="size" th:value="M">
+											name="size" checked="checked" class="size" th:value="M">
 										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span id="price_m" th:text="${item.priceM} + 円"></span>(税抜)
 									</label>
 									<label class="radio-inline">
 										<input type="radio"
-											name="responsibleCompany" class="size" th:value="L">
+											name="size" class="size" th:value="L">
 										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span id="price_l" th:text="${item.priceL} + 円"></span>(税抜)
 									</label>
 								</div>
@@ -103,7 +103,6 @@
 								<div class="col-sm-12" id="topping">
 									<label class="checkbox-inline" th:each="topping:${item.toppingList}"	>
 										<input type="checkbox" name="orderToppingIdList" th:value="${topping.id}">
-										<input type="checkbox" value="" class="checkbox">
 											<span th:text="${topping.name}">オニオン</span>
 									</label>
 								</div>
@@ -119,19 +118,19 @@
 									<label for="">数量:</label>
 									<label class="control-label"
 										style="color: red" for="inputError">数量を選択してください</label> <select
-										name="area" class="form-control" id="pizzanum">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
+										 class="form-control" id="pizzanum" name="quanity">
+										<option th:value="1">1</option>
+										<option th:value="2">2</option>
+										<option th:value="3">3</option>
+										<option th:value="4">4</option>
+										<option th:value="5">5</option>
+										<option th:value="6">6</option>
+										<option th:value="7">7</option>
+										<option th:value="8">8</option>
+										<option th:value="9">9</option>
+										<option th:value="10">10</option>
+										<option th:value="11">11</option>
+										<option th:value="12">12</option>
 									</select>
 								</div>
 							</div>

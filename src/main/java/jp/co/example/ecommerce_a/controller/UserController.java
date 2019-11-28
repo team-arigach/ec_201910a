@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_a.domain.User;
+import jp.co.example.ecommerce_a.repository.OrderRepository;
 import jp.co.example.ecommerce_a.service.UserService;
 
 /**
@@ -25,6 +26,9 @@ public class UserController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private OrderRepository orderRepository;
 	
 	/**
 	 * ログイン画面を表示する.
@@ -51,6 +55,9 @@ public class UserController {
 			model.addAttribute("loginError", "メールアドレスかパスワードが一致しません。");
 			return toLogin();
 		}
+//		Integer sessionId = session.getId().hashCode();
+//		Integer orderId = orderRepository.findByUserIdAndStatus(sessionId, 0).getId();
+		
 		return "redirect:/showItemList";
 	}
 	
