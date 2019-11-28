@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import jp.co.example.ecommerce_a.domain.OrderTopping;
-import jp.co.example.ecommerce_a.domain.Topping;
 
 /**
  * オーダートッピングオブジェクトを操作するリポジトリ.

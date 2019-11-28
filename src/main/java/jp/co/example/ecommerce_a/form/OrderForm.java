@@ -112,8 +112,5 @@ public class OrderForm {
 	public void setPaymentMethod(Integer paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> creditFunction
+
 }
