@@ -47,9 +47,9 @@ public class OrderController {
 	 * @return　注文確認画面
 	 */
 	@RequestMapping("")
-	public String index(Model model) {
+	public String index(Integer id, Model model) {
 		
-		Order order = testDataService.testOrder();
+		Order order = orderService.showOrder(id);
 		model.addAttribute("order",order);
 		
 		List<Integer> deliveryTimeList = new ArrayList<>();
