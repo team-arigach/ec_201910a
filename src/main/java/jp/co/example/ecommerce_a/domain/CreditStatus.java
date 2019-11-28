@@ -7,8 +7,7 @@ public class CreditStatus {
 	/** メッセージ */
 	private String message;
 	/** エラーコード */
-	private String errorCode;
-	
+	private String error_code;
 	public String getStatus() {
 		return status;
 	}
@@ -21,16 +20,17 @@ public class CreditStatus {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public String getErrorCode() {
-		return errorCode;
+	public String getError_code() {
+		return error_code;
 	}
-	public void setErrorCode(String errorCode) {
-		this.errorCode = errorCode;
+	public void setError_code(String error_code) {
+		this.error_code = error_code;
 	}
 	@Override
 	public String toString() {
-		return "CreditStatus [status=" + status + ", message=" + message + ", errorCode=" + errorCode + "]";
+		return "CreditStatus [status=" + status + ", message=" + message + ", error_code=" + error_code + "]";
 	}
+	
 	
 	
 	
