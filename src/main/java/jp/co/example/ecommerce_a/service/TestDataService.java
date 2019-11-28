@@ -86,7 +86,7 @@ public class TestDataService {
 		orderToppingList.add(orderTopping3);
 		
 		List<OrderTopping> orderToppingList2 = new ArrayList<>();
-		orderItem1.setOrderToppingList(orderToppingList2);
+		orderItem2.setOrderToppingList(orderToppingList2);
 		
 		OrderTopping orderTopping4 = new OrderTopping();
 		orderTopping4.setId(4);
