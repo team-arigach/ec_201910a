@@ -48,7 +48,7 @@
 
 		<!-- table -->
 
-		<div class="container" th:unless="${order.orderItemList.size() > 0}">
+		<div class="container" th:unless="${order}">
 
 			<div class="row">
 				<div
@@ -68,7 +68,7 @@
 
 		</div>
 
-		<div class="row" th:if="${order.orderItemList.size() > 0}">
+		<div class="row" th:if="${order}">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<h3 class="text-center">ショッピングカート</h3>
@@ -123,7 +123,7 @@
 			</div>
 		</div>
 
-		<div class="row" th:if="${order.orderItemList.size() > 0}">
+		<div class="row" th:if="${order}">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
 					<span id="total-price">消費税：8,000円</span><br> <span
@@ -132,7 +132,7 @@
 			</div>
 		</div>
 
-		<div class="row" th:if="${order.orderItemList.size() > 0}">
+		<div class="row" th:if="${order}">
 			<div class="col-xs-offset-5 col-xs-3">
 				<div class="form-group">
 					<form action="order_confirm.html" th:action="@{/order}">
