@@ -1,6 +1,9 @@
 package jp.co.example.ecommerce_a.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +20,7 @@ import jp.co.example.ecommerce_a.service.InsertShoppingCartService;
  *
  */
 @Controller
-@RequestMapping("/shoppingCart")
+@RequestMapping("")
 public class ShoppingCartController {
 
 	@Autowired
@@ -30,8 +33,16 @@ public class ShoppingCartController {
 	 * @param orderItemForm リクエストパラメータ
 	 * @return ショッピングカートリストに遷移
 	 */
-	@RequestMapping("/registerItem")
+	@RequestMapping("/shoppingCart")
 	public String additem(OrderItemForm orderItemForm) {
+		orderItemForm.setItemId("2");
+		orderItemForm.setQuanity("0");
+		orderItemForm.setSize("M");
+		List<Integer> orderToppingIdList = new ArrayList<>();
+		orderToppingIdList.add(2);
+		orderToppingIdList.add(3);
+		orderToppingIdList.add(4);
+		orderItemForm.setOrderToppingIdList(orderToppingIdList);
 		insertShoppingService.insertOrder(orderItemForm);
 		
 
