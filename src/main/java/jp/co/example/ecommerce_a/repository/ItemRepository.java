@@ -76,8 +76,9 @@ public class ItemRepository {
 	}
 	
 	public void insert(Item item) {
-		String sql = "INSERT INTO items (id, name, description, price_m, price_l, image_path, deleted VALUES ( :id, :name, :description, :priceM, :priceL, :imagePath, :deleted);";
+		String sql = "INSERT INTO items (id, name, description, price_m, price_l, image_path, deleted) VALUES (:id, :name, :description, :priceM, :priceL, :imagePath, :deleted);";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(item);
 		template.update(sql, param);
+		System.err.println("一件の登録が完了しました。");
 	}
 }

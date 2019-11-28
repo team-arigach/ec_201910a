@@ -20,12 +20,12 @@
 		<div class="card border-dark form-mgn mt-3">
 			<h1 class="card-header">商品を登録</h1>
 			<div class="card-body">
-				<form action="#" th:action="@{/newItem/inputItem}" method="post">
+				<form action="#" th:action="@{/insertItem/input}" enctype="multipart/form-data" method="post">
 					<div class="row">
 						<div class="col-5">
 							<div class="field">
 								<h4>画像を登録</h4>
-								<input type="file" class="image" id="file">
+								<input type="file" class="image" id="file" name="imagePath">
 								<div id="img_field" onClick="$('#file').click()"></div>
 
 							</div>

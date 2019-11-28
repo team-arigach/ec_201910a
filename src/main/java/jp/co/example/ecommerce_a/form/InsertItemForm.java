@@ -62,6 +62,12 @@ public class InsertItemForm {
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
+	@Override
+	public String toString() {
+		return "InsertItemForm [id=" + id + ", name=" + name + ", description=" + description + ", priceM=" + priceM
+				+ ", priceL=" + priceL + ", imagePath=" + imagePath + ", deleted=" + deleted + "]";
+	}
+	
 	
 	
 

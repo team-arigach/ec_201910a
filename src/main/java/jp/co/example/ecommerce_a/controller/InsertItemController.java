@@ -26,6 +26,7 @@ public class InsertItemController {
 	public String input(InsertItemForm insertItemForm) throws IOException {
 		Item item = new Item();
 		BeanUtils.copyProperties(insertItemForm, item);
+		System.err.println("insertitemForm = "+insertItemForm);
 		
 		byte[] encoded = Base64.getEncoder().encode(insertItemForm.getImagePath().getBytes());
 		Charset charset = StandardCharsets.UTF_8;
@@ -41,9 +42,16 @@ public class InsertItemController {
 		}
 		base64image.append(base64);
 		item.setImagePath(base64image.toString());
+		System.err.println("item = "+item);
 		
 		itemService.insertItem(item);
-		return null;
+		
+		return "redirect:/insertItem";
+	}
+	
+	@RequestMapping("")
+	public String insertItem() {
+		return "new_item";
 	}
 	
 
