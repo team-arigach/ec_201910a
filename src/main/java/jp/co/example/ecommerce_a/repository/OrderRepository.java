@@ -143,7 +143,7 @@ public class OrderRepository {
 				+ "total_price = :totalPrice, "
 				+ "order_date = :orderDate, "
 				+ "destination_name = :destinationName, "
-				+ "destination_name = :destinationName, "
+				+ "destination_email = :destinationEmail, "
 				+ "destination_zipcode = :destinationZipcode, "
 				+ "destination_address = :destinationAddress, "
 				+ "destination_tel = :destinationTel, "
