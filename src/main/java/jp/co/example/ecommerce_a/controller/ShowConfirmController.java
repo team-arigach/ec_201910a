@@ -2,6 +2,8 @@ package jp.co.example.ecommerce_a.controller;
 
 
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,9 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_a.domain.Order;
-import jp.co.example.ecommerce_a.domain.OrderItem;
 import jp.co.example.ecommerce_a.form.OrderForm;
-import jp.co.example.ecommerce_a.service.TestDataService;
+import jp.co.example.ecommerce_a.service.ShowConfirmService;
 
 /**
  * 商品確認画面を表示するためのコントローラー.
@@ -24,7 +25,11 @@ import jp.co.example.ecommerce_a.service.TestDataService;
 public class ShowConfirmController {
 	
 	@Autowired
-	private TestDataService testDataService;
+	private ShowConfirmService showConfirmService;
+	
+	
+	@Autowired
+	private HttpSession session;
 	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
@@ -40,14 +45,11 @@ public class ShowConfirmController {
 	 */
 	@RequestMapping("/showConfirm")
 	public String showConfirm(Model model) {
-		
-		Order order = testDataService.testOrder();
-		for (OrderItem oi : order.getOrderItemList()) {
-			System.out.println("subtotal = " + oi.getSubTotal());
-			
+		Integer userId = session.getId().hashCode();
+		Order order = showConfirmService.showOrderConfirm(userId, 0);
+		if(order != null) {
+			model.addAttribute("order", order);
 		}
-		model.addAttribute("order",order);
-		System.out.println(order);
 		return "order_confirm"; 
 	}
 }
