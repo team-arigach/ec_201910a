@@ -3,11 +3,13 @@ package jp.co.example.ecommerce_a.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_a.domain.Item;
+import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.service.ShowItemListService;
 
 /**
@@ -31,7 +33,7 @@ public class ShowItemController {
 	 * @return 商品全件画面か検索結果画面
 	 */
 	@RequestMapping("/showItemList")
-	public String showItemList(String name, Model model) {
+	public String showItemList(String name, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<List<Item>> bigItemList = showItemListService.findByLikeName(name);
 		if(bigItemList.isEmpty()) {
 			model.addAttribute("message", "該当する商品はありません");

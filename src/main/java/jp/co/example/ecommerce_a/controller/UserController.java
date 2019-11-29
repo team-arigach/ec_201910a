@@ -20,9 +20,6 @@ import jp.co.example.ecommerce_a.repository.UserRepository;
 @RequestMapping("")
 public class UserController {
 	
-	@Autowired
-	private UserRepository userRepository;
-	
 	/**
 	 * ログイン画面を表示する.
 	 * @return ログイン画面
@@ -30,8 +27,6 @@ public class UserController {
 	@RequestMapping("/login")
 	public String toLogin(Model model, @RequestParam(required = false) String error) {
 		System.err.println("ログインエラー" + error);
-		User user1 = userRepository.findByMailAddress("deviationvalue1023@ezweb.ne.jp");
-		System.err.println(user1);
 		if(error != null) {
 			System.err.println("ログイン失敗");
 			model.addAttribute("loginError", "メールアドレスまたはパスワードが違います。");
