@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,12 +17,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_a.domain.CreditInfo;
+import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
 import jp.co.example.ecommerce_a.service.CreditInfoService;
 import jp.co.example.ecommerce_a.service.MailSenderService;
 import jp.co.example.ecommerce_a.service.OrderService;
+import jp.co.example.ecommerce_a.service.ShowShoppingCartService;
 
 
 @Controller
@@ -37,6 +40,9 @@ public class OrderController {
 	@Autowired
 	private CreditInfoService creditInfoService;
 	
+	@Autowired
+	private ShowShoppingCartService showShoppingCartService;
+	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
 		return new OrderForm();
@@ -49,9 +55,9 @@ public class OrderController {
 	 * @return 注文確認画面
 	 */
 	@RequestMapping("")
-	public String index(Integer id, Model model) {
+	public String index(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		
-		Order order = orderService.showOrder(id);
+		Order order = showShoppingCartService.showShoppingCart(loginUser.getUser().getId(), 0);
 		model.addAttribute("order", order);
 		
 		List<Integer> deliveryTimeList = new ArrayList<>();
@@ -72,9 +78,9 @@ public class OrderController {
 	 * @return エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
 	@RequestMapping("/input")
-	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm, Model model) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
-			return index(orderForm.getId(), model);
+			return index(orderForm.getId(), model, loginUser);
 		}
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
@@ -84,7 +90,7 @@ public class OrderController {
 			BeanUtils.copyProperties(creditInfoForm, creditInfo);
 			if ( !creditInfoService.isCheckCreditInfo(creditInfo)) {
 				model.addAttribute("creditError", "カード情報が正しくありません。");
-				return index(orderForm.getId(), model);
+				return index(orderForm.getId(), model, loginUser);
 			}
 		}
 		
