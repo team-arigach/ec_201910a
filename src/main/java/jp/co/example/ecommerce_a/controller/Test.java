@@ -16,7 +16,6 @@ public class Test {
 	@Autowired
 	private OrderRepository orderRepository;
 	
-	
 	@RequestMapping("/testNull")
 	public String method() {
 		System.err.println("null");
