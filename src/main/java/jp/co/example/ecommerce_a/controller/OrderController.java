@@ -21,10 +21,12 @@ import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
+import jp.co.example.ecommerce_a.service.AddShoppingCartService;
 import jp.co.example.ecommerce_a.service.CreditInfoService;
 import jp.co.example.ecommerce_a.service.MailSenderService;
 import jp.co.example.ecommerce_a.service.OrderService;
 import jp.co.example.ecommerce_a.service.ShowShoppingCartService;
+import jp.co.example.ecommerce_a.service.SortItemService;
 
 
 @Controller
@@ -43,6 +45,12 @@ public class OrderController {
 	@Autowired
 	private ShowShoppingCartService showShoppingCartService;
 	
+	@Autowired
+	private SortItemService sortItemService;
+	
+	@Autowired
+	private AddShoppingCartService addShoppingCartService;
+	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
 		return new OrderForm();
@@ -57,7 +65,10 @@ public class OrderController {
 	@RequestMapping("")
 	public String index(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		
+		addShoppingCartService.addShoppingCart(loginUser.getUser().getId());
 		Order order = showShoppingCartService.showShoppingCart(loginUser.getUser().getId(), 0);
+		sortItemService.sortOrderItem(order);
+		
 		model.addAttribute("order", order);
 		
 		List<Integer> deliveryTimeList = new ArrayList<>();

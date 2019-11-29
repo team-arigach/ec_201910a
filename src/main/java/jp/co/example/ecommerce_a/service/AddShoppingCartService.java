@@ -25,15 +25,32 @@ public class AddShoppingCartService {
 	public void addShoppingCart(Integer loginUserId) {
 		Integer userId = (Integer) session.getAttribute("userId");
 		Order preOrder = orderRepository.findByUserIdAndStatus(userId, 0);
-		Integer orderId = orderRepository.findByUserIdAndStatus(loginUserId, 0).getId();
+		Order order = orderRepository.findByUserIdAndStatus(loginUserId, 0);
 
-		if (preOrder != null) {
-			for (OrderItem preOrderItem : preOrder.getOrderItemList()) {
-				preOrderItem.setOrderId(orderId);
-				orderItemRepository.update(preOrderItem);
+		if(order != null) {
+			if (preOrder != null) {
+				for (OrderItem preOrderItem : preOrder.getOrderItemList()) {
+					preOrderItem.setOrderId(order.getId());
+					orderItemRepository.update(preOrderItem);
+				}
+			}
+			
+		} else {
+			if( preOrder != null) {
+				Order newOrder = new Order();
+				newOrder.setStatus(0);
+				newOrder.setTotalPrice(0);
+				Integer id = orderRepository.insert(newOrder).getId();
+				for (OrderItem preOrderItem : preOrder.getOrderItemList()) {
+					preOrderItem.setOrderId(id);
+					orderItemRepository.update(preOrderItem);
+				}
+				newOrder.setStatus(0);
+				newOrder.setTotalPrice(0);
+				System.err.println("新規登録");
 			}
 		}
-		System.err.println("メソッドが呼ばれる");
+		System.err.println("addShoppingCartメソッドが呼ばれています。");
 
 	}
 
