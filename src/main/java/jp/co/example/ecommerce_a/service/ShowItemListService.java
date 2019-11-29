@@ -50,7 +50,6 @@ public class ShowItemListService {
 	 * @return 商品情報一覧
 	 */
 	public StringBuilder getItemListForAutocomplete(String name) {
-		//商品情報取得で使用しているのでメソッド化したい
 		List<Item> itemList = null;
 		if (name == null || name.equals("")) {
 			// 検索文字列が空なら全件検索

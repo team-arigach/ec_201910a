@@ -3,13 +3,13 @@ package jp.co.example.ecommerce_a.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.form.OrderItemForm;
 import jp.co.example.ecommerce_a.service.InsertShoppingCartService;
-
-//import jp.co.example.ecommerce_a.service.InsertShoppingCartService;
 
 /**
  * ショッピングカートにアイテムを登録するコントローラ.
@@ -32,8 +32,8 @@ public class ShoppingCartController {
 	 * @return ショッピングカートリストに遷移
 	 */
 	@RequestMapping("/registerItem")
-	public String additem(OrderItemForm orderItemForm) {
-		insertShoppingService.insertOrder(orderItemForm);
+	public String additem(OrderItemForm orderItemForm, @AuthenticationPrincipal LoginUser loginUser) {
+		insertShoppingService.insertOrder(orderItemForm, loginUser);
 		
 
 		return "redirect:/cartList";

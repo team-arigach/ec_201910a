@@ -1,5 +1,7 @@
 package jp.co.example.ecommerce_a.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,9 @@ public class OrderService {
 		order.setUserId(updateOrder.getUserId());
 		// DBから取得したオーダーの合計金額を取得し、インサートするオーダーにセット
 		order.setTotalPrice(updateOrder.getCalcTotalPrice());
+		// 現在時刻を取得し、オーダーにセット
+		Date date = new Date();
+		order.setOrderDate(date);
 		if(order.getPaymentMethod() == 1) {
 			order.setStatus(1);
 		}

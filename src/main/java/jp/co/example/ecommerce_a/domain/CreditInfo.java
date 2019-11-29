@@ -4,7 +4,7 @@ public class CreditInfo {
 	
 	private Integer userId;
 	/** カード番号 */
-	private Long card_number;
+	private String card_number;
 	/** 有効期限年 */
 	private Integer card_exp_year;
 	/** 有効期限月 */
@@ -22,10 +22,10 @@ public class CreditInfo {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Long getCard_number() {
+	public String getCard_number() {
 		return card_number;
 	}
-	public void setCard_number(Long card_number) {
+	public void setCard_number(String card_number) {
 		this.card_number = card_number;
 	}
 	public Integer getCard_exp_year() {
@@ -58,6 +58,14 @@ public class CreditInfo {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+	@Override
+	public String toString() {
+		return "CreditInfo [userId=" + userId + ", card_number=" + card_number + ", card_exp_year=" + card_exp_year
+				+ ", card_exp_month=" + card_exp_month + ", card_name=" + card_name + ", card_cvv=" + card_cvv
+				+ ", amount=" + amount + "]";
+	}
+	
+	
 	
 	
 

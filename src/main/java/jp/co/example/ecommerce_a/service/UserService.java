@@ -40,20 +40,20 @@ public class UserService {
 		return user;
 	}
 	
-	public void userIdUpdate(Integer sessionId,Integer id) {
-		Order order = orderRepository.findByUserIdAndStatus(sessionId, 0);
-		// Ordersテーブルのログイン前のIDを取得
-		System.out.println(order);
-		if(order != null) {
-		Integer orderId = order.getId();
-		
-		// ログイン前のsessionIDに紐づいているidを取得
-		List<Order> orderList = orderRepository.findByOrderId(orderId);  
-		for(Order checkorder:orderList) {
-			orderItemRepository.updateOrderIdFromOrderItemsTable(checkorder.getId(),id);		
-		}
-		}
-		
-	}
+//	public void userIdUpdate(Integer sessionId,Integer id) {
+//		Order order = orderRepository.findByUserIdAndStatus(sessionId, 0);
+//		// Ordersテーブルのログイン前のIDを取得
+//		System.out.println(order);
+//		if(order != null) {
+//		Integer orderId = order.getId();
+//		
+//		// ログイン前のsessionIDに紐づいているidを取得
+//		List<Order> orderList = orderRepository.findByOrderId(orderId);  
+//		for(Order checkorder:orderList) {
+//			orderItemRepository.updateOrderIdFromOrderItemsTable(checkorder.getId(),id);		
+//		}
+//		}
+//		
+//	}
 
 }

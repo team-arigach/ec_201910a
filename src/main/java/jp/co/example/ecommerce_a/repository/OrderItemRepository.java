@@ -58,17 +58,9 @@ public class OrderItemRepository {
 		template.update(sql, param);		
 	}
 	
-	public void updateOrderId(Integer orderId) {
-		String sql = "UPDATE order_items SET order_id=:orderId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
-		template.update(sql, param);
-	}
-	
-
-	
-	public void update(Integer id) {
-		String sql = "UPDATE order_id SET order_id=:Id WHERE order_id=:orderId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", id).addValue("id", id);
+	public void update(OrderItem orderItem) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
+		String sql = "UPDATE order_items SET id = :id, item_id = :itemId, order_id = :orderId, quantity = :quantity, size = :size WHERE id = :id;";
 		template.update(sql, param);
 	}
 	
