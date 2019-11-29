@@ -242,9 +242,10 @@
 							</tr>
 						</tbody>
 					</table>
+					<div style="color: red" th:text="${creditError}"></div>
 					<div id="credit_input">
 						クレジット番号<input type="text" name="card_number"
-							value="12345678910123456789"><br> 有効期限 <select
+							value="12345678910123456789l"><br> 有効期限 <select
 							name="card_exp_month">
 							<option th:value="1">1</option>
 							<option th:value="2">2</option>

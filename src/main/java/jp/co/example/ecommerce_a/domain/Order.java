@@ -61,9 +61,7 @@ public class Order {
 		for( OrderItem orderItem : this.orderItemList) {
 		  totalPrice += orderItem.getSubTotal();
 		}
-		System.out.println(totalPrice);
 		return totalPrice;
-//		return 300; // 警告を消すため
 	}
 
 	// 以下 getter / setter

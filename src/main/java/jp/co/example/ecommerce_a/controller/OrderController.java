@@ -15,14 +15,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.example.ecommerce_a.domain.CreditInfo;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
-import jp.co.example.ecommerce_a.repository.OrderRepository;
+import jp.co.example.ecommerce_a.service.CreditInfoService;
 import jp.co.example.ecommerce_a.service.MailSenderService;
 import jp.co.example.ecommerce_a.service.OrderService;
-import jp.co.example.ecommerce_a.service.ShowShoppingCartService;
-import jp.co.example.ecommerce_a.service.TestDataService;
 
 
 @Controller
@@ -34,6 +33,9 @@ public class OrderController {
 	
 	@Autowired
 	private MailSenderService mailSenderService;
+	
+	@Autowired
+	private CreditInfoService creditInfoService;
 	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
@@ -77,6 +79,18 @@ public class OrderController {
 		
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
+		
+		System.err.println("クレジット情報 => " + creditInfoForm);
+		
+		// クレジット処理に関して
+		if( orderForm.getPaymentMethod() == 2) {
+			CreditInfo creditInfo = creditInfoService.convertCredit(creditInfoForm);
+			System.err.println("クレジット情報返還後 => " + creditInfo);
+			if ( !creditInfoService.isCheckCreditInfo(creditInfo)) {
+				model.addAttribute("creditError", "カード情報が正しくありません。");
+				return index(orderForm.getId(), model);
+			}
+		}
 		
 		//パラメータで取得したdeliverryTimeとdeliveryHourTimestamp型に変換してOrderオブジェクトにセット
 		LocalDate localDate = orderForm.convertLocalDate(orderForm.getDeliveryTime());

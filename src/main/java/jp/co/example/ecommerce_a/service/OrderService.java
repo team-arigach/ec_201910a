@@ -21,11 +21,14 @@ public class OrderService {
 	 */
 	public void order(Order order) {
 		Order updateOrder = orderRepository.load(order.getId());
+		// DBから取得したオーダーのuser_idを取得し、インサートするオーダーにセット
 		order.setUserId(updateOrder.getUserId());
-		order.setTotalPrice(order.getTotalPrice());
+		// DBから取得したオーダーの合計金額を取得し、インサートするオーダーにセット
+		order.setTotalPrice(updateOrder.getCalcTotalPrice());
 		if(order.getPaymentMethod() == 1) {
 			order.setStatus(1);
-		}else if(order.getPaymentMethod() == 2) {
+		}
+		if(order.getPaymentMethod() == 2) {
 			order.setStatus(2);
 		}
 		System.err.println("最終情報構成=>" + order);
