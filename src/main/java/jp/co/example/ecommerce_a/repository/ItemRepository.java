@@ -73,4 +73,22 @@ public class ItemRepository {
 		Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
 		return item;
 	}
+	
+	public List<Item> findAllabout8(Integer offset){
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items limit 8 offset :offset";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("offset", offset);
+		List<Item> itemList = template.query(sql,param, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+	
+	public List<Item> findByLikeNameAbout8(String name,Integer offset){
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name limit 8 offset :offset");
+		String escName = "%" + name + "%";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", escName);
+		List<Item> itemList = template.query(sql.toString(), param,ITEM_ROW_MAPPER);
+		return itemList;
+	}
+	
+	
 }

@@ -47,5 +47,21 @@ public class ShowItemController {
 		
 		return "item_list";
 	}
+		
+		@RequestMapping("/showItemListAbout8")
+		public String showItemListAbout8(String name, Model model, @AuthenticationPrincipal LoginUser loginUser, Integer page) {
+			List<List<Item>> bigItemList = showItemListService.findByLikeName(name);
+			if(bigItemList.isEmpty()) {
+				model.addAttribute("message", "該当する商品はありません");
+				bigItemList = showItemListService.findByLikeName("");
+			}
+			model.addAttribute("bigItemList", bigItemList);
+			
+			// オートコンプリート用にJavaScriptの配列の中身を文字列で作ってスコープへ格納
+			StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(name);
+			model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
+			
+			return "item_list";
+	}
 	
 }

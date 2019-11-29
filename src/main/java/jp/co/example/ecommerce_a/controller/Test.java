@@ -38,7 +38,7 @@ public class Test {
 		form.setUserId(1);
 		form.setOrder_number(12345678912345l);
 		System.err.println(form);
-		System.err.println(creditInfoService.isCheckCreditInfo(form));
+//		System.err.println(creditInfoService.isCheckCreditInfo(form));
 		return null;
 	}
 

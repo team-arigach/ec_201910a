@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import jp.co.example.ecommerce_a.domain.Order;
@@ -44,6 +46,7 @@ public class InsertShoppingCartService {
 	 * @param orderItemForm リクエストパラメータ
 	 */
 	public void insertOrder(OrderItemForm orderItemForm) {
+		
 		OrderItem orderItem = new OrderItem();
 		orderItem.setItemId(orderItemForm.getIntItemId());
 		orderItem.setQuantity(orderItemForm.getIntQuantity());

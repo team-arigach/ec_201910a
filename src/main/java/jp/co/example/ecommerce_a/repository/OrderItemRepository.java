@@ -66,9 +66,9 @@ public class OrderItemRepository {
 	
 
 	
-	public void updateOrderIdFromOrderItemsTable(Integer orderId,Integer id) {
+	public void update(Integer id) {
 		String sql = "UPDATE order_id SET order_id=:Id WHERE order_id=:orderId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId).addValue("id", id);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", id).addValue("id", id);
 		template.update(sql, param);
 	}
 	

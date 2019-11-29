@@ -72,4 +72,40 @@ public class ShowItemListService {
 		}
 		return itemListForAutocompleate;
 	}
+	
+	public List<List<Item>> findByLikeNameAbout8(String name) {
+		//オートコンプリートで使用しているのでメソッド化したい
+		List<Item> itemList = null;
+		if (name == null || name.equals("")) {
+			// 検索文字列が空なら全件検索
+			itemList = itemRepository.findAll();
+		} else {
+			// 検索文字列があれば曖昧検索
+			itemList = itemRepository.findByLikeName(name);
+		}
+		List<List<Item>> bigItemList = new ArrayList<>();
+		List<Item> smallItemsList = null;
+		for (int i = 0; i < itemList.size(); i++) {
+			if (i == 0 || i % 3 == 0) {
+				smallItemsList = new ArrayList<>();
+				bigItemList.add(smallItemsList);
+			}
+			smallItemsList.add(itemList.get(i));
+		}
+		return bigItemList;
+	}
+	
+	public Integer findByStartPoint(Integer page) {
+		if(page == null) {
+			return 0;
+		}
+		return (page-1) * 8;
+	}
+
+
+//	public List<Integer> findByPageList(Integer totalItemCount){
+//		List<Item> itemList = itemRepository.findAll();
+//		
+//		return itemList;
+//	}
 }
