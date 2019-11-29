@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -242,9 +242,10 @@
 							</tr>
 						</tbody>
 					</table>
+					<div style="color: red" th:text="${creditError}"></div>
 					<div id="credit_input">
 						クレジット番号<input type="text" name="card_number"
-							value="12345678910123456789"><br> 有効期限 <select
+							value="12345678910123456789l"><br> 有効期限 <select
 							name="card_exp_month">
 							<option th:value="1">1</option>
 							<option th:value="2">2</option>
@@ -285,6 +286,7 @@
 					</div>
 				</div>
 			</div>
+			<input type="hidden" name="id" th:value="${order.getId()}">
 			<div class="row">
 				<div class="col-xs-offset-4 col-xs-4">
 					<div class="form-group">
