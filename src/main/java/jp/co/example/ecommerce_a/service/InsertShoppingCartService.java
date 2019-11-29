@@ -60,6 +60,7 @@ public class InsertShoppingCartService {
 			}
 		}
 		// Session_idをハッシュコードで取得
+		System.out.println(session.getAttribute("user"));
 		Integer userId = session.getId().hashCode();
 		Timestamp deliveryTime = new Timestamp(System.currentTimeMillis());
 
@@ -73,7 +74,6 @@ public class InsertShoppingCartService {
 			order.setDeliveryTime(deliveryTime);
 			Integer orderId = orderRepository.insert(order).getId();
 			orderItem.setOrderId(orderId);
-			System.out.println("新規登録");
 
 		} else {
 			existedOrder.getOrderItemList().add(orderItem);
@@ -82,12 +82,9 @@ public class InsertShoppingCartService {
 		Integer orderItemId = orderItemRepository.insert(orderItem).getId();
 		for (OrderTopping orderTopping : orderToppingList) {
 			orderTopping.setOrderItemId(orderItemId);
-			System.out.println(orderTopping.getOrderItemId());
-			System.out.println(orderTopping.getToppingId());
 			if (orderItemForm.getOrderToppingIdList().size() != 0) {
 				orderToppingRepository.insert(orderTopping);
 			}
-			System.out.println("追加登録");
 		}
 	}
 	

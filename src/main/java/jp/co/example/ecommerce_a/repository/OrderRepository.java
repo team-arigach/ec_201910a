@@ -186,8 +186,15 @@ public class OrderRepository {
 	}
 	
 	public void updateUserId(Integer userId,Integer sessionId) {
-		String sql = "UPDATE orders SET user_id=userId WHERE user_id=sessionId";
+		String sql = "UPDATE orders SET user_id=:userId WHERE user_id=:sessionId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("sessionId", sessionId);
 		template.update(sql, param);
+	}
+	
+	public List<Order> findByOrderId(Integer orderId) {
+		String sql = "SELECT id FROM orders WHERE user_id=:userId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", orderId);
+		List<Order> orderList = template.query(sql, param,ORDER_ROW_MAPPER);
+		return orderList;
 	}
 }

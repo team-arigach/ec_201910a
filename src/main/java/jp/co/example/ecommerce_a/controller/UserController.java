@@ -55,9 +55,9 @@ public class UserController {
 			model.addAttribute("loginError", "メールアドレスかパスワードが一致しません。");
 			return toLogin();
 		}
-//		Integer sessionId = session.getId().hashCode();
-//		Integer orderId = orderRepository.findByUserIdAndStatus(sessionId, 0).getId();
-		
+		Integer sessionId = session.getId().hashCode();
+		Integer userId = user.getId();
+		userService.userIdUpdate(sessionId, userId);
 		return "redirect:/showItemList";
 	}
 	
