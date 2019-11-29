@@ -52,7 +52,9 @@ public class RegisterUserController {
 	 * @return ログイン画面リダイレクト. フォームに空欄等があれば入力フォームにフォワード.
 	 */
 	@RequestMapping("/register")
-	public String register(@Validated RegisterUserForm registerUserform,BindingResult result,Model model) {
+	public String register(@Validated RegisterUserForm registerUserform
+			, BindingResult result
+			, Model model) {
 		boolean ischeck = registerService.isCheckMailAddress(registerUserform.getEmail());
 		if(ischeck == false) {
 			result.rejectValue("email",null, "そのメールアドレスは登録されています");

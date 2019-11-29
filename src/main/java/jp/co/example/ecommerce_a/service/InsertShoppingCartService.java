@@ -60,9 +60,11 @@ public class InsertShoppingCartService {
 			}
 		}
 		// Session_idをハッシュコードで取得
+		
 		System.out.println(session.getAttribute("user"));
 		Integer userId = session.getId().hashCode();
 		Timestamp deliveryTime = new Timestamp(System.currentTimeMillis());
+		
 
 		// DBに存在するオーダーオブジェクト
 		Order existedOrder = orderRepository.findByUserIdAndStatus(userId, 0);

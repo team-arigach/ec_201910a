@@ -32,18 +32,14 @@ public class ShowShoppingCartController {
 		Order order = showShoppingCartService.showShoppingCart(userId, 0);
 		System.out.println(order);
 		if(order != null) {
-			model.addAttribute("order", order);
+			if(order.getOrderItemList().size() != 0) {
+				model.addAttribute("order", order);
+			}
 		}
 		return "cart_list";
 	}
 	
-	@RequestMapping("/mail")
-	public String send() {
-		System.err.println("メールを送信する。");
-		showShoppingCartService.send();
-		System.err.println("メールの送信完了");
-		return null;
-	}
+	
 	
 	
 

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.co.example.ecommerce_a.domain.Order;
-import jp.co.example.ecommerce_a.domain.OrderItem;
 import jp.co.example.ecommerce_a.domain.User;
 import jp.co.example.ecommerce_a.repository.OrderItemRepository;
 import jp.co.example.ecommerce_a.repository.OrderRepository;

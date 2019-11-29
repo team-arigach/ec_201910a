@@ -13,6 +13,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 </head>
 <body>
 	<div class="container">
@@ -27,8 +28,9 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ --> <img
-						alt="main log" th:src="@{img/header_logo.png}" height="35">
+					<a class="navbar-brand" href="item_list.html"
+						th:href="@{/showItemList}"> <!-- 企業ロゴ --> <img alt="main log"
+						th:src="@{img/header_logo.png}" height="35">
 					</a>
 				</div>
 
@@ -79,17 +81,18 @@
 									<span th:text="${orderItem.item.name}">商品名</span>
 								</div>
 							</td>
-							
+
 							<td><span class="price" th:text="${orderItem.size + 'サイズ'}">&nbsp;</span>&nbsp;&nbsp;
-							 <span th:if="${orderItem.size} == 'M'" th:text="${orderItem.item.priceM + '円'}" ></span> &nbsp;&nbsp;
-							 <span th:if="${orderItem.size} == 'L'" th:text="${orderItem.item.priceL + '円'}"></span> &nbsp;&nbsp;
-							 <span th:text="${orderItem.quantity}"></span>個<br>
-								
+								<span th:if="${orderItem.size} == 'M'"
+								th:text="${orderItem.item.priceM + '円'}"></span> &nbsp;&nbsp; <span
+								th:if="${orderItem.size} == 'L'"
+								th:text="${orderItem.item.priceL + '円'}"></span> &nbsp;&nbsp; <span
+								th:text="${orderItem.quantity}"></span>個<br>
 							<td>
 								<ul>
 									<li th:each="orderTopping:${orderItem.orderToppingList}">
-										<span th:text="${orderTopping.topping.name}"></span>
-										<span th:text="${orderTopping.topping.priceM}"></span>円
+										<span th:text="${orderTopping.topping.name}"></span> <span
+										th:text="${orderTopping.topping.priceM}"></span>円
 									</li>
 								</ul>
 							</td>
@@ -108,7 +111,7 @@
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
-					消費税：<span id="total-price" 
+					消費税：<span id="total-price"
 						th:text="${#numbers.formatInteger(order.totalPrice * 0.1, 1,'COMMA')}"></span>円<br>
 					ご注文金額合計：<span id="total-price"
 						th:text="${#numbers.formatInteger(order.totalPrice * 1.1, 1,'COMMA')} "></span>円
@@ -131,44 +134,41 @@
 									<div class="text-center">お名前</div>
 								</td>
 								<td><input type="text" name="destinationName"
-									th:field="*{destinationName}">
-									<span th:errors="*{destinationName}" style="color: red"></span>
-								</td>
+									th:field="*{destinationName}"> <span
+									th:errors="*{destinationName}" style="color: red"></span></td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">メールアドレス</div>
 								</td>
 								<td><input type="text" name="destinationEmail"
-									th:field="*{destinationEmail}">
-									<span th:errors="*{destinationEmail}" style="color: red"></span>
-								</td>
+									th:field="*{destinationEmail}"> <span
+									th:errors="*{destinationEmail}" style="color: red"></span></td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">郵便番号</div>
 								</td>
 								<td><input type="text" name="destinationZipcode"
-									th:field="*{destinationZipcode}">&nbsp;&nbsp;
-									<button>住所検索</button></td>
+									th:field="*{destinationZipcode}"
+									onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;
+									<!-- <button>住所検索</button></td> -->
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">住所</div>
 								</td>
 								<td><input type="text" name="destinationAddress"
-									th:field="*{destinationAddress}">
-									<span th:errors="*{destinationAddress}" style="color: red"></span>
-								</td>
+									th:field="*{destinationAddress}" size="65"> <span
+									th:errors="*{destinationAddress}" style="color: red"></span></td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">電話番号</div>
 								</td>
 								<td><input type="text" name="destinationTel"
-									th:field="*{destinationTel}">
-									<span th:errors="*{destinationTel}" style="color: red"></span>
-								</td>
+									th:field="*{destinationTel}"> <span
+									th:errors="*{destinationTel}" style="color: red"></span></td>
 							</tr>
 							<tr>
 								<td>
@@ -179,8 +179,8 @@
 										<div class="row">
 											<div class="col-sm-12"></div>
 											<div class="col-sm-5">
-											<span th:errors="*{deliveryTime}" style="color: red"></span><br>
-											<span th:errors="*{deliveryHour}" style="color: red"></span>
+												<span th:errors="*{deliveryTime}" style="color: red"></span><br>
+												<span th:errors="*{deliveryHour}" style="color: red"></span>
 												<input type="date" name="deliveryTime"
 													class="form-control input-sm">
 											</div>
@@ -243,8 +243,9 @@
 						</tbody>
 					</table>
 					<div id="credit_input">
-						クレジット番号<input type="text" name="cardNumber"><br>
-						有効期限 <select name="cardExpMonth">
+						クレジット番号<input type="text" name="card_number"
+							value="12345678910123456789"><br> 有効期限 <select
+							name="card_exp_month">
 							<option th:value="1">1</option>
 							<option th:value="2">2</option>
 							<option th:value="3">3</option>
@@ -257,8 +258,7 @@
 							<option th:value="10">10</option>
 							<option th:value="11">11</option>
 							<option th:value="12">12</option>
-						</select> 
-						<select name="cardExpYear">
+						</select> <select name="card_exp_year">
 							<option value="2019">2019</option>
 							<option value="2020">2020</option>
 							<option value="2021">2021</option>
@@ -279,9 +279,9 @@
 							<option value="2036">2036</option>
 							<option value="2037">2037</option>
 							<option value="2038">2038</option>
-						</select><br> 
-						カード名義人<input type="text" name="cardName"><br>
-						セキュリティーコード<input type="text" name="cardCvv"> ​
+						</select><br> カード名義人<input type="text" name="card_name"
+							value="TAKAHIRO SUZUKI"><br> セキュリティーコード<input
+							type="text" name="card_cvv" value="123"> ​
 					</div>
 				</div>
 			</div>
@@ -295,41 +295,20 @@
 			</div>
 		</form>
 	</div>
-	<button type="button" id="creditTest">テスト</button>
-	<script>
-	$(function() {
-		$("#credit_input").hide();
-		$("input[name=paymentMethod]:radio").on("change", function() {
-			if ($("#creditForm").prop("checked")) {
-				$("#credit_input").show();
-			} else {
-				$("#credit_input").hide();
-			}
-		});
-		
-		$("#creditTest").on("click", function(){
-			$.ajax({
-				type : "POST",
-				url : "http://192.168.56.101:8080/sample-credit-card-web-api/credit-card/payment",
-				dataType : "JSON",
-				data: {
-					'user_id': 1,
-					'amount': 1000,
-					'card_number': 1111222233334444,
-					'card_exp_year': 2019,
-					'card_exp_month': 04,
-					'card_name': "TAKAHIRO SUZUKI",
-					'card_cvv': 123}
-				}).done( (data) => {
-					console.log(data);
-				}).fail( (data) => {
-					console.log("失敗");
-					console.log(data);
-			});
-		});
-	});
-</script>
 	<!-- end container -->
+	<script>
+		$(function() {
+			$("#credit_input").hide();
+			$("input[name=paymentMethod]:radio").on("change", function() {
+				if ($("#creditForm").prop("checked")) {
+					$("#credit_input").show();
+				} else {
+					$("#credit_input").hide();
+				}
+			});
+
+		});
+	</script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

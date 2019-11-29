@@ -64,11 +64,17 @@ public class UserRepository {
 		template.update(sql, param);
 	}
 	
-	public List<User> findByMailAddress(String email) {
-		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
-		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
-		return userList;
+	public User findByMailAddress(String email) {
+		try {
+			String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email";
+			SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
+			User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
+			return user;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 	public User load(Integer id) {
