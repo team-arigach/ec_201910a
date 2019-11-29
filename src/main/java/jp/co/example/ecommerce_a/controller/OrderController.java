@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
+import jp.co.example.ecommerce_a.repository.OrderRepository;
 import jp.co.example.ecommerce_a.service.MailSenderService;
 import jp.co.example.ecommerce_a.service.OrderService;
+import jp.co.example.ecommerce_a.service.ShowShoppingCartService;
 import jp.co.example.ecommerce_a.service.TestDataService;
 
 
@@ -41,8 +43,8 @@ public class OrderController {
 	/**
 	 * 注文確認画面を表示する.
 	 * 
-	 * @param model　リクエストスコープ
-	 * @return　注文確認画面
+	 * @param model リクエストスコープ
+	 * @return 注文確認画面
 	 */
 	@RequestMapping("")
 	public String index(Integer id, Model model) {
@@ -62,22 +64,22 @@ public class OrderController {
 	/**
 	 * 注文する.
 	 * 
-	 * @param orderForm　注文フォーム
-	 * @param result　BindingResult
-	 * @param model　リクエストスコープ
-	 * @return　エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
+	 * @param orderForm 注文フォーム
+	 * @param result BindingResult
+	 * @param model リクエストスコープ
+	 * @return エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
 	@RequestMapping("/input")
 	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm, Model model) {
 		if(result.hasErrors()) {
-			return index(model);
+			return index(orderForm.getId(), model);
 		}
 		
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
 		
 		//パラメータで取得したdeliverryTimeとdeliveryHourTimestamp型に変換してOrderオブジェクトにセット
-		LocalDate localDate = orderForm.getDeliveryTime();
+		LocalDate localDate = orderForm.convertLocalDate(orderForm.getDeliveryTime());
 		int year = localDate.getYear();
 		int month = localDate.getMonthValue();
 		int date = localDate.getDayOfMonth();
@@ -86,7 +88,7 @@ public class OrderController {
 		LocalDateTime localDateTime = LocalDateTime.of(year, month, date, hour, minute);
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
-		
+		System.err.println("insertするオーダーの内容確認=>"+order);
 		orderService.order(order);
 		return "redirect:/order/toOrderFinish";
 	}
