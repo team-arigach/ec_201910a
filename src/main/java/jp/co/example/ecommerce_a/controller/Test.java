@@ -30,7 +30,7 @@ public class Test {
 	public String testCredit() {
 		CreditInfoForm form = new CreditInfoForm();
 		form.setCard_name("takahiro");
-		form.setCard_number(1234567891234567l);
+	//	form.setCard_number(1234567891234567l);
 		form.setCard_exp_year(2019);
 		form.setCard_exp_month(12);
 		form.setCard_cvv(123);

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
+import jp.co.example.ecommerce_a.service.MailSenderService;
 import jp.co.example.ecommerce_a.service.OrderService;
 import jp.co.example.ecommerce_a.service.TestDataService;
 
@@ -28,9 +29,6 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService orderService;
-	
-	@Autowired
-	private TestDataService testDataService;
 	
 	@Autowired
 	private MailSenderService mailSenderService;
@@ -47,10 +45,10 @@ public class OrderController {
 	 * @return　注文確認画面
 	 */
 	@RequestMapping("")
-	public String index(Model model) {
+	public String index(Integer id, Model model) {
 		
-		Order order = testDataService.testOrder();
-		model.addAttribute("order",order);
+		Order order = orderService.showOrder(id);
+		model.addAttribute("order", order);
 		
 		List<Integer> deliveryTimeList = new ArrayList<>();
 		for( int i = 10; i <= 21; i++){
