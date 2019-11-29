@@ -21,12 +21,6 @@ public class CreditInfoService {
 	    return new RestTemplate();
 	}
 	
-	public CreditInfo convertCredit(CreditInfoForm form) {
-		CreditInfo creditInfo = new CreditInfo();
-		BeanUtils.copyProperties(form, creditInfo);
-		creditInfo.setCard_number(form.getLongCardNumber(form.getCard_number()));
-		return creditInfo;
-	}
 	
 	/**
 	 * クレジットカード情報を送信し、結果をJSON形式で取得する.

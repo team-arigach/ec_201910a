@@ -76,16 +76,12 @@ public class OrderController {
 		if(result.hasErrors()) {
 			return index(orderForm.getId(), model);
 		}
-		
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
-		
-		System.err.println("クレジット情報 => " + creditInfoForm);
-		
 		// クレジット処理に関して
 		if( orderForm.getPaymentMethod() == 2) {
-			CreditInfo creditInfo = creditInfoService.convertCredit(creditInfoForm);
-			System.err.println("クレジット情報返還後 => " + creditInfo);
+			CreditInfo creditInfo = new CreditInfo();
+			BeanUtils.copyProperties(creditInfoForm, creditInfo);
 			if ( !creditInfoService.isCheckCreditInfo(creditInfo)) {
 				model.addAttribute("creditError", "カード情報が正しくありません。");
 				return index(orderForm.getId(), model);
@@ -102,7 +98,6 @@ public class OrderController {
 		LocalDateTime localDateTime = LocalDateTime.of(year, month, date, hour, minute);
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
-		System.err.println("insertするオーダーの内容確認=>"+order);
 		orderService.order(order);
 		return "redirect:/order/toOrderFinish";
 	}
