@@ -23,7 +23,7 @@ public class ShowItemListService {
 	 */
 
 	public List<List<Item>> findByLikeName(String name) {
-		//オートコンプリートで使用しているのでメソッド化したい
+		// オートコンプリートで使用しているのでメソッド化したい
 		List<Item> itemList = null;
 		if (name == null || name.equals("")) {
 			// 検索文字列が空なら全件検索
@@ -58,10 +58,10 @@ public class ShowItemListService {
 			// 検索文字列があれば曖昧検索
 			itemList = itemRepository.findByLikeName(name);
 		}
-		
+
 		StringBuilder itemListForAutocompleate = new StringBuilder();
-		for(int i = 0; i < itemList.size(); i++) {
-			if(i != 0) {
+		for (int i = 0; i < itemList.size(); i++) {
+			if (i != 0) {
 				itemListForAutocompleate.append(",");
 			}
 			Item item = itemList.get(i);
@@ -71,16 +71,20 @@ public class ShowItemListService {
 		}
 		return itemListForAutocompleate;
 	}
-	
-	public List<List<Item>> findByLikeNameAbout8(String name) {
-		//オートコンプリートで使用しているのでメソッド化したい
+
+	public List<List<Item>> findByLikeNameAboutSum(String name,Integer offSet) {
+		if(offSet==null) {
+			offSet=0;
+		}
+		System.out.println(name);
+		// オートコンプリートで使用しているのでメソッド化したい
 		List<Item> itemList = null;
 		if (name == null || name.equals("")) {
 			// 検索文字列が空なら全件検索
-			itemList = itemRepository.findAll();
+			itemList = itemRepository.findAllAboutSum(offSet);
 		} else {
 			// 検索文字列があれば曖昧検索
-			itemList = itemRepository.findByLikeName(name);
+			itemList = itemRepository.findByLikeNameAboutSum(name,offSet);
 		}
 		List<List<Item>> bigItemList = new ArrayList<>();
 		List<Item> smallItemsList = null;
@@ -93,18 +97,73 @@ public class ShowItemListService {
 		}
 		return bigItemList;
 	}
-	
+
 	public Integer findByStartPoint(Integer page) {
-		if(page == null) {
+		if (page == null) {
 			return 0;
 		}
-		return (page-1) * 8;
+		return (page - 1) * 8;
+	}
+	
+	public StringBuilder getItemListForAutocompleteAboutSum(String name,Integer count,Integer pageNumber) {
+		List<Item> itemList = null;
+		Integer offSet = makeOffSet(pageNumber, count);
+		if (name == null || name.equals("")) {
+			// 検索文字列が空なら全件検索
+			itemList = itemRepository.findAllAboutSum(offSet);
+		} else {
+			// 検索文字列があれば曖昧検索
+			itemList = itemRepository.findByLikeName(name);
+		}
+
+		StringBuilder itemListForAutocompleate = new StringBuilder();
+		for (int i = 0; i < itemList.size(); i++) {
+			if (i != 0) {
+				itemListForAutocompleate.append(",");
+			}
+			Item item = itemList.get(i);
+			itemListForAutocompleate.append("\"");
+			itemListForAutocompleate.append(item.getName());
+			itemListForAutocompleate.append("\"");
+		}
+		return itemListForAutocompleate;
 	}
 
+	/**
+	 * ページのリストを返す. 追加開発
+	 * 
+	 * @param totalItemCount
+	 * @return ページのリストを返す.
+	 */
+	public List<Integer> makeByPageList(Integer viewCountOfOnePage,Integer itemCount) {
+		Integer totalPage = null;
+		if (itemCount % viewCountOfOnePage == 0) {
+			totalPage = itemCount / viewCountOfOnePage;
+		} else {
+			totalPage = itemCount / viewCountOfOnePage + 1;
+		}
+		List<Integer> pageList = new ArrayList<>();
+		for (int i = 1; i <= totalPage; i++) {
+			pageList.add(i);
+		}
+		return pageList;
+	}
 
-//	public List<Integer> findByPageList(Integer totalItemCount){
-//		List<Item> itemList = itemRepository.findAll();
-//		
-//		return itemList;
-//	}
+	/**
+	 * offSetの数値を決める.
+	 * 
+	 * @param pageNumber クリックされたページ数
+	 * @param viewCountOfOnetePage 1ページ辺りに表示したい件数
+	 * @return
+	 */
+	public Integer makeOffSet(Integer pageNumber, Integer viewCountOfOnetePage) {
+		// offSetの数字を決める
+		if (pageNumber == null) {
+			return 0;
+		} else {
+			return (pageNumber- 1) * viewCountOfOnetePage;
+		}
+		
+	}
+
 }
