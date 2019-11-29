@@ -2,12 +2,12 @@ package jp.co.example.ecommerce_a.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.repository.OrderRepository;
-import jp.co.example.ecommerce_a.service.CreditInfoService;
 
 @Controller
 @RequestMapping("/test")
@@ -16,8 +16,6 @@ public class Test {
 	@Autowired
 	private OrderRepository orderRepository;
 	
-	@Autowired
-	private CreditInfoService creditInfoService;
 	
 	@RequestMapping("/testNull")
 	public String method() {
@@ -38,7 +36,7 @@ public class Test {
 		form.setUserId(1);
 		form.setOrder_number(12345678912345l);
 		System.err.println(form);
-		System.err.println(creditInfoService.isCheckCreditInfo(form));
+	//	System.err.println(creditInfoService.isCheckCreditInfo(form));
 		return null;
 	}
 

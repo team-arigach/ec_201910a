@@ -1,6 +1,5 @@
 package jp.co.example.ecommerce_a.service;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -8,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 
 import jp.co.example.ecommerce_a.domain.CreditInfo;
 import jp.co.example.ecommerce_a.domain.CreditStatus;
-import jp.co.example.ecommerce_a.form.CreditInfoForm;
 
 @Service
 public class CreditInfoService {

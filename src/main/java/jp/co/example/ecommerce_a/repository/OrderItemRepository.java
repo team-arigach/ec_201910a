@@ -48,6 +48,12 @@ public class OrderItemRepository {
 		template.update(sql, param);		
 	}
 	
+	public void update(OrderItem orderItem) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
+		String sql = "UPDATE order_items SET id = :id, item_id = :itemId, order_id = :orderId, quantity = :quantity, size = :size WHERE id = :id;";
+		template.update(sql, param);
+	}
+	
 
 	
 }

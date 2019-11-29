@@ -1,14 +1,15 @@
 package jp.co.example.ecommerce_a.service;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
+import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.domain.OrderItem;
 import jp.co.example.ecommerce_a.domain.OrderTopping;
@@ -43,7 +44,17 @@ public class InsertShoppingCartService {
 	 *
 	 * @param orderItemForm リクエストパラメータ
 	 */
-	public void insertOrder(OrderItemForm orderItemForm) {
+	public void insertOrder(OrderItemForm orderItemForm, @AuthenticationPrincipal LoginUser loginUser) {
+
+		
+		Integer userId = session.getId().hashCode();
+		Order preOrder = null;
+		Integer orderId = 0;
+		
+		// これは必ず生成する。
+		// =============================================================================
+
+		// orderItemListに格納するOderItemオブジェクトを作成
 		OrderItem orderItem = new OrderItem();
 		orderItem.setItemId(orderItemForm.getIntItemId());
 		orderItem.setQuantity(orderItemForm.getIntQuantity());
@@ -59,26 +70,42 @@ public class InsertShoppingCartService {
 				orderToppingList.add(orderTopping);
 			}
 		}
-		// Session_idをハッシュコードで取得
-		Integer userId = session.getId().hashCode();
-		Timestamp deliveryTime = new Timestamp(System.currentTimeMillis());
+		// ==============================================================================
 
+		if (loginUser != null) {
+			userId = loginUser.getUser().getId();
+			Integer preLoginId = (Integer) session.getAttribute("userId");
+			preOrder = orderRepository.findByUserIdAndStatus(preLoginId, 0);
+
+		} else {
+			// Session_idをハッシュコードで取得
+			session.setAttribute("userId", userId);
+		}
+		
 		// DBに存在するオーダーオブジェクト
 		Order existedOrder = orderRepository.findByUserIdAndStatus(userId, 0);
+		
 		if (existedOrder == null) {
 			Order order = new Order();
 			order.setUserId(userId);
 			order.setStatus(0);
 			order.setTotalPrice(0);
-			order.setDeliveryTime(deliveryTime);
-			Integer orderId = orderRepository.insert(order).getId();
+			orderId = orderRepository.insert(order).getId();
 			orderItem.setOrderId(orderId);
-			System.out.println("新規登録");
-
+			System.err.println("新規登録");
 		} else {
+			orderId = existedOrder.getId();
 			existedOrder.getOrderItemList().add(orderItem);
 			orderItem.setOrderId(existedOrder.getId());
 		}
+		
+		if( preOrder != null ) {
+			for (OrderItem preOrderItem : preOrder.getOrderItemList()) {
+				preOrderItem.setOrderId(orderId);
+				orderItemRepository.update(preOrderItem);
+			}
+		}
+		
 		Integer orderItemId = orderItemRepository.insert(orderItem).getId();
 		for (OrderTopping orderTopping : orderToppingList) {
 			orderTopping.setOrderItemId(orderItemId);
@@ -87,10 +114,10 @@ public class InsertShoppingCartService {
 			if (orderItemForm.getOrderToppingIdList().size() != 0) {
 				orderToppingRepository.insert(orderTopping);
 			}
-			System.out.println("追加登録");
+			System.err.println("追加登録");
 		}
 	}
-	
+
 	/**
 	 * ショッピングカートのアイテムを消去するメソッド
 	 * 
@@ -99,6 +126,6 @@ public class InsertShoppingCartService {
 	public void deteleOrder(Integer orderItemid) {
 		orderToppingRepository.delete(orderItemid);
 		orderItemRepository.delete(orderItemid);
-		
+
 	}
 }
