@@ -23,9 +23,12 @@ public class AddShoppingCartService {
 	private OrderItemRepository orderItemRepository;
 
 	public void addShoppingCart(Integer loginUserId) {
+		System.err.println("ログインしているとこの処理に進む(AddShoppingCartService 26行目)");
 		Integer userId = (Integer) session.getAttribute("userId");
 		Order preOrder = orderRepository.findByUserIdAndStatus(userId, 0);
+		System.err.println("この状況のpreOrder = > "+ preOrder);
 		Order order = orderRepository.findByUserIdAndStatus(loginUserId, 0);
+		System.err.println("この状況のOrder = > "+ order);
 
 		if(order != null) {
 			if (preOrder != null) {
@@ -35,11 +38,13 @@ public class AddShoppingCartService {
 				}
 			}
 			
-		} else {
+		}
+		if(order == null){
 			if( preOrder != null) {
 				Order newOrder = new Order();
 				newOrder.setStatus(0);
 				newOrder.setTotalPrice(0);
+				newOrder.setUserId(loginUserId);
 				Integer id = orderRepository.insert(newOrder).getId();
 				for (OrderItem preOrderItem : preOrder.getOrderItemList()) {
 					preOrderItem.setOrderId(id);

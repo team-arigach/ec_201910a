@@ -63,7 +63,7 @@ public class OrderController {
 	 * @return 注文確認画面
 	 */
 	@RequestMapping("")
-	public String index(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+	public String index(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		
 		addShoppingCartService.addShoppingCart(loginUser.getUser().getId());
 		Order order = showShoppingCartService.showShoppingCart(loginUser.getUser().getId(), 0);
@@ -91,7 +91,7 @@ public class OrderController {
 	@RequestMapping("/input")
 	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
-			return index(orderForm.getId(), model, loginUser);
+			return index(model, loginUser);
 		}
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
@@ -101,7 +101,7 @@ public class OrderController {
 			BeanUtils.copyProperties(creditInfoForm, creditInfo);
 			if ( !creditInfoService.isCheckCreditInfo(creditInfo)) {
 				model.addAttribute("creditError", "カード情報が正しくありません。");
-				return index(orderForm.getId(), model, loginUser);
+				return index(model, loginUser);
 			}
 		}
 		
