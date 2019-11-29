@@ -42,6 +42,7 @@ public class ShowItemController {
 	@RequestMapping("/")
 	public String showItemList(String name, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<List<Item>> bigItemList = showItemListService.findByLikeName(name);
+		// 空文字かnullだった場合エラメッセージを表示
 		if(bigItemList.isEmpty()) {
 			model.addAttribute("message", "該当する商品はありません");
 			bigItemList = showItemListService.findByLikeName("");
