@@ -20,12 +20,18 @@ public class OrderService {
 	 * @param order　注文情報
 	 */
 	public void order(Order order) {
-		orderRepository.findByUserIdAndStatus(order.getUserId(), 0);
+		Order updateOrder = orderRepository.load(order.getId());
+		// DBから取得したオーダーのuser_idを取得し、インサートするオーダーにセット
+		order.setUserId(updateOrder.getUserId());
+		// DBから取得したオーダーの合計金額を取得し、インサートするオーダーにセット
+		order.setTotalPrice(updateOrder.getCalcTotalPrice());
 		if(order.getPaymentMethod() == 1) {
 			order.setStatus(1);
-		}else if(order.getPaymentMethod() == 2) {
+		}
+		if(order.getPaymentMethod() == 2) {
 			order.setStatus(2);
 		}
+		System.err.println("最終情報構成=>" + order);
 		orderRepository.update(order);
 	}
 	

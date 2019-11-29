@@ -137,11 +137,11 @@ public class OrderRepository {
 				+ "ORDER BY o.id ,oi.id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
-		if( orderList.size() > 0) { // オーダーリストが存在する場合
-			System.err.println(orderList.get(0));
-			return orderList.get(0);
+		if( orderList.size() == 0) { // オーダーリストが存在する場合
+			return null;
 		}
-		return null;
+		System.err.println(orderList.get(0));
+		return orderList.get(0);
 	}
 	
 	/**

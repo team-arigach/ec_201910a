@@ -15,12 +15,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.example.ecommerce_a.domain.CreditInfo;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
+import jp.co.example.ecommerce_a.service.CreditInfoService;
 import jp.co.example.ecommerce_a.service.MailSenderService;
 import jp.co.example.ecommerce_a.service.OrderService;
-import jp.co.example.ecommerce_a.service.TestDataService;
 
 
 @Controller
@@ -33,6 +34,9 @@ public class OrderController {
 	@Autowired
 	private MailSenderService mailSenderService;
 	
+	@Autowired
+	private CreditInfoService creditInfoService;
+	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
 		return new OrderForm();
@@ -41,8 +45,8 @@ public class OrderController {
 	/**
 	 * 注文確認画面を表示する.
 	 * 
-	 * @param model　リクエストスコープ
-	 * @return　注文確認画面
+	 * @param model リクエストスコープ
+	 * @return 注文確認画面
 	 */
 	@RequestMapping("")
 	public String index(Integer id, Model model) {
@@ -62,22 +66,34 @@ public class OrderController {
 	/**
 	 * 注文する.
 	 * 
-	 * @param orderForm　注文フォーム
-	 * @param result　BindingResult
-	 * @param model　リクエストスコープ
-	 * @return　エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
+	 * @param orderForm 注文フォーム
+	 * @param result BindingResult
+	 * @param model リクエストスコープ
+	 * @return エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
 	@RequestMapping("/input")
 	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm, Model model) {
 		if(result.hasErrors()) {
-			return index(model);
+			return index(orderForm.getId(), model);
 		}
 		
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
 		
+		System.err.println("クレジット情報 => " + creditInfoForm);
+		
+		// クレジット処理に関して
+		if( orderForm.getPaymentMethod() == 2) {
+			CreditInfo creditInfo = creditInfoService.convertCredit(creditInfoForm);
+			System.err.println("クレジット情報返還後 => " + creditInfo);
+			if ( !creditInfoService.isCheckCreditInfo(creditInfo)) {
+				model.addAttribute("creditError", "カード情報が正しくありません。");
+				return index(orderForm.getId(), model);
+			}
+		}
+		
 		//パラメータで取得したdeliverryTimeとdeliveryHourTimestamp型に変換してOrderオブジェクトにセット
-		LocalDate localDate = orderForm.getDeliveryTime();
+		LocalDate localDate = orderForm.convertLocalDate(orderForm.getDeliveryTime());
 		int year = localDate.getYear();
 		int month = localDate.getMonthValue();
 		int date = localDate.getDayOfMonth();
@@ -86,7 +102,7 @@ public class OrderController {
 		LocalDateTime localDateTime = LocalDateTime.of(year, month, date, hour, minute);
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
-		
+		System.err.println("insertするオーダーの内容確認=>"+order);
 		orderService.order(order);
 		return "redirect:/order/toOrderFinish";
 	}
