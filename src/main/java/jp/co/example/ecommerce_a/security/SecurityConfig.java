@@ -42,12 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-				.antMatchers("/order/**", "/registerUser/**", "/shoppingCart/**", "/showConfirm", "/showItemList",
+				.antMatchers("/order/**", "/registerUser/**", "/shoppingCart/**", "/showConfirm", "/",
 						"/detail/**", "/cartList", "/login", "/logout")
 				.permitAll().antMatchers("/orderHistory").hasRole("USER").anyRequest().authenticated();
 
 		http.formLogin().loginPage("/login").loginProcessingUrl("/userLogin").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/showItemList", false) // 第1引数:デフォルトでログイン成功時に遷移させるパス
+				.defaultSuccessUrl("/", false) // 第1引数:デフォルトでログイン成功時に遷移させるパス
 															// 第2引数: true :認証後常に第1引数のパスに遷移
 															// false:認証されてなくて一度ログイン画面に飛ばされてもログインしたら指定したURLに遷移
 				.usernameParameter("email").passwordParameter("password"); // 認証時に使用するパスワードのリクエストパラメータ名

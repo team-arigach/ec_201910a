@@ -97,9 +97,12 @@
 									<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
 								</div>
 							</td>
-							<td><span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span
-								th:text="${orderItem.item.priceM}">2,380</span>円 &nbsp;&nbsp;<span
-								th:text="${orderItem.quantity}">1</span>個</td>
+							<td><span class="price" th:text="${orderItem.size}">&nbsp;</span>&nbsp;&nbsp;
+							<span th:if="${orderItem.size} == 'M'"
+								th:text="${orderItem.item.priceM + '円'}"></span> &nbsp;&nbsp; <span
+								th:if="${orderItem.size} == 'L'"
+								th:text="${orderItem.item.priceL + '円'}"></span> &nbsp;&nbsp; <span
+								th:text="${orderItem.quantity}"></span>個<br>
 							<td>
 								<ul>
 									<li th:each="orderTopping:${orderItem.orderToppingList}"><span
