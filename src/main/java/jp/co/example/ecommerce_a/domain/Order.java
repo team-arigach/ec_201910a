@@ -57,10 +57,13 @@ public class Order {
 	 * @return 合計金額
 	 */
 	public int getCalcTotalPrice() {
-//		int totalPrice = orderItem.getSubTotal();
-//		System.out.println(totalPrice);
-//		return totalPrice;
-		return 300; // 警告を消すため
+		int totalPrice = 0;
+		for( OrderItem orderItem : this.orderItemList) {
+		  totalPrice += orderItem.getSubTotal();
+		}
+		System.out.println(totalPrice);
+		return totalPrice;
+//		return 300; // 警告を消すため
 	}
 
 	// 以下 getter / setter

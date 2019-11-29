@@ -82,7 +82,7 @@
 								</div>
 							</td>
 
-							<td><span class="price" th:text="${orderItem.size + 'サイズ'}">&nbsp;</span>&nbsp;&nbsp;
+							<td><span class="price" th:text="${orderItem.size}">&nbsp;</span>&nbsp;&nbsp;
 								<span th:if="${orderItem.size} == 'M'"
 								th:text="${orderItem.item.priceM + '円'}"></span> &nbsp;&nbsp; <span
 								th:if="${orderItem.size} == 'L'"
