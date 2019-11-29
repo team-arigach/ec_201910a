@@ -40,7 +40,7 @@ public class ShowItemController {
 	 * @param model
 	 * @return 商品全件画面か検索結果画面
 	 */
-	@RequestMapping("/showItemList")
+	@RequestMapping("/")
 	public String showItemList(String name, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<List<Item>> bigItemList = showItemListService.findByLikeName(name);
 		if(bigItemList.isEmpty()) {

@@ -26,7 +26,7 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" th:href="@{/showItemList}"> <!-- 企業ロゴ --> <img
+					<a class="navbar-brand" th:href="@{/}"> <!-- 企業ロゴ --> <img
 						alt="main log" th:src="@{/img/header_logo.png}" height="35">
 					</a>
 				</div>
@@ -57,7 +57,7 @@
 					<!-- Site Title, your name, HELLO msg, etc. -->
 					<h1 class="title">カートに商品がありません</h1>
 					<p>
-						<a th:href="@{/showItemList}"
+						<a th:href="@{/}"
 							class="btn btn-default btn-lg btn-download">商品一覧に戻る</a>
 					</p>
 
@@ -97,9 +97,12 @@
 									<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
 								</div>
 							</td>
-							<td><span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span
-								th:text="${orderItem.item.priceM}">2,380</span>円 &nbsp;&nbsp;<span
-								th:text="${orderItem.quantity}">1</span>個</td>
+							<td><span class="price" th:text="${orderItem.size}">&nbsp;</span>&nbsp;&nbsp;
+							<span th:if="${orderItem.size} == 'M'"
+								th:text="${orderItem.item.priceM + '円'}"></span> &nbsp;&nbsp; <span
+								th:if="${orderItem.size} == 'L'"
+								th:text="${orderItem.item.priceL + '円'}"></span> &nbsp;&nbsp; <span
+								th:text="${orderItem.quantity}"></span>個<br>
 							<td>
 								<ul>
 									<li th:each="orderTopping:${orderItem.orderToppingList}"><span
