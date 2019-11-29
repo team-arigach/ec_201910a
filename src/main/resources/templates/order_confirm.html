@@ -41,8 +41,8 @@
 						<a href="cart_list.html" class="navbar-link"
 							th:href="@{/cartList}">ショッピングカート</a>&nbsp;&nbsp; <a
 							href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-						<a href="login.html" class="navbar-link" th:href="@{/login}">ログイン</a>&nbsp;&nbsp;
-						<a href="item_list.html" class="navbar-link" th:href="@{/logout}">ログアウト</a>
+						<a sec:authorize="isAnonymous()" href="login.html" class="navbar-link" th:href="@{/login}">ログイン</a>&nbsp;&nbsp;
+						<a sec:authorize="hasRole('ROLE_USER')" href="item_list.html" class="navbar-link" th:href="@{/logout}">ログアウト</a>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
