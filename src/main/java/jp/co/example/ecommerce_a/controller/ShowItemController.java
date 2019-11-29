@@ -28,8 +28,7 @@ public class ShowItemController {
 	@Autowired
 	private ShowItemListService showItemListService;
 	@Autowired
-	private AddShoppingCartService addShoppingCartService;
-	
+	private AddShoppingCartService addShoppingCartService;	
 	@Autowired
 	private HttpSession session;
 	
@@ -53,7 +52,7 @@ public class ShowItemController {
 			addShoppingCartService.addShoppingCart(loginUser.getUser().getId());	
 		}
 		
-		// オートコンプリート用にJavaScriptの配列の中身を文字列で作ってスコープへ格納
+		// オートコンプリート用に配列の中身を文字列で作ってスコープへ格納
 		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(name);
 		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
 		

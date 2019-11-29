@@ -45,7 +45,7 @@ public class ShowItemListService {
 	}
 
 	/**
-	 * オートコンプリート用にJavaScriptの配列の中身を文字列で作ります.
+	 * オートコンプリート用に配列の中身を文字列で作成.
 	 * 
 	 * @return 商品情報一覧
 	 */
@@ -57,6 +57,7 @@ public class ShowItemListService {
 		} else {
 			// 検索文字列があれば曖昧検索
 			itemList = itemRepository.findByLikeName(name);
+			itemList = itemRepository.findAll();
 		}
 		
 		StringBuilder itemListForAutocompleate = new StringBuilder();
