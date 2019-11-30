@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,9 +37,12 @@
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
 						<a th:href="@{/cartList}" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
-						<a sec:authorize="hasRole('ROLE_USER')" th:href="@{/orderHistory}" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-						<a sec:authorize="isAnonymous()" th:href="@{/login}" class="navbar-link">ログイン</a>&nbsp;&nbsp; <a sec:authorize="hasRole('ROLE_USER')"
-							th:href="@{/logout}" class="navbar-link">ログアウト</a>
+						<a sec:authorize="hasRole('ROLE_USER')" th:href="@{/orderHistory}"
+							class="navbar-link">注文履歴</a>&nbsp;&nbsp; <a
+							sec:authorize="isAnonymous()" th:href="@{/login}"
+							class="navbar-link">ログイン</a>&nbsp;&nbsp; <a
+							sec:authorize="hasRole('ROLE_USER')" th:href="@{/logout}"
+							class="navbar-link">ログアウト</a>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -57,8 +61,7 @@
 					<!-- Site Title, your name, HELLO msg, etc. -->
 					<h1 class="title">カートに商品がありません</h1>
 					<p>
-						<a th:href="@{/}"
-							class="btn btn-default btn-lg btn-download">商品一覧に戻る</a>
+						<a th:href="@{/}" class="btn btn-default btn-lg btn-download">商品一覧に戻る</a>
 					</p>
 
 				</div>
@@ -92,14 +95,17 @@
 						<tr th:each="orderItem:${order.orderItemList}">
 							<td>
 								<div class="center">
-									<img th:if="${orderItem.item.imagePath.length() < 50}" src="img/1.jpg" th:src="'/img/' + ${orderItem.item.imagePath}" class="img-responsive img-rounded" width="100" height="300">
-							<img th:unless="${orderItem.item.imagePath.length() < 50}" src="img/1.jpg" th:src="${orderItem.item.imagePath}" class="img-responsive img-rounded" width="100" height="300">
-							<br>
-									<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
+									<img th:if="${orderItem.item.imagePath.length() < 50}"
+										src="img/1.jpg" th:src="'/img/' + ${orderItem.item.imagePath}"
+										class="img-responsive img-rounded" width="100" height="300">
+									<img th:unless="${orderItem.item.imagePath.length() < 50}"
+										src="img/1.jpg" th:src="${orderItem.item.imagePath}"
+										class="img-responsive img-rounded" width="100" height="300">
+									<br> <span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
 								</div>
 							</td>
 							<td><span class="price" th:text="${orderItem.size}">&nbsp;</span>&nbsp;&nbsp;
-							<span th:if="${orderItem.size} == 'M'"
+								<span th:if="${orderItem.size} == 'M'"
 								th:text="${orderItem.item.priceM + '円'}"></span> &nbsp;&nbsp; <span
 								th:if="${orderItem.size} == 'L'"
 								th:text="${orderItem.item.priceL + '円'}"></span> &nbsp;&nbsp; <span
@@ -118,7 +124,8 @@
 							</td>
 							<td>
 								<div class="text-center">
-								<a class="btn btn-primary" role="button" th:href="@{'/shoppingCart/deleteItem?orderItemId='+${orderItem.id}}">削除</a>
+									<a class="btn btn-primary" role="button"
+										th:href="@{'/shoppingCart/deleteItem?orderItemId='+${orderItem.id}}">削除</a>
 								</div>
 							</td>
 						</tr>
@@ -130,9 +137,10 @@
 		<div class="row" th:if="${order}">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
-					<span id="total-price">消費税：<span th:text="${order.getTax()}">8000</span>円</span><br> 
-					<span
-						id="total-price">ご注文金額合計：<span th:text="${order.getCalcTotalPrice() + order.getTax()}">8000</span>円(税込)</span>
+					<span id="total-price">消費税：<span th:text="${order.getTax()}">8000</span>円
+					</span><br> <span id="total-price">ご注文金額合計：<span
+						th:text="${order.getCalcTotalPrice() + order.getTax()}">8000</span>円(税込)
+					</span>
 				</div>
 			</div>
 		</div>
@@ -141,9 +149,9 @@
 			<div class="col-xs-offset-5 col-xs-3">
 				<div class="form-group">
 					<form action="order_confirm.html" th:action="@{/order}">
-					<input type="hidden" name="id" th:value="${order.id}">
-						<input class="form-control btn btn-warning btn-block"
-							type="submit" value="注文に進む">
+						<input type="hidden" name="id" th:value="${order.id}"> <input
+							class="form-control btn btn-warning btn-block" type="submit"
+							value="注文に進む">
 					</form>
 				</div>
 			</div>
