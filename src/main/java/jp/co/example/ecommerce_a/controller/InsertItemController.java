@@ -43,6 +43,7 @@ public class InsertItemController {
 		base64image.append(base64);
 		item.setImagePath(base64image.toString());
 		System.err.println("item = "+item);
+		item.setId(itemService.itemCount()+1);
 		
 		itemService.insertItem(item);
 		

@@ -26,5 +26,9 @@ public class InsertItemService {
 		itemRepository.insert(item);
 		
 	}
+	
+	public int itemCount() {
+		return itemRepository.findAll().size();
+	}
 
 }

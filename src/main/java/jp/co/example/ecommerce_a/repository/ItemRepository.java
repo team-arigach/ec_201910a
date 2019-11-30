@@ -85,6 +85,7 @@ public class ItemRepository {
 		template.update(sql, param);
 		System.err.println("一件の登録が完了しました。");
 	}
+	
 
 	public List<Item> findAllAboutSum(Integer offSet){
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items limit 6 offset :offSet";
