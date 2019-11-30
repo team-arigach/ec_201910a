@@ -57,7 +57,7 @@ public class ShowConfirmController {
 		Order order = showConfirmService.showOrderConfirm(userId, 0);
 		System.out.println(order);
 		if(order != null) {
-			sortItemService.sortOrderItem(order);
+			sortItemService.sortOrderItemByM(order);
 			if(order.getOrderItemList().size() != 0) {
 			model.addAttribute("order", order);
 			}

@@ -51,4 +51,15 @@ public class OrderToppingRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
 		template.update(sql, param);
 	}
+	public void deleteByPk(Integer orderToppingId) {
+		String sql = "DELETE FROM order_toppings WHERE id= :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", orderToppingId);
+		template.update(sql, param);
+	}
+	
+	public void update(OrderTopping orderTopping) {
+		String sql = "UPDATE order_toppings SET id = :id, topping_id = :toppingId, order_item_id = :orderItemId WHERE id= :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", orderTopping.getId()).addValue("toppingId", orderTopping.getToppingId()).addValue("orderItemId", orderTopping.getOrderItemId());
+		template.update(sql, param);
+	}
 }

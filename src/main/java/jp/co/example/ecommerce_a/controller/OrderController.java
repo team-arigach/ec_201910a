@@ -67,8 +67,9 @@ public class OrderController {
 		
 		addShoppingCartService.addShoppingCart(loginUser.getUser().getId());
 		Order order = showShoppingCartService.showShoppingCart(loginUser.getUser().getId(), 0);
-		sortItemService.sortOrderItem(order);
-		
+		sortItemService.sortOrderItemByM(order);
+		sortItemService.sortOrderItemByL(order);
+		order = showShoppingCartService.showShoppingCart(loginUser.getUser().getId(), 0);
 		model.addAttribute("order", order);
 		
 		List<Integer> deliveryTimeList = new ArrayList<>();
