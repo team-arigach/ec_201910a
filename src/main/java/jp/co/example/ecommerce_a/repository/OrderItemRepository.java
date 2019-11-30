@@ -31,10 +31,14 @@ public class OrderItemRepository {
 		insert = withTableName.usingGeneratedKeyColumns("id");
 	}
 	
-	private static final RowMapper<OrderItem> ORDER_ITEM_ROW_MAPPER = (rs,i) ->{
+	private static RowMapper<OrderItem> ORDER_ITEM_ROW_MAPPER = (rs,i) ->{
 		
 		OrderItem orderItem = new OrderItem();
 		orderItem.setId(rs.getInt("id"));
+		orderItem.setOrderId(rs.getInt("order_id"));
+		orderItem.setQuantity(rs.getInt("quantity"));
+		orderItem.setItemId(rs.getInt("item_id"));
+		orderItem.setSize(rs.getString("size").charAt(0));
 		return orderItem;
 	};
 
@@ -62,6 +66,17 @@ public class OrderItemRepository {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
 		String sql = "UPDATE order_items SET id = :id, item_id = :itemId, order_id = :orderId, quantity = :quantity, size = :size WHERE id = :id;";
 		template.update(sql, param);
+	}
+	
+	public OrderItem load(Integer id) {
+		try {
+			String sql = "SELECT id, order_id, quantity, item_id, size FROM order_items WHERE id = :id;";
+			SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+			return template.queryForObject(sql, param, ORDER_ITEM_ROW_MAPPER);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 

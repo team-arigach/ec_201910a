@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.example.ecommerce_a.domain.CreditInfo;
 import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.domain.Order;
+import jp.co.example.ecommerce_a.domain.OrderItem;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
 import jp.co.example.ecommerce_a.service.AddShoppingCartService;
@@ -72,12 +73,20 @@ public class OrderController {
 		order = showShoppingCartService.showShoppingCart(loginUser.getUser().getId(), 0);
 		model.addAttribute("order", order);
 		
+		// quantityに表示する要素数
+		int[] count = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+		
+		// 配達時間の表示
 		List<Integer> deliveryTimeList = new ArrayList<>();
 		for( int i = 10; i <= 21; i++){
-			deliveryTimeList.add(i);
+			LocalDateTime date = LocalDateTime.now();
+			if( date.getHour() < i ) {
+				deliveryTimeList.add(i);
+			}
 		}
+		model.addAttribute("toppingListAll", orderService.toppingList());
 		model.addAttribute("deliveryTimeList", deliveryTimeList);
-		
+		model.addAttribute("count", count);
 		return "order_confirm";
 	}
 	
@@ -131,5 +140,13 @@ public class OrderController {
 		mailSenderService.send();
 		System.err.println("メールの送信完了");
 		return "order_finished";
+	}
+	
+	@RequestMapping("/postQuantity")
+	public String postQuantity(Integer id,Integer quantity) {
+		OrderItem orderItem = orderService.loadOrderItem(id);
+		orderItem.setQuantity(quantity);
+		orderService.updateOrderItem(orderItem);
+		return "redirect:/order";
 	}
 }

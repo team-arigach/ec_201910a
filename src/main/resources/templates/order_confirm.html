@@ -30,7 +30,7 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ -->
-						<img alt="main log" th:src="@{img/header_logo.png}" height="35">
+						<img alt="main log" th:src="@{/img/header_logo.png}" height="35">
 					</a>
 				</div>
 
@@ -65,8 +65,9 @@
 								<div class="text-center">商品名</div>
 							</th>
 							<th>
-								<div class="text-center">サイズ、価格(税抜)、数量</div>
+								<div class="text-center">サイズ、価格(税抜</div>
 							</th>
+							<th>数量</th>
 							<th>
 								<div class="text-center">トッピング、価格(税抜)</div>
 							</th>
@@ -91,7 +92,16 @@
 								th:text="${#numbers.formatInteger(orderItem.item.priceM, 1,'COMMA') + '円'}"></span>
 								&nbsp;&nbsp; <span th:if="${orderItem.size} == 'L'"
 								th:text="${#numbers.formatInteger(orderItem.item.priceL, 1,'COMMA') + '円'}"></span>
-								&nbsp;&nbsp; <span th:text="${orderItem.quantity}"></span>個<br>
+								&nbsp;&nbsp; <br>
+							<td>
+								<form action="#" th:action="@{/order/postQuantity}"
+									name="quantityForm" id="quantityForm">
+									<select name="quantity" class="quantityField">
+										<option th:each="i:${count}" th:value="${i}" th:text="${i}"
+											th:selected="${i == orderItem.quantity}"></option>
+									</select>個 <input type="hidden" th:value="${orderItem.id}" name="id">
+								</form>
+							</td>
 							<td>
 								<ul class="col-lg-offset-1">
 									<li th:each="orderTopping:${orderItem.orderToppingList}">
@@ -100,7 +110,8 @@
 
 									</li>
 								</ul>
-								<button type="button" class="btn btn-success btn-sm col-lg-offset-2"
+								<button type="button"
+									class="btn btn-success btn-sm col-lg-offset-2"
 									data-toggle="modal" data-target="#sampleModal">
 									トッピングのカスタマイズ</button>
 							</td>
@@ -327,9 +338,10 @@
 					<h4 class="modal-title">タイトル</h4>
 				</div>
 				<div class="modal-body">
-				<form action="#" method="post">
-				</form>
-				本文</div>
+					<div th:each="toppingAll:${toppingListAll}">
+						<input type="checkbox" th:text="${toppingAll.name}">
+					</div>
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
 					<button type="button" class="btn btn-primary">ボタン</button>
@@ -338,6 +350,13 @@
 		</div>
 	</div>
 	<!-- end container -->
+	<script>
+		$(function() {
+			$(".quantityField").on("change", function() {
+				$("#quantityForm").submit();
+			})
+		});
+	</script>
 	<script>
 		$(function() {
 			$("#credit_input").hide();

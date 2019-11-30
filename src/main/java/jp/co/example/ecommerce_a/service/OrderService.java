@@ -1,13 +1,18 @@
 package jp.co.example.ecommerce_a.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.example.ecommerce_a.domain.Order;
+import jp.co.example.ecommerce_a.domain.OrderItem;
+import jp.co.example.ecommerce_a.domain.Topping;
+import jp.co.example.ecommerce_a.repository.OrderItemRepository;
 import jp.co.example.ecommerce_a.repository.OrderRepository;
+import jp.co.example.ecommerce_a.repository.ToppingRepository;
 
 @Service
 @Transactional
@@ -15,6 +20,12 @@ public class OrderService {
 
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+	
+	@Autowired
+	private ToppingRepository toppingRepository;
 	
 	/**
 	 * 注文する.
@@ -40,7 +51,37 @@ public class OrderService {
 		orderRepository.update(order);
 	}
 	
+	/**
+	 * オーダーIDから取得.
+	 * @param id ID
+	 * @return IDで検索されたオーダー
+	 */
 	public Order showOrder(Integer id) {
 		return orderRepository.load(id);
 	}
+	
+	/**
+	 * 
+	 * OrderItemをIDで検索し、表示する.
+	 * @param id ID
+	 * @return 検索されたオーダーアイテム
+	 */
+	public OrderItem loadOrderItem(Integer id) {
+		return orderItemRepository.load(id);
+	}
+	
+	/**
+	 * 
+	 * 指定されたオーダーアイテムを更新.
+	 * @param orderItem オーダーアイテム
+	 * 
+	 */
+	public void updateOrderItem(OrderItem orderItem) {
+		orderItemRepository.update(orderItem);
+	}
+	
+	public List<Topping> toppingList(){
+		return toppingRepository.findAll();
+	}
+	
 }
