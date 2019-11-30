@@ -13,6 +13,7 @@ import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.OrderForm;
 import jp.co.example.ecommerce_a.service.ShowConfirmService;
+import jp.co.example.ecommerce_a.service.SortItemService;
 
 /**
  * 商品確認画面を表示するためのコントローラー.
@@ -26,6 +27,9 @@ public class ShowConfirmController {
 	
 	@Autowired
 	private ShowConfirmService showConfirmService;
+	
+	@Autowired
+	private SortItemService sortItemService;
 	
 	@Autowired
 	private HttpSession session;
@@ -44,7 +48,7 @@ public class ShowConfirmController {
 	 */
 	@RequestMapping("/showConfirm")
 	public String showConfirm(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		Integer userId = session.getId().hashCode();
+		Integer userId = null;
 		if(loginUser != null) {
 			userId = loginUser.getUser().getId();
 		} else {
@@ -53,6 +57,7 @@ public class ShowConfirmController {
 		Order order = showConfirmService.showOrderConfirm(userId, 0);
 		System.out.println(order);
 		if(order != null) {
+			sortItemService.sortOrderItem(order);
 			if(order.getOrderItemList().size() != 0) {
 			model.addAttribute("order", order);
 			}
