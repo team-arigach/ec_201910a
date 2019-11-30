@@ -20,7 +20,7 @@ public class CreditInfoForm {
 	private long order_number;
 	
 	public Long getLongCardNumber(String cardNumber) {
-		Long parseLong = Long.parseLong(cardNumber + "L");
+		Long parseLong = Long.parseLong(cardNumber);
 		return parseLong;
 	}
 

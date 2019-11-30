@@ -137,11 +137,11 @@ public class OrderRepository {
 				+ "ORDER BY o.id ,oi.id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
-		if( orderList.size() > 0) { // オーダーリストが存在する場合
-			System.err.println(orderList.get(0));
-			return orderList.get(0);
+		if( orderList.size() == 0) { // オーダーリストが存在する場合
+			return null;
 		}
-		return null;
+		System.err.println(orderList.get(0));
+		return orderList.get(0);
 	}
 	
 	/**
@@ -230,8 +230,15 @@ public class OrderRepository {
 	}
 	
 	public void updateUserId(Integer userId,Integer sessionId) {
-		String sql = "UPDATE orders SET user_id=userId WHERE user_id=sessionId";
+		String sql = "UPDATE orders SET user_id=:userId WHERE user_id=:sessionId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("sessionId", sessionId);
 		template.update(sql, param);
+	}
+	
+	public List<Order> findByOrderId(Integer orderId) {
+		String sql = "SELECT id FROM orders WHERE user_id=:userId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", orderId);
+		List<Order> orderList = template.query(sql, param,ORDER_ROW_MAPPER);
+		return orderList;
 	}
 }

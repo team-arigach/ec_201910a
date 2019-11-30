@@ -42,7 +42,7 @@ public class ItemRepository {
 	 * @return 商品メニュー一覧を返します。
 	 */
 	public List<Item> findAll(){
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items";
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_m";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
@@ -55,7 +55,7 @@ public class ItemRepository {
 	 */
 	public List<Item> findByLikeName(String name){
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name");
+		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name ILIKE :name");
 		String escName = "%" + name + "%";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", escName);
 		List<Item> itemList = template.query(sql.toString(), param,ITEM_ROW_MAPPER);
@@ -75,10 +75,30 @@ public class ItemRepository {
 		return item;
 	}
 	
+	/**
+	 * 商品登録を行う.
+	 * @param item 商品
+	 */
 	public void insert(Item item) {
 		String sql = "INSERT INTO items (id, name, description, price_m, price_l, image_path, deleted) VALUES (:id, :name, :description, :priceM, :priceL, :imagePath, :deleted);";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(item);
 		template.update(sql, param);
 		System.err.println("一件の登録が完了しました。");
+	}
+
+	public List<Item> findAllAboutSum(Integer offSet){
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items limit 6 offset :offSet";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("offSet", offSet);
+		List<Item> itemList = template.query(sql,param, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+	
+	public List<Item> findByLikeNameAboutSum(String name, Integer offSet){
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name limit 6 offset :offSet");
+		String escName = "%" + name + "%";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", escName).addValue("offSet", offSet);
+		List<Item> itemList = template.query(sql.toString(), param,ITEM_ROW_MAPPER);
+		return itemList;
 	}
 }

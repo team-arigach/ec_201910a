@@ -42,19 +42,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-				.antMatchers("/order/**", "/registerUser/**", "/shoppingCart/**", "/showConfirm", "/showItemList",
-						"/detail/**", "/cartList", "/login", "/logout")
-				.permitAll().antMatchers("/orderHistory").hasRole("USER").anyRequest().authenticated();
-
+				.antMatchers("/","/registerUser/**", "/shoppingCart/**", "/showConfirm", "/showItemList", "/detail/**",
+						"/cartList", "/login", "/logout")
+				.permitAll().antMatchers("/orderHistory").hasRole("USER").antMatchers("/order/**").hasRole("USER")
+				.anyRequest().authenticated();
 		http.formLogin().loginPage("/login").loginProcessingUrl("/userLogin").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/showItemList", false) // 第1引数:デフォルトでログイン成功時に遷移させるパス
+				.defaultSuccessUrl("/", false) // 第1引数:デフォルトでログイン成功時に遷移させるパス
 															// 第2引数: true :認証後常に第1引数のパスに遷移
 															// false:認証されてなくて一度ログイン画面に飛ばされてもログインしたら指定したURLに遷移
 				.usernameParameter("email").passwordParameter("password"); // 認証時に使用するパスワードのリクエストパラメータ名
 
 		http.logout() // ログアウトに関する設定
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout**")) // ログアウトさせる際に遷移させるパス
-				.logoutSuccessUrl("/showItemList") // ログアウト後に遷移させるパス(ここではログイン画面を設定)
+				.logoutSuccessUrl("/") // ログアウト後に遷移させるパス(ここではログイン画面を設定)
 				.deleteCookies("JSESSIONID") // ログアウト後、Cookieに保存されているセッションIDを削除
 				.invalidateHttpSession(true); // true:ログアウト後、セッションを無効にする false:セッションを無効にしない
 
