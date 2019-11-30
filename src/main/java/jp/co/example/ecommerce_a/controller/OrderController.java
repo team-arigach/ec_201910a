@@ -21,10 +21,12 @@ import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
+import jp.co.example.ecommerce_a.service.AddShoppingCartService;
 import jp.co.example.ecommerce_a.service.CreditInfoService;
 import jp.co.example.ecommerce_a.service.MailSenderService;
 import jp.co.example.ecommerce_a.service.OrderService;
 import jp.co.example.ecommerce_a.service.ShowShoppingCartService;
+import jp.co.example.ecommerce_a.service.SortItemService;
 
 
 @Controller
@@ -43,6 +45,12 @@ public class OrderController {
 	@Autowired
 	private ShowShoppingCartService showShoppingCartService;
 	
+	@Autowired
+	private SortItemService sortItemService;
+	
+	@Autowired
+	private AddShoppingCartService addShoppingCartService;
+	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
 		return new OrderForm();
@@ -55,9 +63,12 @@ public class OrderController {
 	 * @return 注文確認画面
 	 */
 	@RequestMapping("")
-	public String index(Integer id, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+	public String index(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		
+		addShoppingCartService.addShoppingCart(loginUser.getUser().getId());
 		Order order = showShoppingCartService.showShoppingCart(loginUser.getUser().getId(), 0);
+		sortItemService.sortOrderItem(order);
+		
 		model.addAttribute("order", order);
 		
 		List<Integer> deliveryTimeList = new ArrayList<>();
@@ -80,7 +91,7 @@ public class OrderController {
 	@RequestMapping("/input")
 	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
-			return index(orderForm.getId(), model, loginUser);
+			return index(model, loginUser);
 		}
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
@@ -90,7 +101,7 @@ public class OrderController {
 			BeanUtils.copyProperties(creditInfoForm, creditInfo);
 			if ( !creditInfoService.isCheckCreditInfo(creditInfo)) {
 				model.addAttribute("creditError", "カード情報が正しくありません。");
-				return index(orderForm.getId(), model, loginUser);
+				return index(model, loginUser);
 			}
 		}
 		

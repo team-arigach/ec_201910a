@@ -64,20 +64,23 @@ public class ShowItemController {
 	@RequestMapping("/")
 
 	public String showItemListAboutSum(String name, Integer pageNumber, Model model,
-			@AuthenticationPrincipal LoginUser loginUser, Integer page,Integer check) {
+			@AuthenticationPrincipal LoginUser loginUser, Integer page, Integer check) {
 		Integer count = 6; // 1ページ当たりの表示件数を設定
 		Integer offSet = showItemListService.makeOffSet(pageNumber, count);
 		if (pageNumber == null) {
 			offSet = 0;
 		}
-		List<List<Item>> bigItemList = showItemListService.findByLikeNameAboutSum(name,offSet);
+		List<List<Item>> bigItemList = showItemListService.findByLikeNameAboutSum(name, offSet);
 		List<List<Item>> bigItemList2 = showItemListService.findByLikeName(name);
 		if (bigItemList.isEmpty()) {
 			model.addAttribute("message", "該当する商品はありません");
-			bigItemList = showItemListService.findByLikeNameAboutSum("",offSet);
+			bigItemList = showItemListService.findByLikeNameAboutSum("", offSet);
 			bigItemList2 = showItemListService.findByLikeName("");
 		}
-		
+		if (loginUser != null && session.getAttribute("userId") != null) {
+			addShoppingCartService.addShoppingCart(loginUser.getUser().getId());
+		}
+
 		List<Item> itemList = new ArrayList<>();
 		for (List<Item> middleItemList : bigItemList2) {
 			for (Item item : middleItemList) {
@@ -92,11 +95,10 @@ public class ShowItemController {
 		System.out.println(showItemListService.makeOffSet(pageNumber, itemCount));
 		System.out.println(bigItemList);
 		System.out.println(bigItemList2);
-		
 
 		model.addAttribute("bigItemList", bigItemList);
 		model.addAttribute("pageList", pageList);
-		model.addAttribute("name",name);
+		model.addAttribute("name", name);
 		// オートコンプリート用にJavaScriptの配列の中身を文字列で作ってスコープへ格納
 		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(name);
 		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
