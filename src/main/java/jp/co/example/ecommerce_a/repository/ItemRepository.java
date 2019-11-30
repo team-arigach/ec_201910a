@@ -41,7 +41,7 @@ public class ItemRepository {
 	 * @return 商品メニュー一覧を返します。
 	 */
 	public List<Item> findAll(){
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items";
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_m";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
@@ -54,7 +54,7 @@ public class ItemRepository {
 	 */
 	public List<Item> findByLikeName(String name){
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name");
+		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name ILIKE :name");
 		String escName = "%" + name + "%";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", escName);
 		List<Item> itemList = template.query(sql.toString(), param,ITEM_ROW_MAPPER);
@@ -73,4 +73,22 @@ public class ItemRepository {
 		Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
 		return item;
 	}
+	
+	public List<Item> findAllAboutSum(Integer offSet){
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items limit 6 offset :offSet";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("offSet", offSet);
+		List<Item> itemList = template.query(sql,param, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+	
+	public List<Item> findByLikeNameAboutSum(String name, Integer offSet){
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name limit 6 offset :offSet");
+		String escName = "%" + name + "%";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", escName).addValue("offSet", offSet);
+		List<Item> itemList = template.query(sql.toString(), param,ITEM_ROW_MAPPER);
+		return itemList;
+	}
+	
+	
 }

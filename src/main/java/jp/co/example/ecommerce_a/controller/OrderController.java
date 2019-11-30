@@ -3,12 +3,12 @@ package jp.co.example.ecommerce_a.controller;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,11 +16,17 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.example.ecommerce_a.domain.CreditInfo;
+import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
+import jp.co.example.ecommerce_a.service.AddShoppingCartService;
+import jp.co.example.ecommerce_a.service.CreditInfoService;
+import jp.co.example.ecommerce_a.service.MailSenderService;
 import jp.co.example.ecommerce_a.service.OrderService;
-	
+import jp.co.example.ecommerce_a.service.ShowShoppingCartService;
+import jp.co.example.ecommerce_a.service.SortItemService;
 
 @Controller
 @RequestMapping("/order")
@@ -32,6 +38,18 @@ public class OrderController {
 	@Autowired
 	private MailSenderService mailSenderService;
 	
+	@Autowired
+	private CreditInfoService creditInfoService;
+	
+	@Autowired
+	private ShowShoppingCartService showShoppingCartService;
+	
+	@Autowired
+	private SortItemService sortItemService;
+	
+	@Autowired
+	private AddShoppingCartService addShoppingCartService;
+	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
 		return new OrderForm();
@@ -40,13 +58,16 @@ public class OrderController {
 	/**
 	 * 注文確認画面を表示する.
 	 * 
-	 * @param model　リクエストスコープ
-	 * @return　注文確認画面
+	 * @param model リクエストスコープ
+	 * @return 注文確認画面
 	 */
 	@RequestMapping("")
-	public String index(Integer id, Model model) {
+	public String index(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		
-		Order order = orderService.showOrder(id);
+		addShoppingCartService.addShoppingCart(loginUser.getUser().getId());
+		Order order = showShoppingCartService.showShoppingCart(loginUser.getUser().getId(), 0);
+		sortItemService.sortOrderItem(order);
+		
 		model.addAttribute("order", order);
 		
 		List<Integer> deliveryTimeList = new ArrayList<>();
@@ -61,24 +82,30 @@ public class OrderController {
 	/**
 	 * 注文する.
 	 * 
-	 * @param orderForm　注文フォーム
-	 * @param result　BindingResult
-	 * @param model　リクエストスコープ
-	 * @return　エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
+	 * @param orderForm 注文フォーム
+	 * @param result BindingResult
+	 * @param model リクエストスコープ
+	 * @return エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
 	@RequestMapping("/input")
-	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm,Integer id, Model model) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
-			return index(id, model);
+			return index(model, loginUser);
 		}
-		
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
+		// クレジット処理に関して
+		if( orderForm.getPaymentMethod() == 2) {
+			CreditInfo creditInfo = new CreditInfo();
+			BeanUtils.copyProperties(creditInfoForm, creditInfo);
+			if ( !creditInfoService.isCheckCreditInfo(creditInfo)) {
+				model.addAttribute("creditError", "カード情報が正しくありません。");
+				return index(model, loginUser);
+			}
+		}
 		
 		//パラメータで取得したdeliverryTimeとdeliveryHourTimestamp型に変換してOrderオブジェクトにセット
-		String strLocalDate = orderForm.getDeliveryTime();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate localDate = LocalDate.parse(strLocalDate, formatter);
+		LocalDate localDate = orderForm.convertLocalDate(orderForm.getDeliveryTime());
 		int year = localDate.getYear();
 		int month = localDate.getMonthValue();
 		int date = localDate.getDayOfMonth();
@@ -87,7 +114,6 @@ public class OrderController {
 		LocalDateTime localDateTime = LocalDateTime.of(year, month, date, hour, minute);
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
-		
 		orderService.order(order);
 		return "redirect:/order/toOrderFinish";
 	}

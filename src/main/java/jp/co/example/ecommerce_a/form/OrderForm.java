@@ -1,13 +1,18 @@
 package jp.co.example.ecommerce_a.form;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class OrderForm {
-
-	/** 宛名氏名 */
-	@NotBlank(message = "　名前を入力して下さい")
+	
+	/** オーダーID */
+	private Integer id;
+	
+	/**	宛名氏名 */
+	@NotBlank(message="　名前を入力して下さい")
 	private String destinationName;
 
 	/** 宛名Eメール */
@@ -24,9 +29,9 @@ public class OrderForm {
 	/** 宛名電話番号 */
 	@NotBlank(message = "　電話番号を入力して下さい")
 	private String destinationTel;
-
-	/** 配達年月日 */
-	@NotNull(message = "配達日時を指定して下さい")
+	
+	/**	配達年月日 */
+	@NotBlank(message = "配達日時を指定して下さい")
 	private String deliveryTime;
 
 	/** 配達時間 */
@@ -36,7 +41,28 @@ public class OrderForm {
 	/** 支払方法 */
 	private Integer paymentMethod;
 
-	// 以下getter/setter
+	//以下getter/setter
+	
+	/**
+	 * ローカルデイト型に変換するメソッド.
+	 * 
+	 * @param date 変換するデータ
+	 * @return LocalDate型のデータ
+	 */
+	public LocalDate convertLocalDate(String date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate convertDate = LocalDate.parse(date, formatter);
+		return convertDate;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+	
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getDestinationName() {
 		return destinationName;

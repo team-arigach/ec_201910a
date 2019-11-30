@@ -11,7 +11,7 @@ import java.util.List;
  *
  */
 public class Order {
-	
+
 	/** 注文ID */
 	private Integer id;
 	/** ユーザーID */
@@ -40,24 +40,31 @@ public class Order {
 	private User user;
 	/** 注文商品リスト */
 	private List<OrderItem> orderItemList;
-	
-	
+
 	/**
-	 * @return
+	 * 消費税の表示します.
+	 * 
+	 * @return 消費税
 	 */
 	public int getTax() {
-		return 0; // 警告を消すため
-	}
-	
-	/**
-	 * @return
-	 */
-	public int getCalcTotalPrice() {
-		return 0; // 警告を消すため
+		int tax = (int) (getCalcTotalPrice() * 0.1);
+		return tax;
 	}
 
-	
-	// 以下 getter / setter 
+	/**
+	 * 合計金額を表示します.
+	 * 
+	 * @return 合計金額
+	 */
+	public int getCalcTotalPrice() {
+		int totalPrice = 0;
+		for( OrderItem orderItem : this.orderItemList) {
+		  totalPrice += orderItem.getSubTotal();
+		}
+		return totalPrice;
+	}
+
+	// 以下 getter / setter
 	public Integer getId() {
 		return id;
 	}
@@ -138,7 +145,6 @@ public class Order {
 		this.destinationTel = destinationTel;
 	}
 
-
 	public Timestamp getDeliveryTime() {
 		return deliveryTime;
 	}
@@ -179,11 +185,5 @@ public class Order {
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
 				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
 	}
-
-	
-	
-	
-	
-	
 
 }

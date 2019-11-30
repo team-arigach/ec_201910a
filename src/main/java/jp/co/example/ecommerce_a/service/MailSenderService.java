@@ -1,4 +1,4 @@
-package jp.co.example.ecommerce_a.controller;
+package jp.co.example.ecommerce_a.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
