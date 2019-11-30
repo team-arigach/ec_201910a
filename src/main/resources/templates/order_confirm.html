@@ -101,6 +101,11 @@
 									<span th:text="${#numbers.formatInteger(orderItem.getSubTotal(), 1,'COMMA')}">小計（カンマ区切り）</span>円
 								</div>
 							</td>
+							<td>
+								<div class="text-center">
+								<a class="btn btn-primary" role="button" th:href="@{'/shoppingCart/deleteItem?orderItemId='+${orderItem.id}}">削除</a>
+								</div>
+							</td>
 						</tr>
 
 					</tbody>
