@@ -79,8 +79,11 @@
 						<tr th:each="orderItem:${order.orderItemList}">
 							<td>
 								<div class="center">
-									<img src="img/1.jpg"
-										th:src="@{'/img/' + ${orderItem.item.imagePath}}"
+									<img th:if="${orderItem.item.imagePath.length() < 50}"
+										src="img/1.jpg" th:src="'/img/' + ${orderItem.item.imagePath}"
+										class="img-responsive img-rounded" width="100" height="300">
+									<img th:unless="${orderItem.item.imagePath.length() < 50}"
+										src="img/1.jpg" th:src="${orderItem.item.imagePath}"
 										class="img-responsive img-rounded" width="100" height="300"><br>
 									<span th:text="${orderItem.item.name}">商品名</span>
 								</div>

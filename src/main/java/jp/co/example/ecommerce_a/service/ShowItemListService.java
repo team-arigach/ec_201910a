@@ -177,5 +177,10 @@ public class ShowItemListService {
 		}
 		
 	}
+	
+	public List<Item> showItems(){
+		return itemRepository.findAll();
+	}
+
 
 }
