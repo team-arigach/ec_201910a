@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.domain.OrderItem;
 import jp.co.example.ecommerce_a.domain.OrderTopping;
+import jp.co.example.ecommerce_a.domain.Topping;
 import jp.co.example.ecommerce_a.repository.OrderItemRepository;
 import jp.co.example.ecommerce_a.repository.OrderToppingRepository;
+import jp.co.example.ecommerce_a.repository.ToppingRepository;
 
 @Service
 public class SortItemService {
@@ -21,6 +23,9 @@ public class SortItemService {
 
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
+	
+	@Autowired
+	private ToppingRepository toppingRepository;
 
 	public void sortOrderItemByM(Order order) {
 		List<OrderItem> orderItemList = order.getOrderItemList();
@@ -188,6 +193,36 @@ public class SortItemService {
 				}
 			});
 		}
+	}
+	
+	public List<Topping> setOrderItemNonTopping(OrderItem orderItem) {
+		
+		List<Topping> nonOrderToppingList = toppingRepository.findAll();
+		
+		Integer preId = 0;
+		
+		for (OrderTopping topping : orderItem.getOrderToppingList()) {
+			nonOrderToppingList.add(topping.getTopping());
+		}
+		Collections.sort(nonOrderToppingList, new Comparator<Topping>() {
+			@Override
+			public int compare(Topping o1, Topping o2) {
+				return Integer.compare(o1.getId(), o2.getId());
+			}
+		});
+			
+		for (int i = 0; i < nonOrderToppingList.size(); i++) {
+			if( preId == nonOrderToppingList.get(i).getId()) {
+				nonOrderToppingList.remove(i);
+				nonOrderToppingList.remove(i-1);
+				i -= 1;
+				
+			}
+			if( i != nonOrderToppingList.size()) {
+				preId = nonOrderToppingList.get(i).getId();
+			}
+		}
+		return nonOrderToppingList;
 	}
 
 }

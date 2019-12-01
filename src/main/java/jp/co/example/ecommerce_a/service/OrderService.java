@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.domain.OrderItem;
+import jp.co.example.ecommerce_a.domain.OrderTopping;
 import jp.co.example.ecommerce_a.domain.Topping;
 import jp.co.example.ecommerce_a.repository.OrderItemRepository;
 import jp.co.example.ecommerce_a.repository.OrderRepository;
+import jp.co.example.ecommerce_a.repository.OrderToppingRepository;
 import jp.co.example.ecommerce_a.repository.ToppingRepository;
 
 @Service
@@ -26,6 +28,9 @@ public class OrderService {
 	
 	@Autowired
 	private ToppingRepository toppingRepository;
+	
+	@Autowired
+	private OrderToppingRepository orderToppingRepository;
 	
 	/**
 	 * 注文する.
@@ -82,6 +87,33 @@ public class OrderService {
 	
 	public List<Topping> toppingList(){
 		return toppingRepository.findAll();
+	}
+	
+	/**
+	 * オーダーアイテムIDで、トッピングを検索.
+	 * 
+	 * @param orderItemId オーダーアイテムID
+	 * @return 検索されたIDのオーダーアイテムList
+	 */
+	public List<OrderTopping> orderToppingList(Integer orderItemId){
+		return orderToppingRepository.findByOrderItemId(orderItemId);
+	}
+	
+	/**
+	 * オーダートッピングをIDで消去.
+	 * 
+	 * @param id オーダートッピングID
+	 */
+	public void orderToppingDelete(Integer id) {
+		orderToppingRepository.deleteByPk(id);
+	}
+	
+	/**
+	 * オーダートッピングをインサートする.
+	 * @param orderTopping オーダートッピング
+	 */
+	public void InsertOrderTopping(OrderTopping orderTopping) {
+		orderToppingRepository.insert(orderTopping);
 	}
 	
 }

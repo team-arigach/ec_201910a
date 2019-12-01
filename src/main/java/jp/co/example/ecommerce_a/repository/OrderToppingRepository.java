@@ -1,5 +1,7 @@
 package jp.co.example.ecommerce_a.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -28,7 +30,7 @@ public class OrderToppingRepository {
 	private final static RowMapper<OrderTopping> ORDER_TOPPING_ROW_MAPPER = (rs, i) -> {
 		OrderTopping orderTopping = new OrderTopping();
 		orderTopping.setId(rs.getInt("id"));
-		orderTopping.setOrderItemId(rs.getInt("item_id"));
+		orderTopping.setOrderItemId(rs.getInt("order_item_id"));
 		orderTopping.setToppingId(rs.getInt("topping_id"));
 		return orderTopping;
 	};
@@ -51,6 +53,11 @@ public class OrderToppingRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
 		template.update(sql, param);
 	}
+	/**
+	 * プライマリーキーでオーダートッピングを検索.
+	 * 
+	 * @param orderToppingId オーダートッピングID
+	 */
 	public void deleteByPk(Integer orderToppingId) {
 		String sql = "DELETE FROM order_toppings WHERE id= :id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", orderToppingId);
@@ -61,5 +68,11 @@ public class OrderToppingRepository {
 		String sql = "UPDATE order_toppings SET id = :id, topping_id = :toppingId, order_item_id = :orderItemId WHERE id= :id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", orderTopping.getId()).addValue("toppingId", orderTopping.getToppingId()).addValue("orderItemId", orderTopping.getOrderItemId());
 		template.update(sql, param);
+	}
+	
+	public List<OrderTopping> findByOrderItemId(Integer orderItemId){
+		String sql = "SELECT id, order_item_id, topping_id FROM order_toppings WHERE order_item_id = :orderItemId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+		return template.query(sql, param, ORDER_TOPPING_ROW_MAPPER);
 	}
 }

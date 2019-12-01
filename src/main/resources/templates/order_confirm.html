@@ -112,8 +112,46 @@
 								</ul>
 								<button type="button"
 									class="btn btn-success btn-sm col-lg-offset-2"
-									data-toggle="modal" data-target="#sampleModal">
-									トッピングのカスタマイズ</button>
+									data-toggle="modal" th:data-target="'#'+${orderItem.id}">
+									トッピングのカスタマイズ</button> <!-- モーダル・ダイアログ -->
+								<div class="modal fade sampleModal" th:id="${orderItem.id}" tabindex="-1">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">
+													<span>×</span>
+												</button>
+												<h4 class="modal-title">トッピング</h4>
+											</div>
+											<div class="modal-body">
+												<form action="#" th:action="@{/order/postTopping}" method="post" id="postToppingForm">
+												<div>
+													<strong>選択中のトッピング</strong>
+												</div>
+												<span th:each="orderTopping:${orderItem.orderToppingList}">
+													<input type="checkbox" name="checkedTopping" th:value="${orderTopping.topping.id}"
+													th:text="${orderTopping.topping.name}" checked>
+												</span>
+												<div>
+													<strong>選択していないトッピング</strong></div>
+													 <span
+														th:each="topping:${orderItem.nonOrderToppingList}">
+														<input type="checkbox" name="newCheck" th:text="${topping.name}" th:value="${topping.id}">
+													</span>
+													<input type="hidden" name="orderItemId" th:value="${orderItem.id}">
+													<br>
+													<br>
+												    <button type="submit" class="btn btn-success postTopping" th:id="'post'+${orderItem.id}">送信</button>
+												
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">閉じる</button>
+											</div>
+										</div>
+									</div>
+								</div>
 							</td>
 							<td>
 								<div class="text-center">
@@ -327,28 +365,7 @@
 
 
 
-	<!-- モーダル・ダイアログ -->
-	<div class="modal fade" id="sampleModal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span>×</span>
-					</button>
-					<h4 class="modal-title">タイトル</h4>
-				</div>
-				<div class="modal-body">
-					<div th:each="toppingAll:${toppingListAll}">
-						<input type="checkbox" th:text="${toppingAll.name}">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-					<button type="button" class="btn btn-primary">ボタン</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
 	<!-- end container -->
 	<script>
 		$(function() {

@@ -1,12 +1,9 @@
 package jp.co.example.ecommerce_a.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import jp.co.example.ecommerce_a.repository.UserRepository;
 
 /**
  * ユーザーを操作するコントローラー.
@@ -17,10 +14,6 @@ import jp.co.example.ecommerce_a.repository.UserRepository;
 @Controller
 @RequestMapping("")
 public class UserController {
-	
-	@Autowired
-	private UserRepository userRepository;
-
 	
 	/**
 	 * ログイン画面を表示する.
