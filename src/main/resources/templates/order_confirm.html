@@ -192,23 +192,23 @@
 			th:object="${orderForm}">
 			<div class="row">
 				<div
-					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+					class="table-responsive col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
-					<table class="table table-striped">
+					<table class="table table-bordered">
 						<tbody>
 							<tr>
 								<td>
 									<div class="text-center">お名前</div>
 								</td>
-								<td><input type="text" name="destinationName"
-									th:field="*{destinationName}"> <span
+								<td><input type="text" name="destinationName" class="form-control"
+									th:field="*{destinationName}" value="${order.user.name}"> <span
 									th:errors="*{destinationName}" style="color: red"></span></td>
 							</tr>
 							<tr>
-								<td>
+								<td style="width: 300px;">
 									<div class="text-center">メールアドレス</div>
 								</td>
-								<td><input type="text" name="destinationEmail"
+								<td><input type="text" name="destinationEmail" th:value="${order.user.email}" class="form-control" 
 									th:field="*{destinationEmail}"> <span
 									th:errors="*{destinationEmail}" style="color: red"></span></td>
 							</tr>
@@ -216,7 +216,7 @@
 								<td>
 									<div class="text-center">郵便番号</div>
 								</td>
-								<td><input type="text" name="destinationZipcode"
+								<td><input type="text" name="destinationZipcode" th:value="${order.user.zipcode}" class="form-control" 
 									th:field="*{destinationZipcode}"
 									onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;
 									<!-- <button>住所検索</button></td> -->
@@ -225,7 +225,7 @@
 								<td>
 									<div class="text-center">住所</div>
 								</td>
-								<td><input type="text" name="destinationAddress"
+								<td><input type="text" name="destinationAddress"  th:value="${order.user.address}" class="form-control" 
 									th:field="*{destinationAddress}" size="65"> <span
 									th:errors="*{destinationAddress}" style="color: red"></span></td>
 							</tr>
@@ -233,7 +233,7 @@
 								<td>
 									<div class="text-center">電話番号</div>
 								</td>
-								<td><input type="text" name="destinationTel"
+								<td><input type="text" name="destinationTel" th:value="${order.user.telephone}" class="form-control" 
 									th:field="*{destinationTel}"> <span
 									th:errors="*{destinationTel}" style="color: red"></span></td>
 							</tr>
@@ -275,7 +275,7 @@
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お支払い方法</h3>
-					<table class="table table-striped">
+					<table class="table table-bordered">
 						<tbody>
 							<tr>
 								<td>
@@ -285,8 +285,8 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline"> <input type="radio"
-												name="paymentMethod" checked="checked" th:value="1"
-												th:field="*{paymentMethod}"> 代金引換
+												name="paymentMethod" th:value="1"
+												th:field="*{paymentMethod}" checked="checked"> 代金引換
 											</label>
 										</div>
 									</div>
@@ -296,13 +296,14 @@
 								<td>
 									<div class="text-center">クレジットカード決済</div>
 								</td>
-								<td align="center">
+								<td>
 									<div class="row">
 										<div class="col-sm-12">
-											<label class="radio-inline"> <input type="radio"
+											<label class="radio-inline">
+											<input type="radio"
 												name="paymentMethod" id="creditForm" checked="checked"
 												th:value="2" th:field="*{paymentMethod}"> クレジットカード
-											</label><br> <br>
+											</label>
 										</div>
 									</div>
 								</td>

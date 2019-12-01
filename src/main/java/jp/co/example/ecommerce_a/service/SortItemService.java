@@ -28,28 +28,27 @@ public class SortItemService {
 	private ToppingRepository toppingRepository;
 
 	public void sortOrderItemByM(Order order) {
+		/* orderから取得したOrderItemListで
+		 * Lサイズのものは取り除く
+		 * */
 		List<OrderItem> orderItemList = order.getOrderItemList();
 		for (int i = 0; i < orderItemList.size(); i++) {
 			if (orderItemList.get(i).getSize() == 'L') {
 				orderItemList.remove(i);
 			}
 		}
-		System.err.println("orderItemListの中身 " +orderItemList);
 
+		/* オーダーアイテムID順に並び替え
+		 * */
 		sortOrderItemListByAsc(orderItemList);
 		sortOrderItem(orderItemList);
 
 		Integer preItemId = 0;
 		Integer preToppingId = 0;
-//		System.err.println("for文開始");
 		for (int i = 0; i < orderItemList.size(); i++) {
 			OrderItem orderItem = orderItemList.get(i);
-//			System.err.println("オーダーアイテムID = > " + orderItem.getItemId());
-//			System.err.println("preItemID = > " + preItemId);
-//			System.err.println("前のIDがかぶっていれば、下に前のIDが出ます。");
 			if (orderItem.getItemId() == preItemId) {
 				OrderItem subItem = orderItemList.get(i - 1);
-//				System.err.println("前のID = > " + subItem.getItemId());
 				subItem.setQuantity(subItem.getQuantity() + 1);
 				if (orderItem.getOrderToppingList().size() != 0) {
 					for (OrderTopping orderTopping : orderItem.getOrderToppingList()) {
@@ -72,28 +71,13 @@ public class SortItemService {
 						preToppingId = subItem.getOrderToppingList().get(j).getToppingId();
 					}
 				}
-//				System.err.print("アイテムIDの順番を調べたい => ");
-				for (OrderItem orderItemd : orderItemList) {
-					System.err.print(" " + orderItemd.getItemId() + " ");
-				}
-//				System.err.println("アイテムID終了");
-//				System.err.println("下記のアイテムを削除します。");
 				orderItemRepository.delete(orderItem.getId());
 				orderItemList.remove(i);
 				orderItemRepository.update(subItem);
 				i -= 1;
-//				System.err.println(i + "番目のItemを削除しました");
-//				System.err.print("アイテムIDの順番を調べたい => ");
-				for (OrderItem orderItemd : orderItemList) {
-					System.err.print(" " + orderItemd.getItemId() + " ");
-				}
-				System.err.println("アイテムID終了");
 			}
 			preItemId = orderItem.getItemId();
-//			System.err.println("preItemId => " + preItemId);
-//			System.err.println("==================" + (i + 1) + "回目の処理終了==================");
 		}
-//		System.err.println("for文終了");
 	}
 	
 	public void sortOrderItemByL(Order order) {
@@ -109,15 +93,10 @@ public class SortItemService {
 
 		Integer preItemId = 0;
 		Integer preToppingId = 0;
-//		System.err.println("for文開始");
 		for (int i = 0; i < orderItemList.size(); i++) {
 			OrderItem orderItem = orderItemList.get(i);
-//			System.err.println("オーダーアイテムID = > " + orderItem.getItemId());
-//			System.err.println("preItemID = > " + preItemId);
-//			System.err.println("前のIDがかぶっていれば、下に前のIDが出ます。");
 			if (orderItem.getItemId() == preItemId) {
 				OrderItem subItem = orderItemList.get(i - 1);
-//				System.err.println("前のID = > " + subItem.getItemId());
 				subItem.setQuantity(subItem.getQuantity() + 1);
 				if (orderItem.getOrderToppingList().size() != 0) {
 					for (OrderTopping orderTopping : orderItem.getOrderToppingList()) {
@@ -140,28 +119,13 @@ public class SortItemService {
 						preToppingId = subItem.getOrderToppingList().get(j).getToppingId();
 					}
 				}
-//				System.err.print("アイテムIDの順番を調べたい => ");
-				for (OrderItem orderItemd : orderItemList) {
-					System.err.print(" " + orderItemd.getItemId() + " ");
-				}
-//				System.err.println("アイテムID終了");
-//				System.err.println("下記のアイテムを削除します。");
 				orderItemRepository.delete(orderItem.getId());
 				orderItemList.remove(i);
 				orderItemRepository.update(subItem);
 				i -= 1;
-//				System.err.println(i + "番目のItemを削除しました");
-//				System.err.print("アイテムIDの順番を調べたい => ");
-				for (OrderItem orderItemd : orderItemList) {
-					System.err.print(" " + orderItemd.getItemId() + " ");
-				}
-				System.err.println("アイテムID終了");
 			}
 			preItemId = orderItem.getItemId();
-//			System.err.println("preItemId => " + preItemId);
-//			System.err.println("==================" + (i + 1) + "回目の処理終了==================");
 		}
-//		System.err.println("for文終了");
 	}
 
 	/**

@@ -21,7 +21,6 @@ import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.domain.OrderItem;
 import jp.co.example.ecommerce_a.domain.OrderTopping;
-import jp.co.example.ecommerce_a.domain.Topping;
 import jp.co.example.ecommerce_a.form.CatchToppingForm;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
@@ -76,10 +75,6 @@ public class OrderController {
 
 		for (OrderItem oi : order.getOrderItemList()) {
 			oi.setNonOrderToppingList(sortItemService.setOrderItemNonTopping(oi));
-			System.err.println("oiが持っているtoppinglist");
-			for (Topping t : oi.getNonOrderToppingList()) {
-				System.err.print(" " + t.getId() + " ");
-			}
 		}
 
 		model.addAttribute("order", order);

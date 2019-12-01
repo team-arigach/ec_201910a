@@ -35,6 +35,9 @@ public class OrderRepository {
 	private ItemRepository itemRepository;
 	
 	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
 	private ToppingRepository toppingRepository;
 	
 	private SimpleJdbcInsert insert;
@@ -73,6 +76,7 @@ public class OrderRepository {
 				order.setDeliveryTime(rs.getTimestamp("delivery_time"));
 				orderItemList = new ArrayList<>();
 				order.setOrderItemList(orderItemList);
+				order.setUser(userRepository.load(order.getUserId()));
 				orderList.add(order);
 				preId = order.getId();
 			}
@@ -140,7 +144,6 @@ public class OrderRepository {
 		if( orderList.size() == 0) { // オーダーリストが存在する場合
 			return null;
 		}
-		System.err.println(orderList.get(0));
 		return orderList.get(0);
 	}
 	

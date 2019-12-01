@@ -1,6 +1,5 @@
 package jp.co.example.ecommerce_a.repository;
 
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 
