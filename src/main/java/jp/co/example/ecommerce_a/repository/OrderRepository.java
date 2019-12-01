@@ -35,9 +35,6 @@ public class OrderRepository {
 	private ItemRepository itemRepository;
 	
 	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
 	private ToppingRepository toppingRepository;
 	
 	private SimpleJdbcInsert insert;
@@ -76,7 +73,6 @@ public class OrderRepository {
 				order.setDeliveryTime(rs.getTimestamp("delivery_time"));
 				orderItemList = new ArrayList<>();
 				order.setOrderItemList(orderItemList);
-				order.setUser(userRepository.load(order.getUserId()));
 				orderList.add(order);
 				preId = order.getId();
 			}

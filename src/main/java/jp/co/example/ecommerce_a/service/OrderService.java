@@ -11,10 +11,12 @@ import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.domain.OrderItem;
 import jp.co.example.ecommerce_a.domain.OrderTopping;
 import jp.co.example.ecommerce_a.domain.Topping;
+import jp.co.example.ecommerce_a.domain.User;
 import jp.co.example.ecommerce_a.repository.OrderItemRepository;
 import jp.co.example.ecommerce_a.repository.OrderRepository;
 import jp.co.example.ecommerce_a.repository.OrderToppingRepository;
 import jp.co.example.ecommerce_a.repository.ToppingRepository;
+import jp.co.example.ecommerce_a.repository.UserRepository;
 
 @Service
 @Transactional
@@ -31,6 +33,9 @@ public class OrderService {
 	
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	/**
 	 * 注文する.
@@ -85,6 +90,10 @@ public class OrderService {
 		orderItemRepository.update(orderItem);
 	}
 	
+	/**
+	 * トッピングのすべて.
+	 * @return トッピングの全件検索.
+	 */
 	public List<Topping> toppingList(){
 		return toppingRepository.findAll();
 	}
@@ -114,6 +123,15 @@ public class OrderService {
 	 */
 	public void InsertOrderTopping(OrderTopping orderTopping) {
 		orderToppingRepository.insert(orderTopping);
+	}
+	
+	/**
+	 * 指定したIDでユーザーをセットする.
+	 * @param id ユーザーID
+	 * @return 検索されたユーザー
+	 */
+	public User setUser(Integer id) {
+		return userRepository.load(id);
 	}
 	
 }

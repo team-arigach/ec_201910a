@@ -77,6 +77,7 @@ public class OrderController {
 			oi.setNonOrderToppingList(sortItemService.setOrderItemNonTopping(oi));
 		}
 
+		order.setUser(orderService.setUser(order.getUserId()));
 		model.addAttribute("order", order);
 
 		// quantityに表示する要素数
@@ -161,6 +162,11 @@ public class OrderController {
 		return "redirect:/order";
 	}
 
+	/**
+	 * トッピングを変更する.
+	 * @param form フォーム
+	 * @return 注文画面
+	 */
 	@RequestMapping("/postTopping")
 	public String postTopping(CatchToppingForm form) {
 		List<OrderTopping> orderToppingList = orderService.orderToppingList(form.getOrderItemId());
