@@ -48,31 +48,31 @@
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-				<h3 class="text-center">購入履歴</h3>
-				<table class="table table-striped">
+				<h3 class="text-center">注文履歴</h3>
+				<table class="table table-striped" th:each="order:${orderList}">
 					<tbody>
 						<tr>
-							<th>
+							<th style="width:140px">
 								<div class="text-center">
 									注文日
 								</div>
 							</th>
-							<th>
+							<th style="width:280px">
 								<div class="text-center">
 									商品名
 								</div>
 							</th>
-							<th>
+							<th style="width:180px">
 								<div class="text-center">
 									サイズ、価格(税抜)、数量
 								</div>
 							</th>
-							<th>
+							<th style="width:255px">
 								<div class="text-center">
 									トッピング、価格(税抜)
 								</div>
 							</th>
-							<th>
+							<th style="width:90px">
 								<div class="text-center">
 									小計
 								</div>
@@ -80,7 +80,7 @@
 						</tr>
 						<tr th:each="orderItem:${order.orderItemList}">
 							<td>
-								<div class="text-center" th:text="${orderItem.orderDate}">
+								<div class="text-center" th:text="${#dates.format(order.orderDate,'yyyy年MM月dd日')}">
 									2019年1月1日
 								</div>
 							</td>
@@ -128,7 +128,7 @@
 		<div class="row">
 			<div class="col-xs-offset-5 col-xs-3">
 				<div class="form-group">
-					<form action="item_list.html" th:action="@{/toShowItemList}">
+					<form action="item_list.html" th:action="@{/}">
 						<input class="form-control btn btn-warning btn-block"
 							type="submit" value="商品一覧に戻る">
 					</form>

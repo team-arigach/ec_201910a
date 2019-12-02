@@ -37,6 +37,7 @@ public class OrderHistoryController {
 	public String toOrderHistory(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		Integer userId = loginUser.getUser().getId();
 		List<Order> orderList = orderHistoryService.showOrderHistory(userId);
+		System.err.println("orderList-> "+orderList);
 		System.err.println("userId -> " + userId);
 		for (int i = 0; i < orderList.size(); i++) {
 			Integer status = orderList.get(i).getStatus();
@@ -44,6 +45,7 @@ public class OrderHistoryController {
 				orderList.remove(i);
 			}
 		}
+		System.err.println("交信後のorderList-> "+orderList);
 		model.addAttribute("orderList", orderList);
 		return "order_history";
 	}
