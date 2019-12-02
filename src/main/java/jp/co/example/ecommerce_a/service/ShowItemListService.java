@@ -84,7 +84,7 @@ public class ShowItemListService {
 		return itemListForAutocompleate;
 	}
 
-	public List<List<Item>> findByLikeNameAboutSum(String name,Integer offSet) {
+	public List<List<Item>> findByLikeNameAboutSum(String name,Integer limit,Integer offSet) {
 		if(offSet==null) {
 			offSet=0;
 		}
@@ -93,10 +93,10 @@ public class ShowItemListService {
 		List<Item> itemList = null;
 		if (name == null || name.equals("")) {
 			// 検索文字列が空なら全件検索
-			itemList = itemRepository.findAllAboutSum(offSet);
+			itemList = itemRepository.findAllAboutSum(limit,offSet);
 		} else {
 			// 検索文字列があれば曖昧検索
-			itemList = itemRepository.findByLikeNameAboutSum(name,offSet);
+			itemList = itemRepository.findByLikeNameAboutSum(name,limit,offSet);
 		}
 		List<List<Item>> bigItemList = new ArrayList<>();
 		List<Item> smallItemsList = null;
@@ -117,12 +117,12 @@ public class ShowItemListService {
 		return (page - 1) * 8;
 	}
 	
-	public StringBuilder getItemListForAutocompleteAboutSum(String name,Integer count,Integer pageNumber) {
+	public StringBuilder getItemListForAutocompleteAboutSum(String name,Integer count,Integer limit,Integer pageNumber) {
 		List<Item> itemList = null;
 		Integer offSet = makeOffSet(pageNumber, count);
 		if (name == null || name.equals("")) {
 			// 検索文字列が空なら全件検索
-			itemList = itemRepository.findAllAboutSum(offSet);
+			itemList = itemRepository.findAllAboutSum(limit,offSet);
 		} else {
 			// 検索文字列があれば曖昧検索
 			itemList = itemRepository.findByLikeName(name);

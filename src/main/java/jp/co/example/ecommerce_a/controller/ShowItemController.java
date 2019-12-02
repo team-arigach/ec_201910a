@@ -65,18 +65,23 @@ public class ShowItemController {
 
 	public String showItemListAboutSum(String name, Integer pageNumber, Model model,
 			@AuthenticationPrincipal LoginUser loginUser, Integer page, Integer check) {
-		Integer count = 6; // 1ページ当たりの表示件数を設定
+		Integer count = null;
+		count = (Integer)session.getAttribute("count");
+		if(count == null || count== 0 && (pageNumber==null ||pageNumber==0)) {
+		count = 6; // 1ページ当たりの表示件数を設定
+			
+		}
 		Integer offSet = showItemListService.makeOffSet(pageNumber, count);
 		if (pageNumber == null) {
 			offSet = 0;
 		}
-		List<List<Item>> bigItemList = showItemListService.findByLikeNameAboutSum(name, offSet);
+		List<List<Item>> bigItemList = showItemListService.findByLikeNameAboutSum(name,count, offSet);
 		List<List<Item>> bigItemList2 = showItemListService.findByLikeName(name);
 		if (bigItemList.isEmpty()) {
 			if(name!=null) {
 			model.addAttribute("message", "該当する商品はありません");
 			}
-			bigItemList = showItemListService.findByLikeNameAboutSum("", offSet);
+			bigItemList = showItemListService.findByLikeNameAboutSum("",count, offSet);
 			bigItemList2 = showItemListService.findByLikeName("");
 		}
 		if (loginUser != null && session.getAttribute("userId") != null) {
@@ -107,5 +112,24 @@ public class ShowItemController {
 
 		return "item_list";
 	}
+	
+	@RequestMapping("/auti")
+	public String auti(Integer number) {
+		System.out.println(number);
+		Integer checkCount= (Integer)session.getAttribute("count");
+		System.out.println("session素こーぴの値"+checkCount);
+		Integer count = null;
+		if(checkCount==null || checkCount==0) {
+			count=(Integer)6;
+			session.setAttribute("count", count);
+		}else {
+			count=number;
+			session.removeAttribute("count");
+			session.setAttribute("count", count);
+		}
+		System.out.println("終わりまで起点の？？？");
+		return "forward:/";
+	}
+	
 
 }
