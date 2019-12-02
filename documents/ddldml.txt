@@ -13,8 +13,9 @@ create table users (
 ) ;
 
 
---ユーザー登録(pass:morimori)
+--ユーザー登録(pass:morimori) ( admin password: admin  )
 insert into users(name, email, password, zipcode, address, telephone) values('テストユーザ', 'test@test.co.jp', 'a232fe3fd81a175aa15541dc2051fe2cb003cdae810371104fbfc100eb34cd6f','1111111', 'テスト住所', 'テスト電話番号');
+insert into users(name, email, password, zipcode, address, telephone, isadmin) values('管理者', 'admin@admin.com', '$2a$10$Yj/Vp9YW6r0RwsUWa4bvTecsu0jRLYMZgMziXFapsKggLF5vNJguO','1110000', '東京都', '08012345678', 'true');
 
 -- 商品
 drop table if exists items cascade;
