@@ -136,13 +136,12 @@ public class OrderService {
 	}
 	
 	/**
-	 * 
-	 * @param order
-	 * @return
+	 * ユーザー情報をセットしてオーダーフォームを返す.
+	 * @param order オーダー
+	 * @return オーダーフォーム
 	 */
-	public OrderForm setOrderForm(Order order) {
+	public OrderForm setOrderForm(User user) {
 		OrderForm orderForm = new OrderForm();
-		User user = order.getUser();
 		orderForm.setDestinationName(user.getName());
 		orderForm.setDestinationEmail(user.getEmail());
 		orderForm.setDestinationZipcode(user.getZipcode());
