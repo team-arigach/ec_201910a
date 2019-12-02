@@ -84,6 +84,12 @@ public class UserRepository {
 		return user;
 	}
 	
+	public void delete(String email,String password) {
+		String sql="DELETE FROM users WHERE email=:email and password=:password";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email).addValue("password", password);
+		template.update(sql, param);
+	}
+	
 	
 
 }
