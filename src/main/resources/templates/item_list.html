@@ -104,7 +104,9 @@
 			<label for="pizzanum"></label> <select class="form-control"
 				id="pizzanum" name="quanity" style="width: 200px;"
 				onChange="location.href=value;">
-				<option th:text="'現在の表示件数 :'+${session.count}+' 件' " value="">表示件数を変更
+				<option th:if="${session.count}==null"  th:text="----" value="">表示件数を変更
+				<option th:unless="${session.count}==null" th:text="'現在の表示件数 :'+${session.count}+' 件' " value="">表示件数を変更
+				
 				</option>
 				<option th:text=" 6件ずつ表示"
 					th:value="@{'/displayCount?number='+6+'&name='+${name}}">6</option>

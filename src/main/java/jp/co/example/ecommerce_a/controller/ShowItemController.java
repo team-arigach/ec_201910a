@@ -129,7 +129,6 @@ public class ShowItemController {
 			session.removeAttribute("count");
 			session.setAttribute("count", count);
 		}
-
 		return "forward:/";
 	}
 
