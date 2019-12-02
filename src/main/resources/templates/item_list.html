@@ -27,7 +27,7 @@
 </script>
 
 </head>
-<body>
+<body background="img/background-pizza.jpg">
 	<div class="container">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
@@ -49,10 +49,9 @@
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
-						<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/insertItem}"
-							class="navbar-link">商品登録</a>&nbsp;&nbsp; <a href="cart_list.html"
-							class="navbar-link" th:href="@{/cartList}">ショッピングカート</a>&nbsp;&nbsp;
-						<a sec:authorize="hasRole('ROLE_USER')" href="order_history.html"
+						<a href="cart_list.html" class="navbar-link"
+							th:href="@{/cartList}">ショッピングカート</a>&nbsp;&nbsp; <a
+							sec:authorize="hasRole('ROLE_USER')" href="order_history.html"
 							class="navbar-link" th:href="@{/orderHistory}">注文履歴</a>&nbsp;&nbsp;
 						<a sec:authorize="isAnonymous()" href="login.html"
 							class="navbar-link" th:href="@{/login}">ログイン</a>&nbsp;&nbsp; <a
@@ -104,7 +103,7 @@
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<table class="table table-striped">
 					<tbody>
-						<tr th:each="itemList:${bigItemList}">
+						<tr th:each="itemList:${bigItemList}" class="active">
 							<th th:each="item:${itemList}"><a href="item_detail.html"
 								th:href="@{'/detail/?id=' + ${item.id}}"> <img
 									th:if="${item.imagePath.length() < 50}" src="img/1.jpg"
