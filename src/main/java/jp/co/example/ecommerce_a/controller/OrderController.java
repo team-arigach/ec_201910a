@@ -24,6 +24,7 @@ import jp.co.example.ecommerce_a.domain.OrderTopping;
 import jp.co.example.ecommerce_a.form.CatchToppingForm;
 import jp.co.example.ecommerce_a.form.CreditInfoForm;
 import jp.co.example.ecommerce_a.form.OrderForm;
+import jp.co.example.ecommerce_a.form.OrderItemForm;
 import jp.co.example.ecommerce_a.service.AddShoppingCartService;
 import jp.co.example.ecommerce_a.service.CreditInfoService;
 import jp.co.example.ecommerce_a.service.MailSenderService;
@@ -103,9 +104,13 @@ public class OrderController {
 	 * @return エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
 	@RequestMapping("/input")
-	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm,
-			Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		if (result.hasErrors()) {
+	public String order(@Validated OrderForm orderForm
+			, BindingResult result
+			,OrderItemForm orderItemForm
+			, CreditInfoForm creditInfoForm
+			, Model model
+			, @AuthenticationPrincipal LoginUser loginUser) {
+		if(result.hasErrors()) {
 			return index(model, loginUser);
 		}
 		Order order = new Order();

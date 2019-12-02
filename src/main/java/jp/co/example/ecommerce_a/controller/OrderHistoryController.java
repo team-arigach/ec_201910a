@@ -19,7 +19,7 @@ public class OrderHistoryController {
 	 * @return 注文履歴ページ
 	 */
 	@RequestMapping("/orderHistory")
-	public String toPurchaseHistory() {
+	public String toOrderHistory() {
 		return "order_history";
 	}
 

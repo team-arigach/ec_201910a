@@ -73,7 +73,9 @@ public class ShowItemController {
 		List<List<Item>> bigItemList = showItemListService.findByLikeNameAboutSum(name, offSet);
 		List<List<Item>> bigItemList2 = showItemListService.findByLikeName(name);
 		if (bigItemList.isEmpty()) {
+			if(name!=null) {
 			model.addAttribute("message", "該当する商品はありません");
+			}
 			bigItemList = showItemListService.findByLikeNameAboutSum("", offSet);
 			bigItemList2 = showItemListService.findByLikeName("");
 		}
