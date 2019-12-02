@@ -19,7 +19,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" th:src="@{/js/order_confirm.js}"></script>
 </head>
-<body>
+<body th:background="@{/img/background-pizza.jpg}">
 	<div class="container">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
@@ -58,6 +58,7 @@
 
 
 		<!-- table -->
+		<div class="panel panel-default">
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
@@ -194,8 +195,10 @@
 				</div>
 			</div>
 		</div>
+		</div>
 
 		<!-- table -->
+		<div class="panel panel-default">
 		<form action="order_finished.html" th:action="@{/order/input}"
 			th:object="${orderForm}">
 			<div class="row">
@@ -377,7 +380,7 @@
 			</div>
 		</form>
 	</div>
-
+</div>
 
 
 
