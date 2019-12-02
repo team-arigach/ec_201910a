@@ -12,6 +12,7 @@ import jp.co.example.ecommerce_a.domain.OrderItem;
 import jp.co.example.ecommerce_a.domain.OrderTopping;
 import jp.co.example.ecommerce_a.domain.Topping;
 import jp.co.example.ecommerce_a.domain.User;
+import jp.co.example.ecommerce_a.form.OrderForm;
 import jp.co.example.ecommerce_a.repository.OrderItemRepository;
 import jp.co.example.ecommerce_a.repository.OrderRepository;
 import jp.co.example.ecommerce_a.repository.OrderToppingRepository;
@@ -132,6 +133,21 @@ public class OrderService {
 	 */
 	public User setUser(Integer id) {
 		return userRepository.load(id);
+	}
+	
+	/**
+	 * ユーザー情報をセットしてオーダーフォームを返す.
+	 * @param order オーダー
+	 * @return オーダーフォーム
+	 */
+	public OrderForm setOrderForm(User user) {
+		OrderForm orderForm = new OrderForm();
+		orderForm.setDestinationName(user.getName());
+		orderForm.setDestinationEmail(user.getEmail());
+		orderForm.setDestinationZipcode(user.getZipcode());
+		orderForm.setDestinationAddress(user.getAddress());
+		orderForm.setDestinationTel(user.getTelephone());
+		return orderForm;
 	}
 	
 }

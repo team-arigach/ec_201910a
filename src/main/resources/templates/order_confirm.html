@@ -212,7 +212,7 @@
 								</td>
 								<td><input type="text" name="destinationName"
 									class="form-control" th:field="*{destinationName}"
-									value="${order.user.name}"> <span
+									th:value="${order.user.name}"> <span
 									th:errors="*{destinationName}" style="color: red"></span></td>
 							</tr>
 							<tr>
