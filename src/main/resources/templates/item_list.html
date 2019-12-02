@@ -148,9 +148,12 @@
 
 					</tbody>
 				</table>
-				<a th:each="page:${pageList}"
+				<ul class="pagination">
+				
+				<li class="page-item"><a th:each="page:${pageList}"
 					th:href="@{'/?pageNumber='+${page}+'&name='+${name}}"
-					th:text="${page}"></a>
+					th:text="${page}"></a></li>
+					</ul>
 			</div>
 		</div>
 	</div>
