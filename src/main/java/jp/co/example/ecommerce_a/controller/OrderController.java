@@ -111,7 +111,6 @@ public class OrderController {
 			, Model model
 			, @AuthenticationPrincipal LoginUser loginUser) {
 		System.err.println(orderForm);
-		
 		LocalDate localDate = orderForm.convertLocalDate(orderForm.getDeliveryTime());
 		int year = localDate.getYear();
 		int month = localDate.getMonthValue();
