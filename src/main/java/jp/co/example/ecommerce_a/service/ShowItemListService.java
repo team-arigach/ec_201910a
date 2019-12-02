@@ -98,6 +98,7 @@ public class ShowItemListService {
 			// 検索文字列があれば曖昧検索
 			itemList = itemRepository.findByLikeNameAboutSum(name,limit,offSet);
 		}
+		System.out.println("アイテムリストの状態"+itemList.size());
 		List<List<Item>> bigItemList = new ArrayList<>();
 		List<Item> smallItemsList = null;
 		for (int i = 0; i < itemList.size(); i++) {
@@ -106,7 +107,9 @@ public class ShowItemListService {
 				bigItemList.add(smallItemsList);
 			}
 			smallItemsList.add(itemList.get(i));
+			System.out.println(itemList.get(i));
 		}
+		System.out.println("bigItemListの状態"+bigItemList.size());
 		return bigItemList;
 	}
 
