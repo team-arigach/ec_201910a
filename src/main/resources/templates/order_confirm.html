@@ -173,7 +173,7 @@
 							<td>
 								<div class="text-center">
 									<a class="btn btn-primary" role="button"
-										th:href="@{'/shoppingCart/deleteItem?orderItemId='+${orderItem.id}}">削除</a>
+										th:href="@{'/deleteItem?orderItemId='+${orderItem.id}}">削除</a>
 								</div>
 							</td>
 						</tr>
@@ -211,8 +211,7 @@
 									<div class="text-center">お名前</div>
 								</td>
 								<td><input type="text" name="destinationName"
-									class="form-control" th:field="*{destinationName}"
-									th:value="${order.user.name}"> <span
+									class="form-control" th:field="*{destinationName}"> <span
 									th:errors="*{destinationName}" style="color: red"></span></td>
 							</tr>
 							<tr>
@@ -220,7 +219,7 @@
 									<div class="text-center">メールアドレス</div>
 								</td>
 								<td><input type="text" name="destinationEmail"
-									th:value="${order.user.email}" class="form-control"
+									class="form-control"
 									th:field="*{destinationEmail}"> <span
 									th:errors="*{destinationEmail}" style="color: red"></span></td>
 							</tr>
