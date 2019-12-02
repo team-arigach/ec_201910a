@@ -26,7 +26,7 @@ public class CreditInfoService {
 	 * @return WebApiから返ってきたJSON
 	 */
 	public CreditStatus getStatusByCreditInfo(CreditInfo creditInfo) {
-		String url = "http://192.168.56.101:8080/sample-credit-card-web-api/credit-card/payment";
+		String url = "http://192.168.56.102:8080/sample-credit-card-web-api/credit-card/payment";
 		CreditStatus creditStatus = restTemplate.postForObject(url, creditInfo, CreditStatus.class);
 		return creditStatus;
 	}
