@@ -87,6 +87,10 @@ public class ItemRepository {
 	}
 	
 
+	/**
+	 * @param offSet
+	 * @return
+	 */
 	public List<Item> findAllAboutSum(Integer offSet){
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items limit 6 offset :offSet";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("offSet", offSet);
@@ -94,9 +98,14 @@ public class ItemRepository {
 		return itemList;
 	}
 	
+	/**
+	 * @param name
+	 * @param offSet
+	 * @return
+	 */
 	public List<Item> findByLikeNameAboutSum(String name, Integer offSet){
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name limit 6 offset :offSet");
+		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name ILIKE :name limit 6 offset :offSet");
 		String escName = "%" + name + "%";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", escName).addValue("offSet", offSet);
 		List<Item> itemList = template.query(sql.toString(), param,ITEM_ROW_MAPPER);
