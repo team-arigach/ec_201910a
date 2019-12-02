@@ -39,7 +39,7 @@
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
 						<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/insertItem}"
-							class="navbar-link">商品登録</a> <a href="cart_list.html"
+							class="navbar-link">商品登録</a>&nbsp;&nbsp; <a href="cart_list.html"
 							class="navbar-link" th:href="@{/cartList}">ショッピングカート</a>&nbsp;&nbsp;
 						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
 						<a sec:authorize="isAnonymous()" href="login.html"
