@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,68 +34,77 @@
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
-						<a th:href="@{/cartList}" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
+						<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/insertItem}"
+							class="navbar-link">商品登録</a>&nbsp;&nbsp; <a th:href="@{/cartList}"
+							class="navbar-link">ショッピングカート</a>&nbsp;&nbsp; <a
+							sec:authorize="isAnonymous()" th:href="@{/orderHistory}"
+							class="navbar-link">注文履歴</a>&nbsp;&nbsp; <a th:href="@{/login}"
+							class="navbar-link">ログイン</a>&nbsp;&nbsp; <a th:href="@{/logout}"
+							class="navbar-link">ログアウト</a>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
 			</div>
 			<!-- /.container-fluid -->
 		</nav>
-		
+
 		<!-- login form -->
 		<div class="row">
-			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
+			<div
+				class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
 				<div class="well">
-					<form method="post" th:action="@{/registerUser/register}" th:object="${registerUserForm}">
+					<form method="post" th:action="@{/registerUser/register}"
+						th:object="${registerUserForm}">
 						<fieldset>
 							<legend>ユーザ登録</legend>
 							<div class="form-group">
 								<label for="inputName">名前:</label><label th:errors="*{name}"
 									class="control-label" style="color: red" for="inputError">名前を入力してください</label>
-								<input type="text" id="inputName" class="form-control" name="name"
-									placeholder="Name">
+								<input type="text" id="inputName" class="form-control"
+									name="name" placeholder="Name">
 							</div>
 							<div class="form-group">
-								<label for="inputEmail">メールアドレス:</label><label th:errors="*{email}"
-									class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
-								<input type="text" id="inputEmail" class="form-control" name="email"
+								<label for="inputEmail">メールアドレス:</label><label
+									th:errors="*{email}" class="control-label" style="color: red"
+									for="inputError">メールアドレスを入力してください</label> <input type="text"
+									id="inputEmail" class="form-control" name="email"
 									placeholder="Email">
 							</div>
 							<div class="form-group">
-								<label for="inputZipcode">郵便番号:</label>
-								<label th:errors="*{zipcode}"
-									class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
-									<input type="button" value="住所検索">
-								<input type="text" id="inputZipcode" class="form-control" name="zipcode"
-									placeholder="Zipcode">
-								
+								<label for="inputZipcode">郵便番号:</label> <label
+									th:errors="*{zipcode}" class="control-label" style="color: red"
+									for="inputError">郵便番号を入力してください</label> <input type="button"
+									value="住所検索"> <input type="text" id="inputZipcode"
+									class="form-control" name="zipcode" placeholder="Zipcode">
+
 							</div>
 							<div class="form-group">
-								<label for="inputAddress">住所:</label>
-								<label th:errors="*{address}"
-									class="control-label" style="color: red" for="inputError">住所を入力してください</label>
-								<input type="text" id="inputAddress" class="form-control" name="address"
+								<label for="inputAddress">住所:</label> <label
+									th:errors="*{address}" class="control-label" style="color: red"
+									for="inputError">住所を入力してください</label> <input type="text"
+									id="inputAddress" class="form-control" name="address"
 									placeholder="Address">
 							</div>
 							<div class="form-group">
-								<label for="inputTel">電話番号:</label>
-								<label th:errors="*{telephone}"
-									class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
-								<input type="text" id="inputTel" class="form-control" name="telephone"
+								<label for="inputTel">電話番号:</label> <label
+									th:errors="*{telephone}" class="control-label"
+									style="color: red" for="inputError">電話番号を入力してください</label> <input
+									type="text" id="inputTel" class="form-control" name="telephone"
 									placeholder="Tel">
 							</div>
 							<div class="form-group">
-								<label for="inputPassword">パスワード:</label>
-								<label th:errors="*{password}"
-									class="control-label" style="color: red" for="inputError">パスワードを入力してください</label>
-								<input type="password" id="inputPassword" class="form-control" name="password"
-									placeholder="Password">
+								<label for="inputPassword">パスワード:</label> <label
+									th:errors="*{password}" class="control-label"
+									style="color: red" for="inputError">パスワードを入力してください</label> <input
+									type="password" id="inputPassword" class="form-control"
+									name="password" placeholder="Password">
 							</div>
 							<div class="form-group">
-								<label for="inputConfirmationPassword">確認用パスワード:</label>
-								<label th:errors="*{passwordconfomation}"
-									class="control-label" style="color: red" for="inputError">確認用パスワードを入力してください</label>
-								<input type="password" id="inputConfirmationPassword" class="form-control" name="passwordconfomation"
+								<label for="inputConfirmationPassword">確認用パスワード:</label> <label
+									th:errors="*{passwordconfomation}" class="control-label"
+									style="color: red" for="inputError">確認用パスワードを入力してください</label> <input
+									type="password" id="inputConfirmationPassword"
+									class="form-control" name="passwordconfomation"
 									placeholder="Confirmation Password">
 							</div>
 							<div class="form-group">

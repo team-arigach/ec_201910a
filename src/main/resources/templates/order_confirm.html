@@ -38,9 +38,10 @@
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
-						<a href="cart_list.html" class="navbar-link"
-							th:href="@{/cartList}">ショッピングカート</a>&nbsp;&nbsp; <a
-							href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
+						<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/insertItem}"
+							class="navbar-link">商品登録</a> <a href="cart_list.html"
+							class="navbar-link" th:href="@{/cartList}">ショッピングカート</a>&nbsp;&nbsp;
+						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
 						<a sec:authorize="isAnonymous()" href="login.html"
 							class="navbar-link" th:href="@{/login}">ログイン</a>&nbsp;&nbsp; <a
 							sec:authorize="hasRole('ROLE_USER')" href="item_list.html"
@@ -117,7 +118,8 @@
 									class="btn btn-success btn-sm col-lg-offset-2"
 									data-toggle="modal" th:data-target="'#'+${orderItem.id}">
 									トッピングのカスタマイズ</button> <!-- モーダル・ダイアログ -->
-								<div class="modal fade sampleModal" th:id="${orderItem.id}" tabindex="-1">
+								<div class="modal fade sampleModal" th:id="${orderItem.id}"
+									tabindex="-1">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -127,25 +129,28 @@
 												<h4 class="modal-title">トッピング</h4>
 											</div>
 											<div class="modal-body">
-												<form action="#" th:action="@{/order/postTopping}" method="post" id="postToppingForm">
-												<div>
-													<strong>選択中のトッピング</strong>
-												</div>
-												<span th:each="orderTopping:${orderItem.orderToppingList}">
-													<input type="checkbox" name="checkedTopping" th:value="${orderTopping.topping.id}"
-													th:text="${orderTopping.topping.name}" checked>
-												</span>
-												<div>
-													<strong>選択していないトッピング</strong></div>
-													 <span
-														th:each="topping:${orderItem.nonOrderToppingList}">
-														<input type="checkbox" name="newCheck" th:text="${topping.name}" th:value="${topping.id}">
+												<form action="#" th:action="@{/order/postTopping}"
+													method="post" id="postToppingForm">
+													<div>
+														<strong>選択中のトッピング</strong>
+													</div>
+													<span th:each="orderTopping:${orderItem.orderToppingList}">
+														<input type="checkbox" name="checkedTopping"
+														th:value="${orderTopping.topping.id}"
+														th:text="${orderTopping.topping.name}" checked>
 													</span>
-													<input type="hidden" name="orderItemId" th:value="${orderItem.id}">
-													<br>
-													<br>
-												    <button type="submit" class="btn btn-success postTopping col-lg-offset-9" th:id="'post'+${orderItem.id}">トッピング情報変更</button>
-												
+													<div>
+														<strong>選択していないトッピング</strong>
+													</div>
+													<span th:each="topping:${orderItem.nonOrderToppingList}">
+														<input type="checkbox" name="newCheck"
+														th:text="${topping.name}" th:value="${topping.id}">
+													</span> <input type="hidden" name="orderItemId"
+														th:value="${orderItem.id}"> <br> <br>
+													<button type="submit"
+														class="btn btn-success postTopping col-lg-offset-9"
+														th:id="'post'+${orderItem.id}">トッピング情報変更</button>
+
 												</form>
 											</div>
 											<div class="modal-footer">
@@ -200,15 +205,17 @@
 								<td>
 									<div class="text-center">お名前</div>
 								</td>
-								<td><input type="text" name="destinationName" class="form-control"
-									th:field="*{destinationName}" value="${order.user.name}"> <span
+								<td><input type="text" name="destinationName"
+									class="form-control" th:field="*{destinationName}"
+									value="${order.user.name}"> <span
 									th:errors="*{destinationName}" style="color: red"></span></td>
 							</tr>
 							<tr>
 								<td style="width: 300px;">
 									<div class="text-center">メールアドレス</div>
 								</td>
-								<td><input type="text" name="destinationEmail" th:value="${order.user.email}" class="form-control" 
+								<td><input type="text" name="destinationEmail"
+									th:value="${order.user.email}" class="form-control"
 									th:field="*{destinationEmail}"> <span
 									th:errors="*{destinationEmail}" style="color: red"></span></td>
 							</tr>
@@ -216,7 +223,8 @@
 								<td>
 									<div class="text-center">郵便番号</div>
 								</td>
-								<td><input type="text" name="destinationZipcode" th:value="${order.user.zipcode}" class="form-control" 
+								<td><input type="text" name="destinationZipcode"
+									th:value="${order.user.zipcode}" class="form-control"
 									th:field="*{destinationZipcode}"
 									onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;
 									<!-- <button>住所検索</button></td> -->
@@ -225,7 +233,8 @@
 								<td>
 									<div class="text-center">住所</div>
 								</td>
-								<td><input type="text" name="destinationAddress"  th:value="${order.user.address}" class="form-control" 
+								<td><input type="text" name="destinationAddress"
+									th:value="${order.user.address}" class="form-control"
 									th:field="*{destinationAddress}" size="65"> <span
 									th:errors="*{destinationAddress}" style="color: red"></span></td>
 							</tr>
@@ -233,7 +242,8 @@
 								<td>
 									<div class="text-center">電話番号</div>
 								</td>
-								<td><input type="text" name="destinationTel" th:value="${order.user.telephone}" class="form-control" 
+								<td><input type="text" name="destinationTel"
+									th:value="${order.user.telephone}" class="form-control"
 									th:field="*{destinationTel}"> <span
 									th:errors="*{destinationTel}" style="color: red"></span></td>
 							</tr>
@@ -299,8 +309,7 @@
 								<td>
 									<div class="row">
 										<div class="col-sm-12">
-											<label class="radio-inline">
-											<input type="radio"
+											<label class="radio-inline"> <input type="radio"
 												name="paymentMethod" id="creditForm" checked="checked"
 												th:value="2" th:field="*{paymentMethod}"> クレジットカード
 											</label>

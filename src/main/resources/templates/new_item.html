@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,11 +17,48 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 <body>
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ -->
+					<img alt="main log" th:src="@{/img/header_logo.png}" height="35">
+				</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<p class="navbar-text navbar-right">
+					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/insertItem}"
+						class="navbar-link">商品登録</a> <a href="cart_list.html"
+						class="navbar-link" th:href="@{/cartList}">ショッピングカート</a>&nbsp;&nbsp;
+					<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
+					<a sec:authorize="isAnonymous()" href="login.html"
+						class="navbar-link" th:href="@{/login}">ログイン</a>&nbsp;&nbsp; <a
+						sec:authorize="hasRole('ROLE_USER')" href="item_list.html"
+						class="navbar-link" th:href="@{/logout}">ログアウト</a>
+				</p>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+
 	<div class="container">
 		<div class="card border-dark form-mgn mt-3">
 			<h1 class="card-header">商品を登録</h1>
 			<div class="card-body">
-				<form action="#" th:action="@{/insertItem/input}" enctype="multipart/form-data" method="post">
+				<form action="#" th:action="@{/insertItem/input}"
+					enctype="multipart/form-data" method="post">
 					<div class="row">
 						<div class="col-5">
 							<div class="field">
@@ -36,21 +74,21 @@
 									class="form-control">
 							</div>
 							<div class="field">
-								<label for="description">商品説明</label> <textarea name="description"
-									class="form-control"></textarea>
+								<label for="description">商品説明</label>
+								<textarea name="description" class="form-control"></textarea>
 							</div>
 							<div class="field">
-								<label for="priceM">Mサイズの価格</label> <input type="text" name="priceM"
-									class="form-control">
+								<label for="priceM">Mサイズの価格</label> <input type="text"
+									name="priceM" class="form-control">
 							</div>
 							<div class="field">
-								<label for="priceL">Lサイズの価格</label> <input type="text" name="priceL"
-									class="form-control">
+								<label for="priceL">Lサイズの価格</label> <input type="text"
+									name="priceL" class="form-control">
 							</div>
 						</div>
 
 						<div class="col-sm-12">
-						<input type="hidden" name="deleted" value="false">
+							<input type="hidden" name="deleted" value="false">
 							<button type="submit" class="btn-success btn-block my-1">登録</button>
 						</div>
 					</div>
