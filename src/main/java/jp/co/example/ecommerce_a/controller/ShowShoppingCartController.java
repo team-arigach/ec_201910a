@@ -44,7 +44,9 @@ public class ShowShoppingCartController {
 
 		System.out.println(order);
 		if (order != null) {
-			sortItemService.sortOrderItem(order);
+			sortItemService.sortOrderItemByM(order);
+			sortItemService.sortOrderItemByL(order);
+			order = showShoppingCartService.showShoppingCart(userId, 0);
 			if (order.getOrderItemList().size() != 0) {
 				model.addAttribute("order", order);
 			}

@@ -2,6 +2,10 @@ package jp.co.example.ecommerce_a.domain;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import jp.co.example.ecommerce_a.repository.ToppingRepository;
+
 /**
  * 注文商品を表すドメイン.
  * 
@@ -9,6 +13,10 @@ import java.util.List;
  *
  */
 public class OrderItem {
+	
+	@Autowired
+	private ToppingRepository toppingRepository;
+	
 	/** 注文商品ID */
 	private Integer id;
 	/** 商品ID */
@@ -23,6 +31,16 @@ public class OrderItem {
 	private Item item;
 	/** 注文トッピングリスト */
 	private List<OrderTopping> orderToppingList;
+	/** 注文していないトッピングリスト*/
+	private List<Topping> nonOrderToppingList;
+
+	public List<Topping> getNonOrderToppingList() {
+		return nonOrderToppingList;
+	}
+
+	public void setNonOrderToppingList(List<Topping> nonOrderToppingList) {
+		this.nonOrderToppingList = nonOrderToppingList;
+	}
 
 	public int getSubTotal() {
 		Integer toppingItems = 0;
@@ -102,8 +120,11 @@ public class OrderItem {
 
 	@Override
 	public String toString() {
-		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
-				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
+		return "OrderItem [toppingRepository=" + toppingRepository + ", id=" + id + ", itemId=" + itemId + ", orderId="
+				+ orderId + ", quantity=" + quantity + ", size=" + size + ", item=" + item + ", orderToppingList="
+				+ orderToppingList + ", nonOrderToppingList=" + nonOrderToppingList + "]";
 	}
+
+	
 
 }

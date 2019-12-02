@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,9 +29,8 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="item_list.html"
-						th:href="@{/}"> <!-- 企業ロゴ --> <img alt="main log"
-						th:src="@{img/header_logo.png}" height="35">
+					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ -->
+						<img alt="main log" th:src="@{/img/header_logo.png}" height="35">
 					</a>
 				</div>
 
@@ -41,8 +41,10 @@
 						<a href="cart_list.html" class="navbar-link"
 							th:href="@{/cartList}">ショッピングカート</a>&nbsp;&nbsp; <a
 							href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-						<a sec:authorize="isAnonymous()" href="login.html" class="navbar-link" th:href="@{/login}">ログイン</a>&nbsp;&nbsp;
-						<a sec:authorize="hasRole('ROLE_USER')" href="item_list.html" class="navbar-link" th:href="@{/logout}">ログアウト</a>
+						<a sec:authorize="isAnonymous()" href="login.html"
+							class="navbar-link" th:href="@{/login}">ログイン</a>&nbsp;&nbsp; <a
+							sec:authorize="hasRole('ROLE_USER')" href="item_list.html"
+							class="navbar-link" th:href="@{/logout}">ログアウト</a>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -63,42 +65,107 @@
 								<div class="text-center">商品名</div>
 							</th>
 							<th>
-								<div class="text-center">サイズ、価格(税抜)、数量</div>
+								<div class="text-center">サイズ、価格(税抜</div>
 							</th>
+							<th>数量</th>
 							<th>
 								<div class="text-center">トッピング、価格(税抜)</div>
 							</th>
 							<th>
 								<div class="text-center">小計（税抜）</div>
 							</th>
+							<th></th>
 						</tr>
 						<tr th:each="orderItem:${order.orderItemList}">
 							<td>
 								<div class="center">
-									<img src="img/1.jpg"
-										th:src="@{'/img/' + ${orderItem.item.imagePath}}"
+									<img th:if="${orderItem.item.imagePath.length() < 50}"
+										src="img/1.jpg" th:src="'/img/' + ${orderItem.item.imagePath}"
+										class="img-responsive img-rounded" width="100" height="300">
+									<img th:unless="${orderItem.item.imagePath.length() < 50}"
+										src="img/1.jpg" th:src="${orderItem.item.imagePath}"
 										class="img-responsive img-rounded" width="100" height="300"><br>
 									<span th:text="${orderItem.item.name}">商品名</span>
 								</div>
 							</td>
 
-							<td><span class="price" th:text="${orderItem.size}">&nbsp;</span>&nbsp;&nbsp;
-								<span th:if="${orderItem.size} == 'M'"
-								th:text="${#numbers.formatInteger(orderItem.item.priceM, 1,'COMMA') + '円'}"></span> &nbsp;&nbsp; <span
-								th:if="${orderItem.size} == 'L'"
-								th:text="${#numbers.formatInteger(orderItem.item.priceL, 1,'COMMA') + '円'}"></span> &nbsp;&nbsp; <span
-								th:text="${orderItem.quantity}"></span>個<br>
+							<td class="text-center"><span class="price"
+								th:text="${orderItem.size}">&nbsp;</span>&nbsp;&nbsp; <span
+								th:if="${orderItem.size} == 'M'"
+								th:text="${#numbers.formatInteger(orderItem.item.priceM, 1,'COMMA') + '円'}"></span>
+								&nbsp;&nbsp; <span th:if="${orderItem.size} == 'L'"
+								th:text="${#numbers.formatInteger(orderItem.item.priceL, 1,'COMMA') + '円'}"></span>
+								&nbsp;&nbsp; <br>
 							<td>
-								<ul>
+								<form action="#" th:action="@{/order/postQuantity}"
+									name="quantityForm" id="quantityForm">
+									<select name="quantity" class="quantityField">
+										<option th:each="i:${count}" th:value="${i}" th:text="${i}"
+											th:selected="${i == orderItem.quantity}"></option>
+									</select>個 <input type="hidden" th:value="${orderItem.id}" name="id">
+								</form>
+							</td>
+							<td>
+								<ul class="col-lg-offset-1">
 									<li th:each="orderTopping:${orderItem.orderToppingList}">
 										<span th:text="${orderTopping.topping.name}"></span> <span
 										th:text="${orderTopping.topping.priceM}"></span>円
+
 									</li>
 								</ul>
+								<button type="button"
+									class="btn btn-success btn-sm col-lg-offset-2"
+									data-toggle="modal" th:data-target="'#'+${orderItem.id}">
+									トッピングのカスタマイズ</button> <!-- モーダル・ダイアログ -->
+								<div class="modal fade sampleModal" th:id="${orderItem.id}" tabindex="-1">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">
+													<span>×</span>
+												</button>
+												<h4 class="modal-title">トッピング</h4>
+											</div>
+											<div class="modal-body">
+												<form action="#" th:action="@{/order/postTopping}" method="post" id="postToppingForm">
+												<div>
+													<strong>選択中のトッピング</strong>
+												</div>
+												<span th:each="orderTopping:${orderItem.orderToppingList}">
+													<input type="checkbox" name="checkedTopping" th:value="${orderTopping.topping.id}"
+													th:text="${orderTopping.topping.name}" checked>
+												</span>
+												<div>
+													<strong>選択していないトッピング</strong></div>
+													 <span
+														th:each="topping:${orderItem.nonOrderToppingList}">
+														<input type="checkbox" name="newCheck" th:text="${topping.name}" th:value="${topping.id}">
+													</span>
+													<input type="hidden" name="orderItemId" th:value="${orderItem.id}">
+													<br>
+													<br>
+												    <button type="submit" class="btn btn-success postTopping" th:id="'post'+${orderItem.id}">送信</button>
+												
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">閉じる</button>
+											</div>
+										</div>
+									</div>
+								</div>
 							</td>
 							<td>
 								<div class="text-center">
-									<span th:text="${#numbers.formatInteger(orderItem.getSubTotal(), 1,'COMMA')}">小計（カンマ区切り）</span>円
+									<span
+										th:text="${#numbers.formatInteger(orderItem.getSubTotal(), 1,'COMMA')}">小計（カンマ区切り）</span>円
+								</div>
+							</td>
+							<td>
+								<div class="text-center">
+									<a class="btn btn-primary" role="button"
+										th:href="@{'/shoppingCart/deleteItem?orderItemId='+${orderItem.id}}">削除</a>
 								</div>
 							</td>
 						</tr>
@@ -125,23 +192,23 @@
 			th:object="${orderForm}">
 			<div class="row">
 				<div
-					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+					class="table-responsive col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
-					<table class="table table-striped">
+					<table class="table table-bordered">
 						<tbody>
 							<tr>
 								<td>
 									<div class="text-center">お名前</div>
 								</td>
-								<td><input type="text" name="destinationName"
-									th:field="*{destinationName}"> <span
+								<td><input type="text" name="destinationName" class="form-control"
+									th:field="*{destinationName}" value="${order.user.name}"> <span
 									th:errors="*{destinationName}" style="color: red"></span></td>
 							</tr>
 							<tr>
-								<td>
+								<td style="width: 300px;">
 									<div class="text-center">メールアドレス</div>
 								</td>
-								<td><input type="text" name="destinationEmail"
+								<td><input type="text" name="destinationEmail" th:value="${order.user.email}" class="form-control" 
 									th:field="*{destinationEmail}"> <span
 									th:errors="*{destinationEmail}" style="color: red"></span></td>
 							</tr>
@@ -149,7 +216,7 @@
 								<td>
 									<div class="text-center">郵便番号</div>
 								</td>
-								<td><input type="text" name="destinationZipcode"
+								<td><input type="text" name="destinationZipcode" th:value="${order.user.zipcode}" class="form-control" 
 									th:field="*{destinationZipcode}"
 									onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;
 									<!-- <button>住所検索</button></td> -->
@@ -158,7 +225,7 @@
 								<td>
 									<div class="text-center">住所</div>
 								</td>
-								<td><input type="text" name="destinationAddress"
+								<td><input type="text" name="destinationAddress"  th:value="${order.user.address}" class="form-control" 
 									th:field="*{destinationAddress}" size="65"> <span
 									th:errors="*{destinationAddress}" style="color: red"></span></td>
 							</tr>
@@ -166,7 +233,7 @@
 								<td>
 									<div class="text-center">電話番号</div>
 								</td>
-								<td><input type="text" name="destinationTel"
+								<td><input type="text" name="destinationTel" th:value="${order.user.telephone}" class="form-control" 
 									th:field="*{destinationTel}"> <span
 									th:errors="*{destinationTel}" style="color: red"></span></td>
 							</tr>
@@ -208,7 +275,7 @@
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お支払い方法</h3>
-					<table class="table table-striped">
+					<table class="table table-bordered">
 						<tbody>
 							<tr>
 								<td>
@@ -218,8 +285,8 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline"> <input type="radio"
-												name="paymentMethod" checked="checked" th:value="1"
-												th:field="*{paymentMethod}"> 代金引換
+												name="paymentMethod" th:value="1"
+												th:field="*{paymentMethod}" checked="checked"> 代金引換
 											</label>
 										</div>
 									</div>
@@ -229,13 +296,14 @@
 								<td>
 									<div class="text-center">クレジットカード決済</div>
 								</td>
-								<td align="center">
+								<td>
 									<div class="row">
 										<div class="col-sm-12">
-											<label class="radio-inline"> <input type="radio"
+											<label class="radio-inline">
+											<input type="radio"
 												name="paymentMethod" id="creditForm" checked="checked"
 												th:value="2" th:field="*{paymentMethod}"> クレジットカード
-											</label><br> <br>
+											</label>
 										</div>
 									</div>
 								</td>
@@ -297,7 +365,19 @@
 			</div>
 		</form>
 	</div>
+
+
+
+
+
 	<!-- end container -->
+	<script>
+		$(function() {
+			$(".quantityField").on("change", function() {
+				$("#quantityForm").submit();
+			})
+		});
+	</script>
 	<script>
 		$(function() {
 			$("#credit_input").hide();

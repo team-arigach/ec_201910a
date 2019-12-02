@@ -140,7 +140,6 @@ public class OrderRepository {
 		if( orderList.size() == 0) { // オーダーリストが存在する場合
 			return null;
 		}
-		System.err.println(orderList.get(0));
 		return orderList.get(0);
 	}
 	
