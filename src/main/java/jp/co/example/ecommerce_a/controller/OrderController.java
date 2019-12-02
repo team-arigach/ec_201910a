@@ -104,7 +104,6 @@ public class OrderController {
 	 * @return エラー出たら注文確認画面に戻り、そうでなければ注文完了画面へリダイレクト
 	 */
 	@RequestMapping("/input")
-<<<<<<< HEAD
 	public String order(@Validated OrderForm orderForm
 			, BindingResult result
 			,OrderItemForm orderItemForm
@@ -112,11 +111,6 @@ public class OrderController {
 			, Model model
 			, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
-=======
-	public String order(@Validated OrderForm orderForm, BindingResult result, CreditInfoForm creditInfoForm,
-			Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		if (result.hasErrors()) {
->>>>>>> f43bacdd8a6e66ae6cd325a7c33e4e6724ee5889
 			return index(model, loginUser);
 		}
 		Order order = new Order();
