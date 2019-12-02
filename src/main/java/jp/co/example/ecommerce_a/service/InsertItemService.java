@@ -22,11 +22,14 @@ public class InsertItemService {
 	 * アイテムの登録処理.
 	 */
 	public void insertItem(Item item) {
-		
 		itemRepository.insert(item);
-		
 	}
 	
+	/**
+	 * アイテムを数える.
+	 * 
+	 * @return
+	 */
 	public int itemCount() {
 		return itemRepository.findAll().size();
 	}
