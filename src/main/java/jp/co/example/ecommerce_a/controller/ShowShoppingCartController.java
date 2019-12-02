@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.domain.Order;
+import jp.co.example.ecommerce_a.service.AddShoppingCartService;
 import jp.co.example.ecommerce_a.service.ShowShoppingCartService;
 import jp.co.example.ecommerce_a.service.SortItemService;
 
@@ -22,6 +23,9 @@ public class ShowShoppingCartController {
 
 	@Autowired
 	private SortItemService sortItemService;
+	
+	@Autowired
+	private AddShoppingCartService addShoppingCartService;
 	
 	@Autowired
 	private HttpSession session;
@@ -40,8 +44,10 @@ public class ShowShoppingCartController {
 		} else {
 			userId = session.getId().hashCode();
 		}
+		if (loginUser != null && session.getAttribute("userId") != null) {
+			addShoppingCartService.addShoppingCart(loginUser.getUser().getId());
+		}
 		Order order = showShoppingCartService.showShoppingCart(userId, 0);
-
 		System.out.println(order);
 		if (order != null) {
 			sortItemService.sortOrderItemByM(order);

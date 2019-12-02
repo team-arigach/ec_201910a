@@ -66,9 +66,9 @@
 						<div class="col-xs-5">
 							<img th:if="${item.imagePath.length() < 50}" src="img/1.jpg"
 								th:src="'/img/' + ${item.imagePath}"
-								class="img-responsive img-rounded" width="300" height="600">
+								class="img-responsive img-rounded center-block" width="300" height="600">
 							<img th:unless="${item.imagePath.length() < 50}" src="img/1.jpg"
-								th:src="${item.imagePath}" class="img-responsive img-rounded"
+								th:src="${item.imagePath}" class="img-responsive img-rounded center-block"
 								width="200" height="600">
 						</div>
 

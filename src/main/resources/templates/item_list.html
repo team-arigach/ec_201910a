@@ -68,7 +68,7 @@
 			</div>
 			<!-- /.container-fluid -->
 		</nav>
-		<div sec:authorize="hasRole('ROLE_USER')" class="text-right">
+		<div sec:authorize="hasRole('ROLE_USER')" class="text-right btn btn-warning">
 			<span sec:authentication="principal.user.name"></span> さんがログインしています
 		</div>
 
@@ -134,7 +134,7 @@
 									class="img-responsive img-rounded center-block" width="200"
 									height="600"> <img
 									th:unless="${item.imagePath.length() < 50}" src="img/1.jpg"
-									th:src="${item.imagePath}" class="img-responsive img-rounded"
+									th:src="${item.imagePath}" class="img-responsive img-rounded center-block"
 									width="200" height="600">
 							</a><br> <a href="item_detail.html"
 								th:href="@{'/detail/?id=' + ${item.id}}"> <span
