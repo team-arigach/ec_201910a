@@ -240,7 +240,7 @@ public class OrderRepository {
 	 * @return 検索されたオーダー全件
 	 */
 	public List<Order> findAllByUserId(Integer userId){
-		String sql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method FROM orders WHERE userId = :userId;";
+		String sql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method FROM orders WHERE user_id = :userId;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		return template.query(sql, param, ORDER_ROW_MAPPER);
 	}

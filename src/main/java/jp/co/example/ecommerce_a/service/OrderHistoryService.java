@@ -1,5 +1,7 @@
 package jp.co.example.ecommerce_a.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +26,10 @@ public class OrderHistoryService {
 	 * 注文履歴画面を表示する.
 	 * 
 	 * @param userId ユーザーID
-	 * @param status　支払状況
-	 * @return　注文情報
+	 * @return　注文情報リスト
 	 */
-	public Order showOrderHistory(Integer userId, Integer status) {
-		Order order = orderRepository.findByUserIdAndStatus(userId, status);
-		return order;
+	public List<Order> showOrderHistory(Integer userId) {
+		List<Order> orderList = orderRepository.findAllByUserId(userId);	 
+		return orderList;
 	}
 }

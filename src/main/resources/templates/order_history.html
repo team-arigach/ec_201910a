@@ -78,93 +78,44 @@
 								</div>
 							</th>
 						</tr>
-						<tr>
+						<tr th:each="orderItem:${order.orderItemList}">
 							<td>
-								<div class="text-center">
+								<div class="text-center" th:text="${orderItem.orderDate}">
 									2019年1月1日
 								</div>
 							</td>
 							<td>
 								<div class="center">
-									<img src="img/1.jpg"
-										class="img-responsive img-rounded" width="100" height="300"><br>
-									じゃがバターベーコン
+									<img th:if="${orderItem.item.imagePath.length() < 50}"
+										src="img/1.jpg" th:src="'/img/' + ${orderItem.item.imagePath}"
+										class="img-responsive img-rounded" width="100" height="300">
+									<img th:unless="${orderItem.item.imagePath.length() < 50}"
+										src="img/1.jpg" th:src="${orderItem.item.imagePath}"><br>
+									<span th:text="${orderItem.item.name}"></span>じゃがバターベーコン
 								</div>
 							</td>
-							<td>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円
-								&nbsp;&nbsp;1個
+							<td class="text-center"><span class="price"
+								th:text="${orderItem.size}">&nbsp;</span>&nbsp;&nbsp; <span
+								th:if="${orderItem.size} == 'M'"
+								th:text="${#numbers.formatInteger(orderItem.item.priceM, 1,'COMMA') + '円'}"></span>
+								&nbsp;&nbsp; <span th:if="${orderItem.size} == 'L'"
+								th:text="${#numbers.formatInteger(orderItem.item.priceL, 1,'COMMA') + '円'}"></span>
+								&nbsp;&nbsp; <br>
 							</td>
 							<td>
 								<ul>
-									<li>ピーマン300円</li>
-									<li>オニオン300円</li>
-									<li>あらびきソーセージ300円</li>
+									<li th:each="orderTopping:${orderItem.orderToppingList}">
+									<span th:text="${orderTopping.topping.name}">ピーマン</span> 
+									<span th:if="${orderItem.size} == 'M'"
+										  th:text="${orderTopping.topping.priceM}">200</span> 
+									<span th:unless="${orderItem.size} == 'M'"
+										  th:text="${orderTopping.topping.priceL}">300</span>円
+									</li>
 								</ul>
 							</td>
 							<td>
 								<div class="text-center">
-									3,280円
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="text-center">
-									2019年1月1日
-								</div>
-							</td>
-							<td>
-								<div class="center">
-									<img src="img/1.jpg"
-										class="img-responsive img-rounded" width="100" height="300"><br>
-									じゃがバターベーコン
-								</div>
-							</td>
-							<td>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円
-								&nbsp;&nbsp;1個
-							</td>
-							<td>
-								<ul>
-									<li>ピーマン300円</li>
-									<li>オニオン300円</li>
-									<li>あらびきソーセージ300円</li>
-								</ul>
-							</td>
-							<td>
-								<div class="text-center">
-									3,280円
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="text-center">
-									2019年1月1日
-								</div>
-							</td>
-							<td>
-								<div class="center">
-									<img src="img/1.jpg"
-										class="img-responsive img-rounded" width="100" height="300"><br>
-									じゃがバターベーコン
-								</div>
-							</td>
-							<td>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円
-								&nbsp;&nbsp;1個
-							</td>
-							<td>
-								<ul>
-									<li>ピーマン300円</li>
-									<li>オニオン300円</li>
-									<li>あらびきソーセージ300円</li>
-								</ul>
-							</td>
-							<td>
-								<div class="text-center">
-									3,280円
+									<span th:text="${#numbers.formatInteger(orderItem.getSubTotal(), 1,'COMMA')}"></span>円
 								</div>
 							</td>
 						</tr>
@@ -177,7 +128,7 @@
 		<div class="row">
 			<div class="col-xs-offset-5 col-xs-3">
 				<div class="form-group">
-					<form action="order_confirm.html">
+					<form action="item_list.html" th:action="@{/toShowItemList}">
 						<input class="form-control btn btn-warning btn-block"
 							type="submit" value="商品一覧に戻る">
 					</form>
