@@ -38,6 +38,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		// ここで権限を付与
 		Collection<GrantedAuthority> authorityList = new ArrayList<>();
 		authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
+		if(user.getIsAdmin()) {
+			authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		}
 		return new LoginUser(user, authorityList);
 	}
 	

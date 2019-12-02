@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/","/registerUser/**", "/shoppingCart/**", "/showConfirm", "/showItemList", "/detail/**",
 						"/cartList", "/login", "/logout")
 				.permitAll().antMatchers("/orderHistory").hasRole("USER").antMatchers("/order/**").hasRole("USER")
+				.antMatchers("/insertItem").hasRole("ADMIN")
 				.anyRequest().authenticated();
 		http.formLogin().loginPage("/login").loginProcessingUrl("/userLogin").failureUrl("/login?error=true")
 				.defaultSuccessUrl("/", false) // 第1引数:デフォルトでログイン成功時に遷移させるパス
