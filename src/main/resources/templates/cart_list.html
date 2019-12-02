@@ -115,8 +115,11 @@
 							<td>
 								<ul>
 									<li th:each="orderTopping:${orderItem.orderToppingList}"><span
-										th:text="${orderTopping.topping.name}">ピーマン</span><span
-										th:text="${orderTopping.topping.priceM}">300</span>円</li>
+										th:text="${orderTopping.topping.name}">ピーマン</span>
+										<span th:if="${orderItem.size} == 'M'" th:text="${orderTopping.topping.priceM}">300</span>
+										<span th:unless="${orderItem.size} == 'M'" th:text="${orderTopping.topping.priceL}">300</span>円
+										
+									</li>
 								</ul>
 							</td>
 							<td>
