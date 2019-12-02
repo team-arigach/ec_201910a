@@ -80,6 +80,7 @@ public class OrderController {
 
 		order.setUser(orderService.setUser(order.getUserId()));
 		model.addAttribute("order", order);
+		model.addAttribute("orderForm",orderService.setOrderForm(order.getUser()));
 
 		// quantityに表示する要素数
 		int[] count = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };

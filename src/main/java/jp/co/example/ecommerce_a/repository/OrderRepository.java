@@ -187,6 +187,47 @@ public class OrderRepository {
 		return null;
 	}
 	
+	/**
+	 * 指定されたユーザーIDから注文を全件取得.
+	 * @return 検索されたオーダー全件
+	 */
+	public List<Order> findAllByUserId(Integer userId) {
+		String sql = "SELECT o.id AS id, "
+				+ "o.user_id, "
+				+ "o.status, "
+				+ "total_price, "
+				+ "order_date, "
+				+ "destination_name, "
+				+ "destination_email, "
+				+ "destination_zipcode, "
+				+ "destination_address, "
+				+ "destination_tel, "
+				+ "delivery_time, "
+				+ "payment_method, "
+				+ "oi.id AS order_item_id, "
+				+ "oi.item_id, "
+				+ "t.id AS order_topping_id, "
+				+ "quantity, "
+				+ "size, "
+				+ "t.topping_id, "
+				+ "t.order_item_id AS order_item_id "
+				+ "FROM orders o "
+				+ "LEFT OUTER JOIN "
+				+ "order_items oi "
+				+ "ON o.id = oi.order_id "
+				+ "LEFT OUTER JOIN order_toppings t "
+				+ "ON t.order_item_id = oi.id "
+				+ "WHERE "
+				+ "o.user_id = :userId "
+				+ "ORDER BY o.id ,oi.id;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
+		if( orderList.size() > 0) { // オーダーリストが存在する場合
+			return orderList;
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * ショッピングカートにアイテムを追加する.
@@ -235,13 +276,6 @@ public class OrderRepository {
 	}
 
 	
-	/**
-	 * 指定されたユーザーIDから注文を全件取得.
-	 * @return 検索されたオーダー全件
-	 */
-	public List<Order> findAllByUserId(Integer userId){
-		String sql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method FROM orders WHERE userId = :userId;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
-		return template.query(sql, param, ORDER_ROW_MAPPER);
-	}
+	
+	
 }
