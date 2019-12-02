@@ -16,6 +16,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+<script type="text/javascript" th:src="@{/js/address_search.js}"></script>
 </head>
 <body th:background="@{/img/background-pizza.jpg}">
 	<div class="container">
@@ -229,9 +230,9 @@
 								</td>
 								<td><input type="text" name="destinationZipcode"
 									th:value="${order.user.zipcode}" class="form-control"
-									th:field="*{destinationZipcode}"
-									onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;
-									<!-- <button>住所検索</button></td> -->
+									th:field="*{destinationZipcode}">
+									<!-- onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');"> -->&nbsp;&nbsp;
+									<button type="button" class="address-search">住所検索</button></td>
 							</tr>
 							<tr>
 								<td>
