@@ -1,16 +1,12 @@
 package jp.co.example.ecommerce_a.service;
 
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.domain.User;
-import jp.co.example.ecommerce_a.repository.OrderItemRepository;
-import jp.co.example.ecommerce_a.repository.OrderRepository;
 import jp.co.example.ecommerce_a.repository.UserRepository;
 
 @Service
@@ -19,11 +15,6 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	private OrderRepository orderRepository;
-	
-	@Autowired
-	private OrderItemRepository orderItemRepository;
 	
 	@Autowired
 	private HttpSession session;
@@ -39,21 +30,5 @@ public class UserService {
 		session.setAttribute("user", user);
 		return user;
 	}
-	
-//	public void userIdUpdate(Integer sessionId,Integer id) {
-//		Order order = orderRepository.findByUserIdAndStatus(sessionId, 0);
-//		// Ordersテーブルのログイン前のIDを取得
-//		System.out.println(order);
-//		if(order != null) {
-//		Integer orderId = order.getId();
-//		
-//		// ログイン前のsessionIDに紐づいているidを取得
-//		List<Order> orderList = orderRepository.findByOrderId(orderId);  
-//		for(Order checkorder:orderList) {
-//			orderItemRepository.updateOrderIdFromOrderItemsTable(checkorder.getId(),id);		
-//		}
-//		}
-//		
-//	}
 
 }

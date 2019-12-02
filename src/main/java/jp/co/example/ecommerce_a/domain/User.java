@@ -22,6 +22,8 @@ public class User {
 	private String address;
 	/** 電話番号 */
 	private String telephone;
+	/** 管理者情報 */
+	private Boolean isAdmin;
 	
 	// 以下 getter / setter
 	
@@ -66,6 +68,12 @@ public class User {
 	}
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	
 	@Override

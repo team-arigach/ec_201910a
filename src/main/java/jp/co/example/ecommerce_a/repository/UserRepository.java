@@ -1,6 +1,5 @@
 package jp.co.example.ecommerce_a.repository;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -36,6 +35,7 @@ public class UserRepository {
 		user.setZipcode(rs.getString("zipcode"));
 		user.setAddress(rs.getString("address"));
 		user.setTelephone(rs.getString("telephone"));
+		user.setIsAdmin(rs.getBoolean("isadmin"));
 		return user;
 	};
 	
@@ -66,7 +66,7 @@ public class UserRepository {
 	
 	public User findByMailAddress(String email) {
 		try {
-			String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email";
+			String sql = "SELECT id,name,email,password,zipcode,address,telephone, isadmin FROM users WHERE email=:email";
 			SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
 			User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
 			return user;
