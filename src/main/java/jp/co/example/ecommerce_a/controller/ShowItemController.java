@@ -25,6 +25,7 @@ import jp.co.example.ecommerce_a.service.ShowItemListService;
 @Controller
 @RequestMapping("")
 public class ShowItemController {
+	private Integer defaultCount = 6;
 
 	@Autowired
 	private ShowItemListService showItemListService;
@@ -71,7 +72,8 @@ public class ShowItemController {
 		Integer count = null;
 		count = (Integer) session.getAttribute("count");
 		if (count == null || count == 0 && (pageNumber == null || pageNumber == 0)) {
-			count = 6; // 1ページ当たりの表示件数を設定
+			count = defaultCount; // 1ページ当たりの表示件数を設定
+			session.setAttribute("count", count);
 
 		}
 		Integer offSet = showItemListService.makeOffSet(pageNumber, count);
