@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.example.ecommerce_a.domain.LoginUser;
 import jp.co.example.ecommerce_a.domain.Order;
 import jp.co.example.ecommerce_a.form.OrderForm;
+import jp.co.example.ecommerce_a.service.InsertShoppingCartService;
 import jp.co.example.ecommerce_a.service.ShowConfirmService;
 import jp.co.example.ecommerce_a.service.SortItemService;
 
@@ -33,6 +34,9 @@ public class ShowConfirmController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private InsertShoppingCartService insertShoppingService;
 	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
@@ -63,5 +67,12 @@ public class ShowConfirmController {
 			}
 		}
 		return "order_confirm"; 
+	}
+	
+	@RequestMapping("/deleteItem")
+	public String deleteItem(Integer orderItemId) {
+		insertShoppingService.deteleOrder(orderItemId);
+		System.out.println(orderItemId);
+		return "forward:/order";
 	}
 }
