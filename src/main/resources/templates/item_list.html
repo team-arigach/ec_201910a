@@ -68,7 +68,7 @@
 			</div>
 			<!-- /.container-fluid -->
 		</nav>
-		<div sec:authorize="hasRole('ROLE_USER')" class="text-right">
+		<div sec:authorize="hasRole('ROLE_USER')" class="text-right btn btn-warning">
 			<span sec:authentication="principal.user.name"></span> さんがログインしています
 		</div>
 
