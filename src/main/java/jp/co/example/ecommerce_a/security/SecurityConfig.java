@@ -1,5 +1,6 @@
 package jp.co.example.ecommerce_a.security;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-
+	
 	/**
 	 * セキュリティー設定を無効にする.
 	 */
@@ -48,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/insertItem").hasRole("ADMIN")
 				.anyRequest().authenticated();
 		http.formLogin().loginPage("/login").loginProcessingUrl("/userLogin").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/", false) // 第1引数:デフォルトでログイン成功時に遷移させるパス
+				.defaultSuccessUrl("/check", true) // 第1引数:デフォルトでログイン成功時に遷移させるパス
 															// 第2引数: true :認証後常に第1引数のパスに遷移
 															// false:認証されてなくて一度ログイン画面に飛ばされてもログインしたら指定したURLに遷移
 				.usernameParameter("email").passwordParameter("password"); // 認証時に使用するパスワードのリクエストパラメータ名
