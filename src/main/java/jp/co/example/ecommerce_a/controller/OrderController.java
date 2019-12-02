@@ -111,6 +111,9 @@ public class OrderController {
 			, CreditInfoForm creditInfoForm
 			, Model model
 			, @AuthenticationPrincipal LoginUser loginUser) {
+		if(result.hasErrors()) {
+			return index(model, loginUser);
+		}
 		System.err.println(orderForm);
 		LocalDate localDate = orderForm.convertLocalDate(orderForm.getDeliveryTime());
 		int year = localDate.getYear();
