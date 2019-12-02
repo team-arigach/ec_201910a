@@ -2,6 +2,7 @@ package jp.co.example.ecommerce_a.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 /**
  * ユーザー登録フォーム.
@@ -20,7 +21,7 @@ public class RegisterUserForm {
 	@Email(message = "入力された内容がメールアドレスではありません")
 	private String email;
 	/**	電話番号 */
-	@NotBlank(message = "電話番号を入力して下さい")
+	@Pattern(regexp = "^[0-9]{10,11}$",message="電話番号を入力してください。")
 	private String telephone;
 	/**	パスワード */
 	@NotBlank(message = "パスワードを入力して下さい")
@@ -32,7 +33,7 @@ public class RegisterUserForm {
 	@NotBlank(message = "住所を入力して下さい")
 	private String address;
 	/**	郵便番号 */
-	@NotBlank(message="郵便番号を入力してください")
+	@Pattern(regexp = "^[0-9]{7}$",message="郵便番号を入力してください")
 	private String zipcode;
 	public String getName() {
 		return name;

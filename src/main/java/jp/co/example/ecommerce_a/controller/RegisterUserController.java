@@ -1,5 +1,6 @@
 package jp.co.example.ecommerce_a.controller;
 
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,6 +71,7 @@ public class RegisterUserController {
 		User user = new User();
 		BeanUtils.copyProperties(registerUserform, user);
 		registerService.insertUser(user);
+
 		return "redirect:/registerUser/toLoginPage";
 	}
 	

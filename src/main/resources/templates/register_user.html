@@ -63,7 +63,7 @@
 							<div class="form-group">
 								<label for="inputZipcode">郵便番号:</label>
 								<label th:errors="*{zipcode}"
-									class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
+									class="control-label" style="color: red" for="inputError">郵便番号(半角ハイフン無し)を入力してください</label>
 									<input type="button" value="住所検索">
 								<input type="text" id="inputZipcode" class="form-control" name="zipcode"
 									placeholder="Zipcode">
@@ -79,7 +79,7 @@
 							<div class="form-group">
 								<label for="inputTel">電話番号:</label>
 								<label th:errors="*{telephone}"
-									class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
+									class="control-label" style="color: red" for="inputError">電話番号(ハイフン無し)を入力してください</label>
 								<input type="text" id="inputTel" class="form-control" name="telephone"
 									placeholder="Tel">
 							</div>
