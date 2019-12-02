@@ -111,8 +111,14 @@ public class ShowItemController {
 		return "item_list";
 	}
 
-	@RequestMapping("/auti")
-	public String auti(Integer number) {
+	/**
+	 * 商品一覧の表示件数変更をするメソッド
+	 * 
+	 * @param number 表示件数
+	 * @return アイテムリスト
+	 */
+	@RequestMapping("/displayCount")
+	public String displayCount(Integer number) {
 		Integer checkCount = (Integer) session.getAttribute("count");
 		Integer count = null;
 		if (checkCount == null || checkCount == 0) {
