@@ -105,7 +105,7 @@ public class ItemRepository {
 	 */
 	public List<Item> findByLikeNameAboutSum(String name,Integer limit, Integer offSet){
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name limit :limit offset :offSet");
+		sql.append("SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name ILIKE :name limit :limit offset :offSet");
 		String escName = "%" + name + "%";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", escName).addValue("limit", limit).addValue("offSet", offSet);
 		List<Item> itemList = template.query(sql.toString(), param,ITEM_ROW_MAPPER);
