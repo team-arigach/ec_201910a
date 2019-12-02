@@ -233,11 +233,15 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("sessionId", sessionId);
 		template.update(sql, param);
 	}
+
 	
-	public List<Order> findByOrderId(Integer orderId) {
-		String sql = "SELECT id FROM orders WHERE user_id=:userId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", orderId);
-		List<Order> orderList = template.query(sql, param,ORDER_ROW_MAPPER);
-		return orderList;
+	/**
+	 * 指定されたユーザーIDから注文を全件取得.
+	 * @return 検索されたオーダー全件
+	 */
+	public List<Order> findAllByUserId(Integer userId){
+		String sql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method FROM orders WHERE userId = :userId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		return template.query(sql, param, ORDER_ROW_MAPPER);
 	}
 }
