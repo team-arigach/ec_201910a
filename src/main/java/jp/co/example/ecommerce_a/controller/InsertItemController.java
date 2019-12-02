@@ -47,7 +47,7 @@ public class InsertItemController {
 		
 		itemService.insertItem(item);
 		
-		return "redirect:/insertItem";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("")

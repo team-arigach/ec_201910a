@@ -97,8 +97,23 @@
 			</div>
 		</div>
 
-		<!-- table -->
 
+		<!-- table -->
+		<div
+			class="table-responsive col-lg-offset-8 col-lg-4 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+			<label for="pizzanum"></label> <select class="form-control"
+				id="pizzanum" name="quanity" style="width: 200px;"
+				onChange="location.href=value;">
+				<option th:text="'現在の表示件数 :'+${session.count}+' 件' " value="">表示件数を変更
+				</option>
+				<option th:text=" 6件ずつ表示"
+					th:value="@{'/displayCount?number='+6+'&name='+${name}}">6</option>
+				<option th:text="18件ずつ表示"
+					th:value="@{'/displayCount?number='+18+'&name='+${name}}">18</option>
+				<option th:text="30件ずつ表示"
+					th:value="@{'/displayCount?number='+30+'&name='+${name}}">30</option>
+			</select>
+		</div>
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
@@ -132,14 +147,12 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-     $(window).load(function() {
-             $('#featured').orbit({
-                  bullets: true
-             });
-         });
-    </script>
-
+	<script>
+		function dropsort() {
+			var browser = document.sort_form.sort.value;
+			location.href = browser
+		}
+	</script>
 	<!-- end container -->
 	<script src="js/bootstrap.min.js"></script>
 </body>

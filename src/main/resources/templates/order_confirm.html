@@ -15,9 +15,7 @@
     <![endif]-->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" th:src="@{/js/order_confirm.js}"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 </head>
 <body th:background="@{/img/background-pizza.jpg}">
 	<div class="container">
@@ -261,11 +259,10 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12"></div>
-											<div class="col-sm-5">
+											<div class="col-sm-12">
 												<span th:errors="*{deliveryTime}" style="color: red"></span><br>
 												<span th:errors="*{deliveryHour}" style="color: red"></span>
-												<input type="text" id="datepicker"
-													class="form-control input-sm">
+												<input type="date" name="deliveryTime" class="form-control input-sm">
 											</div>
 
 										</div>
