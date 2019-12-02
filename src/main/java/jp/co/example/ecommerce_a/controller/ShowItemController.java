@@ -102,7 +102,6 @@ public class ShowItemController {
 		Integer itemCount = itemList.size();// 抽出したデータ数を確認
 		List<Integer> pageList = showItemListService.makeByPageList(count, itemCount); // 表示するページ番号を決定しリスト化
 		showItemListService.makeOffSet(pageNumber, count); // 表示するoffsetの値を決める
-
 		model.addAttribute("bigItemList", bigItemList);
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("name", name);
