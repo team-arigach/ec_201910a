@@ -136,4 +136,13 @@ public class OrderForm {
 		this.paymentMethod = paymentMethod;
 	}
 
+	@Override
+	public String toString() {
+		return "OrderForm [id=" + id + ", destinationName=" + destinationName + ", destinationEmail=" + destinationEmail
+				+ ", destinationZipcode=" + destinationZipcode + ", destinationAddress=" + destinationAddress
+				+ ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime + ", deliveryHour="
+				+ deliveryHour + ", paymentMethod=" + paymentMethod + "]";
+	}
+
+	
 }

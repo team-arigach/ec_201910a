@@ -110,6 +110,22 @@ public class OrderController {
 			, CreditInfoForm creditInfoForm
 			, Model model
 			, @AuthenticationPrincipal LoginUser loginUser) {
+		System.err.println(orderForm);
+		
+		LocalDate localDate = orderForm.convertLocalDate(orderForm.getDeliveryTime());
+		int year = localDate.getYear();
+		int month = localDate.getMonthValue();
+		int date = localDate.getDayOfMonth();
+		int hour = orderForm.getDeliveryHour();
+		int minute = 0;
+		LocalDateTime localDateTime = LocalDateTime.of(year, month, date, hour, minute);
+		LocalDateTime localDateTimeNow = LocalDateTime.now().plusHours(1);
+		boolean isAfter = localDateTime.isAfter(localDateTimeNow);
+		
+		if(!(isAfter)) {
+			result.rejectValue("deliveryTime", "", "現在時刻の１時間以降を選択してください");
+		}
+		
 		if(result.hasErrors()) {
 			return index(model, loginUser);
 		}
@@ -126,13 +142,13 @@ public class OrderController {
 		}
 
 		// パラメータで取得したdeliverryTimeとdeliveryHourTimestamp型に変換してOrderオブジェクトにセット
-		LocalDate localDate = orderForm.convertLocalDate(orderForm.getDeliveryTime());
-		int year = localDate.getYear();
-		int month = localDate.getMonthValue();
-		int date = localDate.getDayOfMonth();
-		int hour = orderForm.getDeliveryHour();
-		int minute = 0;
-		LocalDateTime localDateTime = LocalDateTime.of(year, month, date, hour, minute);
+		//LocalDate localDate = orderForm.convertLocalDate(orderForm.getDeliveryTime());
+		//int year = localDate.getYear();
+		//int month = localDate.getMonthValue();
+		//int date = localDate.getDayOfMonth();
+		//int hour = orderForm.getDeliveryHour();
+		//int minute = 0;
+		//LocalDateTime localDateTime = LocalDateTime.of(year, month, date, hour, minute);
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
 		orderService.order(order);
