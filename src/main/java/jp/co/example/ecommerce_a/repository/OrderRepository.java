@@ -219,7 +219,7 @@ public class OrderRepository {
 				+ "ON t.order_item_id = oi.id "
 				+ "WHERE "
 				+ "o.user_id = :userId "
-				+ "ORDER BY o.id ,oi.id;";
+				+ "ORDER BY o.id ,oi.id DESC;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
 		if( orderList.size() > 0) { // オーダーリストが存在する場合
@@ -274,8 +274,4 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("sessionId", sessionId);
 		template.update(sql, param);
 	}
-
-	
-	
-	
 }
