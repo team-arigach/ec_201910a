@@ -23,8 +23,7 @@ public class ShowItemListService {
 	private ItemRepository itemRepository;
 
 	/**
-	 * 商品リスト情報を取得します.
-	 * (最初のログインまたは指定なしでの検索の場合商品情報を全件表示します)
+	 * 商品リスト情報を取得します. (最初のログインまたは指定なしでの検索の場合商品情報を全件表示します)
 	 * 
 	 * @param name
 	 * @return 商品一覧画面（3個ずつ商品を表示しその後列を落として３個ずつ表示）
@@ -39,9 +38,9 @@ public class ShowItemListService {
 		} else {
 			itemList = itemRepository.findByLikeName(name);
 		}
-			// bigItemListは、smallItemsListが詰まっている
+		// bigItemListは、smallItemsListが詰まっている
 		List<List<Item>> bigItemList = new ArrayList<>();
-			//smallItemsListは、3件ずつのオブジェクトが詰まっている
+		// smallItemsListは、3件ずつのオブジェクトが詰まっている
 		List<Item> smallItemsList = null;
 		for (int i = 0; i < itemList.size(); i++) {
 			if (i == 0 || i % 3 == 0) {
@@ -56,8 +55,7 @@ public class ShowItemListService {
 	/**
 	 * オートコンプリート用に配列の中身を文字列で作成.
 	 * 
-	 * @return オートコンプリート用の配列の文字列 
-	 * (例) "Charity4","Specialミート4","Family４"
+	 * @return オートコンプリート用の配列の文字列 (例) "Charity4","Specialミート4","Family４"
 	 */
 	public StringBuilder getItemListForAutocomplete(String name) {
 		List<Item> itemList = null;
@@ -84,21 +82,20 @@ public class ShowItemListService {
 		return itemListForAutocompleate;
 	}
 
-	public List<List<Item>> findByLikeNameAboutSum(String name,Integer limit,Integer offSet) {
-		if(offSet==null) {
-			offSet=0;
+	public List<List<Item>> findByLikeNameAboutSum(String name, Integer limit, Integer offSet) {
+		if (offSet == null) {
+			offSet = 0;
 		}
 		System.out.println(name);
 		// オートコンプリートで使用しているのでメソッド化したい
 		List<Item> itemList = null;
 		if (name == null || name.equals("")) {
 			// 検索文字列が空なら全件検索
-			itemList = itemRepository.findAllAboutSum(limit,offSet);
+			itemList = itemRepository.findAllAboutSum(limit, offSet);
 		} else {
 			// 検索文字列があれば曖昧検索
-			itemList = itemRepository.findByLikeNameAboutSum(name,limit,offSet);
+			itemList = itemRepository.findByLikeNameAboutSum(name, limit, offSet);
 		}
-		System.out.println("アイテムリストの状態"+itemList.size());
 		List<List<Item>> bigItemList = new ArrayList<>();
 		List<Item> smallItemsList = null;
 		for (int i = 0; i < itemList.size(); i++) {
@@ -106,10 +103,9 @@ public class ShowItemListService {
 				smallItemsList = new ArrayList<>();
 				bigItemList.add(smallItemsList);
 			}
-			smallItemsList.add(itemList.get(i));
-			System.out.println(itemList.get(i));
+			Item item = itemList.get(i);
+			smallItemsList.add(item);
 		}
-		System.out.println("bigItemListの状態"+bigItemList.size());
 		return bigItemList;
 	}
 
@@ -119,13 +115,14 @@ public class ShowItemListService {
 		}
 		return (page - 1) * 8;
 	}
-	
-	public StringBuilder getItemListForAutocompleteAboutSum(String name,Integer count,Integer limit,Integer pageNumber) {
+
+	public StringBuilder getItemListForAutocompleteAboutSum(String name, Integer count, Integer limit,
+			Integer pageNumber) {
 		List<Item> itemList = null;
 		Integer offSet = makeOffSet(pageNumber, count);
 		if (name == null || name.equals("")) {
 			// 検索文字列が空なら全件検索
-			itemList = itemRepository.findAllAboutSum(limit,offSet);
+			itemList = itemRepository.findAllAboutSum(limit, offSet);
 		} else {
 			// 検索文字列があれば曖昧検索
 			itemList = itemRepository.findByLikeName(name);
@@ -150,7 +147,7 @@ public class ShowItemListService {
 	 * @param totalItemCount
 	 * @return ページのリストを返す.
 	 */
-	public List<Integer> makeByPageList(Integer viewCountOfOnePage,Integer itemCount) {
+	public List<Integer> makeByPageList(Integer viewCountOfOnePage, Integer itemCount) {
 		Integer totalPage = null;
 		if (itemCount % viewCountOfOnePage == 0) {
 			totalPage = itemCount / viewCountOfOnePage;
@@ -167,7 +164,7 @@ public class ShowItemListService {
 	/**
 	 * offSetの数値を決める.
 	 * 
-	 * @param pageNumber クリックされたページ数
+	 * @param pageNumber           クリックされたページ数
 	 * @param viewCountOfOnetePage 1ページ辺りに表示したい件数
 	 * @return
 	 */
@@ -176,14 +173,13 @@ public class ShowItemListService {
 		if (pageNumber == null) {
 			return 0;
 		} else {
-			return (pageNumber- 1) * viewCountOfOnetePage;
+			return (pageNumber - 1) * viewCountOfOnetePage;
 		}
-		
-	}
-	
-	public List<Item> showItems(){
-		return itemRepository.findAll();
+
 	}
 
+	public List<Item> showItems() {
+		return itemRepository.findAll();
+	}
 
 }
