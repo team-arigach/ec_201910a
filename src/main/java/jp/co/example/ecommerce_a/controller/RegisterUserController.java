@@ -67,17 +67,8 @@ public class RegisterUserController {
 		BeanUtils.copyProperties(registerUserform, user);
 		registerService.insertUser(user);
 
-		return "redirect:/registerUser/toLoginPage";
+		return "redirect:/login";
 	}
 
-	/**
-	 * ログイン画面に遷移するメソッド.
-	 * 
-	 * @return ログイン画面に遷移
-	 */
-	@RequestMapping("toLoginPage")
-	public String toLoginPage() {
-		return "login";
-	}
 
 }

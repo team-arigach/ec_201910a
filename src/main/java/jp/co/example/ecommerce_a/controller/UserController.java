@@ -32,8 +32,10 @@ public class UserController {
 	@RequestMapping("/login")
 	public String toLogin(Model model, @RequestParam(required = false) String error) {
 		//=====sessionに前のURLを記憶============
-		if(!("/login".equals( request.getHeader("REFERER").substring(21))) ) {
-			session.setAttribute("referer", request.getHeader("REFERER").substring(21));
+		String header = request.getHeader("REFERER");
+		String refererInfo = header.substring(21);
+		if(!("/login".equals( refererInfo)) && !("/registerUser/register".equals( refererInfo)) && !("/registerUser".equals( refererInfo)) ) {
+			session.setAttribute("referer", refererInfo);
 		}
 		System.err.println("referer = > " + session.getAttribute("referer"));
 		//======================================
