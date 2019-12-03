@@ -131,10 +131,10 @@
 								href="item_detail.html" th:href="@{'/detail/?id=' + ${item.id}}">
 									<img th:if="${item.imagePath.length() < 50}" src="img/1.jpg"
 									th:src="'/img/' + ${item.imagePath}"
-									class="img-responsive img-rounded center-block" width="200"
+									class="img-responsive img-rounded center-block " width="200"
 									height="600"> <img
 									th:unless="${item.imagePath.length() < 50}" src="img/1.jpg"
-									th:src="${item.imagePath}" class="img-responsive img-rounded center-block"
+									th:src="${item.imagePath}" class="img-responsive img-rounded center-block scale-img"
 									width="200" height="600">
 							</a><br> <a href="item_detail.html"
 								th:href="@{'/detail/?id=' + ${item.id}}"> <span
