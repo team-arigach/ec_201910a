@@ -16,41 +16,23 @@
     <![endif]-->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
-<body>
+<body th:background="@{/img/background-pizza.jpg}">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="item_list.html" th:href="@{/}"><img
+			alt="main log" th:src="@{/img/header_logo.png}" height="35"></a>
 
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-					aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ -->
-					<img alt="main log" th:src="@{/img/header_logo.png}" height="35">
-				</a>
-			</div>
-
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<p class="navbar-text navbar-right">
-					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/insertItem}"
-						class="navbar-link">商品登録</a>&nbsp;&nbsp; <a href="cart_list.html"
-						class="navbar-link" th:href="@{/cartList}">ショッピングカート</a>&nbsp;&nbsp;
-					<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-					<a sec:authorize="isAnonymous()" href="login.html"
-						class="navbar-link" th:href="@{/login}">ログイン</a>&nbsp;&nbsp; <a
-						sec:authorize="hasRole('ROLE_USER')" href="item_list.html"
-						class="navbar-link" th:href="@{/logout}">ログアウト</a>
-				</p>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container-fluid -->
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item"><a class="nav-link"
+				sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/insertItem}">商品登録</a>
+			</li>
+			<li class="nav-item"><a href="cart_list.html" class="nav-link"
+				th:href="@{/cartList}">ショッピングカート</a></li>
+			<li class="nav-item"><a sec:authorize="isAnonymous()"
+				href="login.html" class="nav-link" th:href="@{/login}">ログイン</a></li>
+			<li class="nav-item"><a sec:authorize="hasRole('ROLE_USER')"
+				href="item_list.html" class="nav-link" th:href="@{/logout}">ログアウト</a></li>
+		</ul>
+		<!-- /.navbar-collapse -->
 	</nav>
 
 	<div class="container">
@@ -87,9 +69,9 @@
 							</div>
 						</div>
 
-						<div class="col-sm-12">
+						<div class="col-sm-4 offset-sm-4">
 							<input type="hidden" name="deleted" value="false">
-							<button type="submit" class="btn-success btn-block my-1">登録</button>
+							<button type="submit" class="btn btn-success btn-block mt-3 mb-1">登録</button>
 						</div>
 					</div>
 				</form>
