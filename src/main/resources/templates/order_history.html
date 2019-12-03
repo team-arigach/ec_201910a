@@ -78,7 +78,7 @@
 										2019年1月1日</div>
 								</td>
 								<td>
-									<div class="center">
+									<div class="text-center">
 										<img th:if="${orderItem.item.imagePath.length() < 50}"
 											src="img/1.jpg"
 											th:src="'/img/' + ${orderItem.item.imagePath}"
@@ -87,8 +87,8 @@
 											th:unless="${orderItem.item.imagePath.length() < 50}"
 											src="img/1.jpg" th:src="${orderItem.item.imagePath}"
 											class="img-responsive img-rounded" width="100" height="300"
-											style="margin: 0 auto"><br> <span
-											th:text="${orderItem.item.name}"></span>じゃがバターベーコン
+											style="margin: 0 auto"><br> 
+										<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
 									</div>
 								</td>
 								<td class="text-center"><span class="price"
@@ -97,7 +97,7 @@
 									th:text="${#numbers.formatInteger(orderItem.item.priceM, 1,'COMMA') + '円'}"></span>
 									&nbsp;&nbsp; <span th:if="${orderItem.size} == 'L'"
 									th:text="${#numbers.formatInteger(orderItem.item.priceL, 1,'COMMA') + '円'}"></span>
-									&nbsp;&nbsp; <br></td>
+									&nbsp;&nbsp;<span th:text="${orderItem.quantity}"></span>個<br></td>
 								<td>
 									<ul>
 										<li th:each="orderTopping:${orderItem.orderToppingList}">
