@@ -25,7 +25,7 @@ public class RegisterUserForm {
 	private String telephone;
 	/**	パスワード */
 	@NotBlank(message = "パスワードが入力されていません")
-	@Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}",message = "半角英数字を用いた8桁以上のパスワードを設定してください")
+	@Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}",message = "半角英数字を用いた8桁以上のパスワードを入力してください")
 	private String password;
 	/**	確認用パスワード */
 	@NotBlank(message = "確認用パスワードを入力して下さい")

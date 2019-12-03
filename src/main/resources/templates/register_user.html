@@ -60,14 +60,14 @@
 								<label for="inputName">名前:</label><label th:errors="*{name}"
 									class="control-label" style="color: red" for="inputError">名前を入力してください</label>
 								<input type="text" id="inputName" class="form-control"
-									name="name" placeholder="Name">
+									name="name" placeholder="Name" th:field="*{name}">
 							</div>
 							<div class="form-group">
 								<label for="inputEmail">メールアドレス:</label><label
 									th:errors="*{email}" class="control-label" style="color: red"
 									for="inputError">メールアドレスを入力してください</label> <input type="text"
 									id="inputEmail" class="form-control" name="email"
-									placeholder="Email">
+									placeholder="Email" th:field="*{email}">
 							</div>
 									<!-- <input type="button" value="住所検索"> -->
 							<div class="form-group">
@@ -75,7 +75,7 @@
 								<label th:errors="*{zipcode}"
 									class="control-label" style="color: red" for="inputError">郵便番号(半角ハイフン無し)を入力してください</label>
 									<button type="button" class="address-search2">住所検索</button>
-								<input type="text" id="inputZipcode" class="form-control" name="zipcode"
+								<input type="text" id="inputZipcode" class="form-control" name="zipcode" th:field="*{zipcode}"
 									placeholder="Zipcode">
 							</div>
 							<div class="form-group">
@@ -83,13 +83,13 @@
 									th:errors="*{address}" class="control-label" style="color: red"
 									for="inputError">住所を入力してください</label> <input type="text"
 									id="inputAddress" class="form-control" name="address"
-									placeholder="Address">
+									placeholder="Address" th:field="*{address}">
 							</div>
 							<div class="form-group">
 								<label for="inputTel">電話番号(半角ハイフン無し):</label>
 								<label th:errors="*{telephone}"
 									class="control-label" style="color: red" for="inputError">電話番号(ハイフン無し)を入力してください</label>
-								<input type="text" id="inputTel" class="form-control" name="telephone"
+								<input type="text" id="inputTel" class="form-control" name="telephone" th:field="*{telephone}"
 									placeholder="Tel">
 							</div>
 							<div class="form-group">
