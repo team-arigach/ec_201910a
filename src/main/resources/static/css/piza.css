@@ -21,3 +21,12 @@ span#total-price {
 	opacity: 0.95;
 }
 
+.scale-img {
+　width: 250px; /*画像の幅*/
+　height: 175px; /*画像の高さ*/
+　transition-duration: 0.5s; /*変化の時間*/
+}
+.scale-img:hover {
+　transform: scale(1.2,1.2); /*画像の拡大*/
+　cursor: pointer; /*カーソルをポインターにする*/
+}
