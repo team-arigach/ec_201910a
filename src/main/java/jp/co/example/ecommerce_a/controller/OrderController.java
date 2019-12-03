@@ -66,7 +66,7 @@ public class OrderController {
 	 * @return 注文確認画面
 	 */
 	@RequestMapping("")
-	public String index(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+	public String index(Model model, @AuthenticationPrincipal LoginUser loginUser, boolean isError) {
 
 		addShoppingCartService.addShoppingCart(loginUser.getUser().getId());
 		Order order = showShoppingCartService.showShoppingCart(loginUser.getUser().getId(), 0);
@@ -80,7 +80,9 @@ public class OrderController {
 
 		order.setUser(orderService.setUser(order.getUserId()));
 		model.addAttribute("order", order);
-		model.addAttribute("orderForm",orderService.setOrderForm(order.getUser()));
+		if(!isError) {
+			model.addAttribute("orderForm",orderService.setOrderForm(order.getUser()));
+		}
 
 		// quantityに表示する要素数
 		int[] count = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
@@ -107,13 +109,13 @@ public class OrderController {
 	@RequestMapping("/input")
 	public String order(@Validated OrderForm orderForm
 			, BindingResult result
-			,OrderItemForm orderItemForm
+			, OrderItemForm orderItemForm
 			, CreditInfoForm creditInfoForm
 			, Model model
 			, @AuthenticationPrincipal LoginUser loginUser) {
-		if(result.hasErrors()) {
-			return index(model, loginUser);
-		}
+		//if(result.hasErrors()) {
+		//	return index(model, loginUser);
+		//}
 		System.err.println(orderForm);
 		LocalDate localDate = orderForm.convertLocalDate(orderForm.getDeliveryTime());
 		int year = localDate.getYear();
@@ -126,11 +128,11 @@ public class OrderController {
 		boolean isAfter = localDateTime.isAfter(localDateTimeNow);
 		
 		if(!(isAfter)) {
-			result.rejectValue("deliveryTime", "", "現在時刻の１時間以降を選択してください");
+			result.rejectValue("deliveryHour", "", "現在時刻の１時間以降を選択してください");
 		}
 		
 		if(result.hasErrors()) {
-			return index(model, loginUser);
+			return index(model, loginUser, true);
 		}
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
@@ -140,7 +142,7 @@ public class OrderController {
 			BeanUtils.copyProperties(creditInfoForm, creditInfo);
 			if (!creditInfoService.isCheckCreditInfo(creditInfo)) {
 				model.addAttribute("creditError", "カード情報が正しくありません。");
-				return index(model, loginUser);
+				return index(model, loginUser, true);
 			}
 		}
 
