@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -167,9 +168,12 @@ public class OrderController {
 	 */
 	@RequestMapping("/toOrderFinish")
 	public String toOrderFinish() {
+		long start = new Date().getTime();
 		System.err.println("メールを送信する。");
 		mailSenderService.send();
 		System.err.println("メールの送信完了");
+		long end = new Date().getTime();
+		System.out.println("メール送信時間:"+ (end - start));
 		return "order_finished";
 	}
 
